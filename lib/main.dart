@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oulun_energia_mobile/flavors.dart';
 
 void main() {
-  F.appFlavor = Flavor.STAGING;
+  F.appFlavor = Flavor.DEV;
   runApp(const MyApp());
 }
 
