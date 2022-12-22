@@ -19,6 +19,7 @@ dependencies:
   riverpod: ^2.1.1
   intl: ^0.17.0
   flutter_flavorizr: ^2.1.5
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -28,7 +29,7 @@ dev_dependencies:
 
 flavorizr:
   flavors:
-    production:
+    production: # flavor to publish from (production signed)
       app:
         name: "Oulun Energia"
 
@@ -38,9 +39,18 @@ flavorizr:
       ios:
         bundleId: "fi.oulunenergia.pohjoistavoimaa"
 
-    staging:
+    staging: # flavor for internal/external testing (staging signed)
       app:
         name: "Oulun Energia -staging"
+
+      android:
+        applicationId: "fi.oulunenergia.pohjoistavoimaa.dev"
+      ios:
+        bundleId: "fi.oulunenergia.pohjoistavoimaa.dev"
+
+    dev: # flavor that uses developer's own signature and playground
+      app:
+        name: "Oulun Energia -dev"
 
       android:
         applicationId: "fi.oulunenergia.pohjoistavoimaa.dev"
