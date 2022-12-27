@@ -22,4 +22,14 @@ class F {
     }
   }
 
+  static String get baseUrl {
+    switch (appFlavor) {
+      case Flavor.DEV:
+      case Flavor.STAGING:
+      case Flavor.PRODUCTION:
+      default:
+        return "https://app.oulunenergia.fi";
+    }
+  }
+
 }

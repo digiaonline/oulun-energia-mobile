@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oulun_energia_mobile/core/authentication/authentication.dart';
+import 'package:oulun_energia_mobile/core/network_api/authentication_api.dart';
+import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/main/main_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 
@@ -21,7 +27,8 @@ class OEApp extends StatelessWidget {
       theme: defaultTheme,
       initialRoute: MainView.routeName,
       routes: {
-        MainView.routeName: (context) => MainView(),
+        MainView.routeName: (context) => const MainView(),
+        LoginView.routeName: (context) => LoginView()
       },
     );
   }
