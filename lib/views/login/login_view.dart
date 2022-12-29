@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oulun_energia_mobile/core/network_api/authentication_api.dart';
+import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 
 import '../utils/snackbar.dart';
