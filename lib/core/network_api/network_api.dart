@@ -28,6 +28,18 @@ abstract class RestApiBase {
     };
     return map;
   }
+
+  @protected
+  Future<dynamic> get(String uri) async {
+    var headers = await getAuthenticationHeaders();
+    RestApiResponse response =
+        await restClient.get(Uri.parse(uri), headers: headers);
+    if (response.response?.statusCode == HttpStatus.ok) {
+      var content = await response.bodyContent();
+      return content;
+    }
+    return null;
+  }
 }
 
 class RestClient {
