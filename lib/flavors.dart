@@ -22,14 +22,33 @@ class F {
     }
   }
 
+  static String get apiUsername {
+    switch (appFlavor) {
+      case Flavor.DEV:
+      case Flavor.STAGING:
+      case Flavor.PRODUCTION:
+      default:
+        return 'oe_app';
+    }
+  }
+
+  static String get apiPassword {
+    switch (appFlavor) {
+      case Flavor.DEV:
+      case Flavor.STAGING:
+      case Flavor.PRODUCTION:
+      default:
+        return '9d1d5K8inM7774ji0m';
+    }
+  }
+
   static String get baseUrl {
     switch (appFlavor) {
       case Flavor.DEV:
       case Flavor.STAGING:
       case Flavor.PRODUCTION:
       default:
-        return "https://app.oulunenergia.fi";
+        return 'https://app.oulunenergia.fi';
     }
   }
-
 }
