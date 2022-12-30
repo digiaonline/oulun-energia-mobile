@@ -1,3 +1,26 @@
 {
-    "kalatie": "Fish ladder"
+   "january": "January",
+   "february": "February",
+   "march": "March",
+   "april": "April",
+   "may": "May",
+   "june": "June",
+   "july": "July",
+   "august": "August",
+   "september": "September",
+   "october": "October",
+   "november": "November",
+   "december": "December",
+   "settings": "Settings",
+   "usageInfo": "Usage info",
+   "usageViewMyConsumption": "My Energy Consumption",
+   "usageViewUsageData": "Usage data",
+   "usageViewHour": "Hour",
+   "usageViewDay": "Day",
+   "usageViewMonth": "Month",
+   "usageViewYear": "Year",
+   "usageViewHome": "Home",
+   "usageViewMyUsage": "My usage",
+   "usageViewInterruptions": "Interruptions",
+   "usageViewContact": "Contact us"
 }

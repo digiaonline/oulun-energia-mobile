@@ -1,3 +1,26 @@
 {
-    "kalatie": "Kalatie"
+   "january": "Tammikuu",
+   "february": "Helmikuu",
+   "march": "Maaliskuu",
+   "april": "Huhtikuu",
+   "may": "Toukokuu",
+   "june": "Kesäkuu",
+   "july": "Heinäkuu",
+   "august": "Elokuu",
+   "september": "Syyskuu",
+   "october": "Lokakuu",
+   "november": "Marraskuu",
+   "december": "Joulukuu",
+   "settings": "Asetukset",
+   "usageInfo": "Kulutustiedot",
+   "usageViewMyConsumption": "Oma Energiankulutus",
+   "usageViewUsageData": "Kulutustiedot",
+   "usageViewHour": "Tunti",
+   "usageViewDay": "Päivä",
+   "usageViewMonth": "Kuukausi",
+   "usageViewYear": "Vuosi",
+   "usageViewHome": "Etusivu",
+   "usageViewMyUsage": "Oma kulutus",
+   "usageViewInterruptions": "Keskeytykset",
+   "usageViewContact": "Ota yhteyttä"
 }
