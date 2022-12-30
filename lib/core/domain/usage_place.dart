@@ -1,4 +1,5 @@
 import 'package:oulun_energia_mobile/core/domain/contract.dart';
+import 'package:oulun_energia_mobile/core/enums.dart';
 
 class UsagePlace {
   final bool isCompany;
@@ -7,7 +8,7 @@ class UsagePlace {
   final String? postCode;
   final String? postPlace;
   final String? street;
-  final String? type;
+  final UsageType type;
   final List<Contract> contracts;
 
   UsagePlace({
@@ -18,7 +19,7 @@ class UsagePlace {
     this.postCode,
     this.postPlace,
     this.street,
-    this.type,
+    this.type = UsageType.electric,
   });
 
   static UsagePlace fromJson(Map<String, dynamic> json) {
@@ -36,5 +37,16 @@ class UsagePlace {
         street: json['street'],
         type: json['type'],
         contracts: contracts);
+  }
+
+  getUsageType(String type) {
+    switch (type.toLowerCase()) {
+      case 'sähkö':
+        return UsageType.electric;
+      case 'kaukolämpö':
+        return UsageType.districtHeating;
+      default:
+        return UsageType.missing;
+    }
   }
 }

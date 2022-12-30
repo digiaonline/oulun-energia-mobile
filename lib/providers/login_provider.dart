@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oulun_energia_mobile/core/authentication/authentication.dart';
 import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
+import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/core/network_api/authentication_api.dart';
 import 'package:oulun_energia_mobile/flavors.dart';
 
@@ -50,10 +51,4 @@ class UserAuthState {
         loggedIn: loggedIn ?? this.loggedIn,
         userAuth: userAuth ?? this.userAuth);
   }
-}
-
-enum LoggedInStatus {
-  failed,
-  loggedIn,
-  loggedOut,
 }
