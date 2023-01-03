@@ -31,20 +31,20 @@ class Usage {
 
   String _formatByHour() {
     final DateFormat formatter = DateFormat('HH', 'fi');
-    return '${formatter.format(from)}-${formatter.format(to)}';
+    return formatter.format(to);
   }
 
   String formatDate() {
     String date = '';
     switch (interval) {
-      case UsageInterval.interval:
+      case UsageInterval.hour:
         date = _formatByHour();
         break;
       case UsageInterval.day:
-        date = DateFormat('E d.MM', 'fi').format(from);
+        date = DateFormat('d', 'fi').format(from);
         break;
-      case UsageInterval.week:
-        date = DateFormat('MM\\yyyy', 'fi').format(from);
+      case UsageInterval.month:
+        date = DateFormat('MMM', 'fi').format(from);
         break;
       case UsageInterval.year:
         date = DateFormat('yyyy', 'fi').format(from);
