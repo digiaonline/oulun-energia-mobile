@@ -1,22 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_flavorizr/extensions/extensions_string.dart';
+import 'package:intl/intl.dart';
 
 class StringUtils {
-  static String getMonthString(int month, BuildContext context) {
-    var months = [
-      AppLocalizations.of(context)!.january,
-      AppLocalizations.of(context)!.february,
-      AppLocalizations.of(context)!.march,
-      AppLocalizations.of(context)!.april,
-      AppLocalizations.of(context)!.may,
-      AppLocalizations.of(context)!.june,
-      AppLocalizations.of(context)!.july,
-      AppLocalizations.of(context)!.august,
-      AppLocalizations.of(context)!.september,
-      AppLocalizations.of(context)!.october,
-      AppLocalizations.of(context)!.november,
-      AppLocalizations.of(context)!.december
-    ];
-    return months[month - 1];
-  }
+  static String getMonth(DateTime date, String locale) =>
+      DateFormat('LLLL yyyy', locale).format(date).capitalize;
+
+  static String getDate(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
+
+  static String getDay(DateTime date) => DateFormat('d.M.yyyy').format(date);
 }
