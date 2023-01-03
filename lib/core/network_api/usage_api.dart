@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:oulun_energia_mobile/core/domain/usage.dart';
 import 'package:oulun_energia_mobile/core/domain/usage_place.dart';
 import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
@@ -18,19 +17,19 @@ class UsageApi extends RestApiBase {
   Future<List<Usage>> getElectricUsage(
       UserAuth? userAuth,
       UsagePlace? usagePlace,
-      DateTime from,
-      DateTime to,
+      String from,
+      String to,
       UsageInterval usageInterval) async {
     if (userAuth == null || usagePlace == null) {
       return [];
     }
 
-    var fromUtc = dateToUtcString(from);
-    var toUtc = dateToUtcString(to);
-    var interval = usageInterval.name.toUpperCase();
-
-    var uri =
-        '$_electricUsagePath/${usagePlace.id}/${usagePlace.network}/$fromUtc/$toUtc/$interval/${userAuth.oeToken}';
+    String interval = usageInterval.name.toUpperCase();
+    String usageType = usagePlace.type == UsageType.electric
+        ? _electricUsagePath
+        : _districtHeatingPath;
+    String uri =
+        '$usageType/${usagePlace.id}/${usagePlace.network}/$from/$to/$interval/${userAuth.oeToken}';
 
     var content = await get(uri);
 
@@ -38,15 +37,45 @@ class UsageApi extends RestApiBase {
       return [];
     }
 
-    var json = xmlToJson(content);
+    Map<String, dynamic> jsonObj = xmlToJson(content);
 
-    List<dynamic> readings = json['s:Envelope']['s:Body']
+    bool hasReadings = jsonObj['s:Envelope']['s:Body']
+                    ['FetchMeteringDataWSResponse']['FetchMeteringDataWSResult']
+                ['a:Readings']
+            .toString() !=
+        'null';
+
+    if (!hasReadings) {
+      return [];
+    }
+
+    List<dynamic> usages = [];
+
+    Map<String, dynamic> readings = jsonObj['s:Envelope']['s:Body']
             ['FetchMeteringDataWSResponse']['FetchMeteringDataWSResult']
-        ['a:Readings']['a:ReadingData'];
+        ['a:Readings'];
 
-    return readings
-        .map((reading) => Usage.fromJson(reading, usageInterval))
-        .toList();
+    try {
+      var readingObj = readings['a:ReadingData'];
+      String type = readingObj.runtimeType.toString();
+
+      switch (type) {
+        case '_InternalLinkedHashMap<String, dynamic>':
+          usages = [readingObj];
+          break;
+        case 'List<dynamic>':
+          usages = readingObj;
+          break;
+        default:
+          break;
+      }
+
+      return usages
+          .map((reading) => Usage.fromJson(reading, usageInterval))
+          .toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   String dateToUtcString(DateTime dateTime) =>
