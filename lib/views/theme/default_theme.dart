@@ -10,6 +10,7 @@ ThemeData defaultTheme = ThemeData(
   navigationBarTheme: const NavigationBarThemeData(
     indicatorColor: Color(0xFFF1F0F4),
   ),
+  fontFamily: 'Eina',
 );
 
 const Color appBarIconColor = Colors.black;
