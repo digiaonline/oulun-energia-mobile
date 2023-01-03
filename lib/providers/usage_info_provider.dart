@@ -1,6 +1,5 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:oulun_energia_mobile/core/authentication/authentication.dart';
 import 'package:oulun_energia_mobile/core/domain/usage.dart';
 import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
@@ -76,7 +75,7 @@ class UsageInfoState {
 
     switch (usageInterval) {
       case UsageInterval.hour:
-        dateString = DateFormat('d.M.yyyy', locale).format(date);
+        dateString = StringUtils.getDay(date);
         break;
       case UsageInterval.day:
         dateString = StringUtils.getMonth(date, locale);
@@ -105,8 +104,8 @@ class UsageInfoState {
         DateTime startDate = DateTime.utc(date.year, date.month, 1);
         DateTime endDate = DateTime.utc(date.year, date.month + 1, 1)
             .subtract(const Duration(hours: 1));
-        from = '${DateFormat('yyyy-MM-dd').format(startDate)}T00:00:00';
-        to = '${DateFormat('yyyy-MM-dd').format(endDate)}T23:00:00';
+        from = '${StringUtils.getDate(startDate)}T00:00:00';
+        to = '${StringUtils.getDate(endDate)}T23:00:00';
         break;
       case UsageInterval.month:
         from = '${date.year}-01-01T00:00:00';

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class OptionButton extends StatelessWidget {
+class SelectionButton extends StatelessWidget {
   final String text;
-  final Icon icon;
+  final Widget widget;
   final Function()? onChangePage;
 
-  const OptionButton(
+  const SelectionButton(
       {Key? key,
       required this.text,
-      required this.icon,
+      required this.widget,
       required this.onChangePage})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onChangePage,
       child: Container(
         decoration: const BoxDecoration(
@@ -23,7 +23,7 @@ class OptionButton extends StatelessWidget {
           ),
         ),
         child: ListTile(
-          leading: icon,
+          leading: widget,
           trailing: const Icon(
             Icons.arrow_forward_ios,
             color: Colors.black,
