@@ -6,16 +6,21 @@ import 'package:oulun_energia_mobile/core/network_api/authentication_api.dart';
 import 'package:oulun_energia_mobile/flavors.dart';
 
 final loginProvider = StateNotifierProvider<UserAuthNotifier, UserAuthState>(
-    (ref) => UserAuthNotifier(
-        UserAuthState(loading: false, loggedIn: LoggedInStatus.loggedOut)));
+    (ref) => UserAuthNotifier(UserAuthState(
+        loading: false, loggedIn: LoggedInStatus.notInitialized)));
 
 class UserAuthNotifier extends StateNotifier<UserAuthState> {
-  UserAuthNotifier(super.state);
+  late final Authentication auth;
+  late final AuthenticationApi api;
+
+  UserAuthNotifier(super.state) {
+    auth = Authentication();
+    api = AuthenticationApi(auth, F.baseUrl);
+    _initialize();
+  }
 
   void login(String user, String password) {
     state = state.copyWith(loading: true);
-    var auth = Authentication();
-    var api = AuthenticationApi(auth, F.baseUrl);
     api.requestToken().then((token) {
       if (token != null) {
         auth
@@ -33,6 +38,18 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
           loggedIn: LoggedInStatus.failed,
         );
       }
+    });
+  }
+
+  void _initialize() {
+    auth.getAuthenticationToken().then((token) {
+      var tokenNotEmpty = token?.isNotEmpty ?? false;
+      tokenNotEmpty
+          ? state = state.copyWith(loggedIn: LoggedInStatus.loggedOut)
+          : state = state.copyWith(
+              loggedIn: token != null
+                  ? LoggedInStatus.visitor
+                  : LoggedInStatus.notInitialized);
     });
   }
 }

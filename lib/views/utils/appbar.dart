@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 
-AppBar buildMainAppBar(BuildContext context,
+SliverAppBar buildMainAppBar(BuildContext context,
     {String? title, Widget? titleWidget}) {
-  return AppBar(
+  return SliverAppBar(
     elevation: 1.0,
     centerTitle: true,
-    title: titleWidget ?? (title != null ? Text(title) : null),
+    title: titleWidget ??
+        (title != null
+            ? Text(title)
+            : SvgPicture.asset(
+                'assets/images/oe_logo.svg',
+                color: const Color(0xFF0F5EA6),
+                width: 200,
+              )),
     leading: InkWell(
       onTap: () => Navigator.of(context).pushNamed(LoginView.routeName),
       child: const Icon(Icons.menu),

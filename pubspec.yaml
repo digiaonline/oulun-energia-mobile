@@ -24,6 +24,8 @@ dependencies:
   flutter_riverpod: ^2.1.1
   xml2json: ^5.3.5
   graphic: ^1.0.1
+  step_progress_indicator: ^1.0.2
+  swipe: ^0.0.1
 
 dev_dependencies:
   flutter_test:
@@ -87,14 +89,14 @@ flutter:
   fonts:
     - family: Eina
       fonts:
-      - asset: assets/fonts/Eina01-Regular.ttf
-        weight: 400
-      - asset: assets/fonts/Eina01-Light.ttf
-        weight: 300
-      - asset: assets/fonts/Eina01-Bold.ttf
-        weight: 700
-      - asset: assets/fonts/Eina01-SemiBold.ttf
-        weight: 600
+        - asset: assets/fonts/Eina01-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Eina01-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Eina01-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Eina01-SemiBold.ttf
+          weight: 600
     # fonts:
     #   - family: Schyler
     #     fonts:
