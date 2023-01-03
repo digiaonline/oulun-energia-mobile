@@ -22,7 +22,7 @@ class UsagePlace {
     this.type = UsageType.electric,
   });
 
-  static UsagePlace fromJson(Map<String, dynamic> json) {
+  factory UsagePlace.fromJson(Map<String, dynamic> json) {
     List<Contract> contracts = [];
     for (var contract in json['contracts']) {
       contracts.add(Contract.fromJson(contract));
@@ -35,11 +35,11 @@ class UsagePlace {
         postCode: json['postcode'],
         postPlace: json['postplace'],
         street: json['street'],
-        type: json['type'],
+        type: getUsageType(json['type']),
         contracts: contracts);
   }
 
-  getUsageType(String type) {
+  static getUsageType(String type) {
     switch (type.toLowerCase()) {
       case 'sähkö':
         return UsageType.electric;

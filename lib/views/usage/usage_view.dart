@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:oulun_energia_mobile/views/usage/usage_data_view.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_default_view.dart';
 
 class UsageView extends StatefulWidget {
   static String routeName = 'usage_view';
 
-  const UsageView({Key? key}) : super(key: key);
+  UsageViews usageView;
+  MyUsageViews myUsageView;
+
+  UsageView(
+      {Key? key,
+      this.usageView = UsageViews.usage,
+      this.myUsageView = MyUsageViews.main})
+      : super(key: key);
 
   @override
   State<UsageView> createState() => _UsageViewState();
 }
 
 class _UsageViewState extends State<UsageView> {
-  int _currentPageIndex = 0;
+  late UsageViews _usageView = widget.usageView;
+  late final MyUsageViews _myUsageView = widget.myUsageView;
 
-  void onChangePage(int page) {
+  void onChangePage(UsageViews view) {
     setState(() {
-      _currentPageIndex = page;
+      _usageView = view;
     });
   }
 
@@ -25,10 +34,9 @@ class _UsageViewState extends State<UsageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: <Widget>[
-        UsageDefaultView(onChangePage: onChangePage),
-        UsageDataView(onChangePage: onChangePage),
-        Container(child: null),
-      ][_currentPageIndex],
+        const SizedBox.shrink(),
+        UsageDefaultView(myUsageView: _myUsageView),
+      ][_usageView.index],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(
@@ -36,16 +44,25 @@ class _UsageViewState extends State<UsageView> {
           ),
         ),
         child: NavigationBar(
+          onDestinationSelected: (int index) {
+            if (index == 0) {
+              Navigator.of(context).pop();
+            }
+
+            onChangePage(UsageViews.values[index]);
+          },
           selectedIndex: 1,
           surfaceTintColor: Colors.red,
           backgroundColor: Colors.white,
           destinations: <Widget>[
             NavigationDestination(
-              icon: const Icon(Icons.home_filled),
+              icon: SvgPicture.asset('assets/icons/home.svg',
+                  width: 20.0, height: 20.0),
               label: AppLocalizations.of(context)!.usageViewHome,
             ),
             NavigationDestination(
-              icon: const Icon(Icons.bar_chart),
+              icon: SvgPicture.asset('assets/icons/monitoring.svg',
+                  width: 20.0, height: 20.0),
               label: AppLocalizations.of(context)!.usageViewMyUsage,
             ),
             NavigationDestination(
