@@ -14,23 +14,21 @@ class SelectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onChangePage,
-      child: Container(
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
         ),
-        child: ListTile(
-          leading: widget,
-          trailing: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.black,
-            size: 19.0,
-          ),
-          title: Text(text),
+      ),
+      child: ListTile(
+        onTap: onChangePage,
+        leading: widget,
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          color: Colors.black,
+          size: 19.0,
         ),
+        title: Text(text),
       ),
     );
   }
