@@ -31,7 +31,8 @@ class UsageApi extends RestApiBase {
     String uri =
         '$usageType/${usagePlace.id}/${usagePlace.network}/$from/$to/$interval/${userAuth.oeToken}';
 
-    var content = await get(uri);
+    Map<String, String> headers = await getAuthenticationHeaders();
+    var content = await restClient.getContent(uri, headers);
 
     if (content == null) {
       return [];

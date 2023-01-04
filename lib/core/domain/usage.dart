@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Usage {
   DateTime from;
@@ -46,25 +48,26 @@ class Usage {
     }
   }
 
-  String _formatByHour() {
-    final DateFormat formatter = DateFormat('HH', 'fi');
+  String _formatByHour(String locale) {
+    final DateFormat formatter = DateFormat('HH', locale);
     return formatter.format(to);
   }
 
-  String formatDate() {
+  String formatDate(BuildContext context) {
     String date = '';
+    String locale = AppLocalizations.of(context)!.localeName;
     switch (interval) {
       case UsageInterval.hour:
-        date = _formatByHour();
+        date = _formatByHour(locale);
         break;
       case UsageInterval.day:
-        date = DateFormat('d', 'fi').format(from);
+        date = DateFormat('d', locale).format(from);
         break;
       case UsageInterval.month:
-        date = DateFormat('MMM', 'fi').format(from);
+        date = DateFormat('MMM', locale).format(from);
         break;
       case UsageInterval.year:
-        date = DateFormat('yyyy', 'fi').format(from);
+        date = DateFormat('yyyy', locale).format(from);
         break;
     }
 
@@ -73,6 +76,6 @@ class Usage {
 
   @override
   String toString() {
-    return 'from: $from to: $to statusCode: ${statusCode.name} value: $value date: ${formatDate()}';
+    return 'from: $from to: $to statusCode: ${statusCode.name} value: $value';
   }
 }

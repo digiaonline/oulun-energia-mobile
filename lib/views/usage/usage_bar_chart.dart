@@ -76,7 +76,7 @@ class _UsageBarChartState extends State<UsageBarChart> {
             data: widget.usages
                 .map((consumption) => {
                       'value': consumption.value,
-                      'date': consumption.formatDate(),
+                      'date': consumption.formatDate(context),
                     })
                 .toList(),
             variables: {
