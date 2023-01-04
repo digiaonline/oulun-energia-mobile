@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
 import 'package:oulun_energia_mobile/core/network_api/network_api.dart';
+import 'package:oulun_energia_mobile/flavors.dart';
 
 class AuthenticationApi extends RestApiBase {
   final String _loginPath;
@@ -13,8 +14,8 @@ class AuthenticationApi extends RestApiBase {
         _tokenPath = "$baseUrl/api/v1/token";
 
   Future<String?> requestToken() async {
-    var user = "oe_app";
-    var passwd = "9d1d5K8inM7774ji0m";
+    var user = F.apiUsername;
+    var passwd = F.apiPassword;
     var headers =
         await getAuthenticationHeaders(username: user, passwd: passwd);
     RestApiResponse response =

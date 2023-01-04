@@ -1,3 +1,20 @@
 {
-    "kalatie": "Kalatie"
+   "usageViewAt": "klo.",
+   "usageViewDate": "Pvm.",
+   "usageViewFetchingData": "Haetaan kulutustietoja",
+   "usageViewSettings": "Asetukset",
+   "usageViewUsageInfo": "Kulutustiedot",
+   "usageViewUsageNoInfo": "Kulutustietoja ei ole saatavilla",
+   "usageViewUsageErrorInfo": "Kulutustietojen hakemisessa on tilapäinen häiriö",
+   "usageViewMyConsumption": "Oma Energiankulutus",
+   "usageViewHistory": "Historia",
+   "usageViewHour": "Tunti",
+   "usageViewDay": "Päivä",
+   "usageViewMonth": "Kuukausi",
+   "usageViewYear": "Vuosi",
+   "usageViewHome": "Etusivu",
+   "usageViewMyUsage": "Oma kulutus",
+   "usageViewUsage": "Kulutus",
+   "usageViewInterruptions": "Keskeytykset",
+   "usageViewContact": "Ota yhteyttä"
 }
