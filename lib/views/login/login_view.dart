@@ -12,9 +12,9 @@ import '../utils/snackbar.dart';
 
 class LoginView extends ConsumerWidget {
   static const String routeName = "login_view";
-  var usernameController = TextEditingController();
+  var usernameController = TextEditingController(text: "mira.juola@icloud.com");
 
-  var passwordController = TextEditingController();
+  var passwordController = TextEditingController(text: "Vaihda123456");
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

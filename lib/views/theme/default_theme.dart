@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+IconThemeData bottomNavigationIconTheme =
+    const IconThemeData(color: Colors.white, size: 20);
+
 TextTheme textTheme = const TextTheme(
   bodyText2: TextStyle(
       fontSize: 14.0, color: Colors.white, fontWeight: FontWeight.w600),
@@ -18,8 +21,13 @@ ThemeData defaultTheme = ThemeData(
     backgroundColor: appBarBackgroundColor,
     foregroundColor: Colors.black,
   ),
-  navigationBarTheme: const NavigationBarThemeData(
-    indicatorColor: Color(0xFFF1F0F4),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedItemColor: Colors.black,
+    unselectedItemColor: Colors.white,
+    backgroundColor: Colors.red,
+    selectedIconTheme: bottomNavigationIconTheme.copyWith(color: Colors.black),
+    unselectedIconTheme:
+        bottomNavigationIconTheme.copyWith(color: Colors.white),
   ),
   fontFamily: 'Eina',
   useMaterial3: true,
