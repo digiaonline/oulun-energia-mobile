@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 
-PreferredSizeWidget usageAppBar(
+PreferredSizeWidget usageAppBar(BuildContext context,
         {required Function() onTap, required String title, Widget? trailing}) =>
     AppBar(
+      backgroundColor: Colors.white.withAlpha(255),
       toolbarHeight: 100,
-      elevation: 0.7,
       flexibleSpace: Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: Column(
@@ -15,7 +16,7 @@ PreferredSizeWidget usageAppBar(
                 onTap: onTap,
                 child: const Icon(
                   Icons.arrow_back,
-                  color: Colors.black,
+                  color: iconColorBlue,
                 ),
               ),
               trailing: trailing,

@@ -22,53 +22,61 @@ class FtuState extends ConsumerState<FirstTimeView> {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var appStateNotifier = ref.read(appStateProvider.notifier);
+    var step = widget._stepIndex;
+    var sliverChild = _getViewContent(ref, step);
+    var content = SliverFillRemaining(child: sliverChild);
     return Scaffold(
-        body: Swipe(
-      child: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            leading: null,
-            automaticallyImplyLeading: false,
-            actions: [
-              InkWell(
-                onTap: () => appStateNotifier.toMainView(),
-                child: Container(
-                  margin: Sizes.marginViewBorder,
-                  child: Text(
-                    "Ohita",
-                    style: textTheme.bodyText2,
+      body: Swipe(
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              leading: null,
+              automaticallyImplyLeading: false,
+              actions: [
+                InkWell(
+                  onTap: () => appStateNotifier.toMainView(),
+                  child: Container(
+                    margin: Sizes.marginViewBorder,
+                    child: Text(
+                      "Ohita",
+                      style: textTheme.bodyText2?.copyWith(color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SliverFillRemaining(
-            child: _getViewContent(ref, widget._stepIndex),
-          )
-        ],
-      ).withBackground(),
-      onSwipeLeft: () {
-        if (widget._stepIndex < 2) {
-          setState(() {
-            widget._stepIndex += 1;
-          });
-        }
-      },
-      onSwipeRight: () {
-        if (widget._stepIndex > 0) {
-          setState(() {
-            widget._stepIndex -= 1;
-          });
-        }
-      },
-    ));
+              ],
+            ),
+            content,
+          ],
+        ).withBackground(),
+        onSwipeLeft: () {
+          if (widget._stepIndex < 2) {
+            setState(() {
+              widget._stepIndex += 1;
+            });
+          }
+        },
+        onSwipeRight: () {
+          if (widget._stepIndex > 0) {
+            setState(() {
+              widget._stepIndex -= 1;
+            });
+          }
+        },
+      ),
+    );
   }
 
-  _getViewContent(WidgetRef ref, int stepIndex) {
+  Widget _getViewContent(WidgetRef ref, int stepIndex) {
     var step = widget._stepIndex;
     var stepItem = stepData[step];
-    return _buildStep(ref, context, stepItem['title']!,
-        stepItem['description']!, stepItem['iconText']!, step);
+    return _buildStep(
+      ref,
+      context,
+      stepItem['title']!,
+      stepItem['description']!,
+      stepItem['iconText']!,
+      step,
+    );
   }
 
   var stepData = [
@@ -92,7 +100,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
     },
   ];
 
-  Container _buildStep(WidgetRef ref, BuildContext context, String title,
+  Widget _buildStep(WidgetRef ref, BuildContext context, String title,
       String description, String iconText, int step) {
     Widget? content = _getStepAdditionalContent(ref, step);
     var textTheme = Theme.of(context).textTheme;
@@ -106,14 +114,14 @@ class FtuState extends ConsumerState<FirstTimeView> {
             children: [
               Text(
                 title,
-                style: textTheme.headline1,
+                style: textTheme.headline1?.copyWith(color: Colors.white),
               ),
               const SizedBox(
                 height: Sizes.marginViewBorderSize,
               ),
               Text(
                 description,
-                style: textTheme.bodyText1,
+                style: textTheme.bodyText1?.copyWith(color: Colors.white),
               )
             ],
           ),
@@ -125,28 +133,33 @@ class FtuState extends ConsumerState<FirstTimeView> {
               ),
               Text(
                 iconText,
-                style: textTheme.headline2,
+                style: textTheme.headline2?.copyWith(color: Colors.white),
               ),
               content ?? const SizedBox.shrink()
             ],
           ),
-          SizedBox(
-            width: 100,
-            child: StepProgressIndicator(
-              totalSteps: 3,
-              currentStep: step,
-              size: 20,
-              selectedSize: 20,
-              roundedEdges: const Radius.circular(10),
-              customStep: (index, color, __) => Icon(
-                Icons.circle,
-                size: 20,
-                color: step == index
-                    ? const Color(0xFFFFFFFF)
-                    : const Color(0xFF1A4590),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 100,
+                child: StepProgressIndicator(
+                  totalSteps: 3,
+                  currentStep: step,
+                  size: 20,
+                  selectedSize: 20,
+                  roundedEdges: const Radius.circular(10),
+                  customStep: (index, color, __) => Icon(
+                    Icons.circle,
+                    size: 20,
+                    color: step == index
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF1A4590),
+                  ),
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -164,7 +177,8 @@ class FtuState extends ConsumerState<FirstTimeView> {
             onPressed: () => ref.read(appStateProvider.notifier).toMainView(),
             child: Text(
               "Jatka ilman kirjautumista",
-              style: defaultTheme.textTheme.bodyText1,
+              style: defaultTheme.textTheme.bodyText1
+                  ?.copyWith(color: Colors.white),
             ),
           ).toButton(),
           const SizedBox(
@@ -178,7 +192,8 @@ class FtuState extends ConsumerState<FirstTimeView> {
               ),
               child: Text(
                 "Kirjaudu",
-                style: defaultTheme.textTheme.bodyText1,
+                style: defaultTheme.textTheme.bodyText1
+                    ?.copyWith(color: Colors.white),
               ),
             ),
           ).toButton(),
@@ -188,7 +203,8 @@ class FtuState extends ConsumerState<FirstTimeView> {
           Text(
             "Kirjautumalla palveluun pääset seuraamaan energiankulutustasi ",
             textAlign: TextAlign.center,
-            style: defaultTheme.textTheme.bodyText1,
+            style:
+                defaultTheme.textTheme.bodyText1?.copyWith(color: Colors.white),
           ),
         ],
       );

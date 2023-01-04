@@ -20,6 +20,7 @@ class UsageScaffold extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: usageAppBar(
+        context,
         onTap: onTap,
         title: title,
         trailing: Container(

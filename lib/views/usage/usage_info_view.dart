@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oulun_energia_mobile/core/domain/usage.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/usage_info_provider.dart';
+import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_scaffold.dart';
 
@@ -47,7 +48,7 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
         ref.watch(usageProvider(context));
     return fetchUsage.when(
       data: (usages) => UsageScaffold(
-          icon: const Icon(Icons.help, color: Colors.black),
+          icon: const Icon(Icons.help, color: iconColorBlue),
           onTap: () => widget.onChangePage(MyUsageViews.main),
           body: DefaultTabController(
             initialIndex: 0,

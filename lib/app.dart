@@ -56,9 +56,10 @@ class OEApp extends ConsumerWidget {
       default:
         break;
     }
+    print("$appName: DEBUG -> $routeName ${appState.current}");
     mainNavigatorKey.currentState
         ?.popUntil((route) => routeName == route.settings.name);
-    
+
     if (mainNavigatorKey.currentState?.canPop() ?? false) {
       mainNavigatorKey.currentState?.pushReplacementNamed(routeName);
     } else {

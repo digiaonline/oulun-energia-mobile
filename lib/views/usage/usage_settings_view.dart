@@ -15,6 +15,7 @@ class UsageSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: usageAppBar(
+          context,
           title: AppLocalizations.of(context)!.usageViewSettings,
           onTap: () => onChangePage(MyUsageViews.main),
         ),

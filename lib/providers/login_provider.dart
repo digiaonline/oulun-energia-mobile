@@ -19,6 +19,14 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     _initialize();
   }
 
+  @override
+  set state(UserAuthState value) {
+    if (mounted) {
+      print("${value.loggedIn.name}");
+      super.state = value;
+    }
+  }
+
   void login(String user, String password) {
     state = state.copyWith(loading: true);
     api.requestToken().then((token) {

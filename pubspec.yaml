@@ -26,6 +26,7 @@ dependencies:
   graphic: ^1.0.1
   step_progress_indicator: ^1.0.2
   swipe: ^0.0.1
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:
