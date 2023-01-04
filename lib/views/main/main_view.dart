@@ -67,27 +67,32 @@ class MainViewState extends State<MainView> {
               color: _selectedIndex == 0
                   ? theme.bottomNavigationBarTheme.selectedItemColor
                   : theme.bottomNavigationBarTheme.unselectedItemColor,
-            ),
+            ).toBottomBarIcon(selected: _selectedIndex == 0),
             label: locals.usageViewHome,
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/monitoring.svg',
-                width: 20.0,
-                height: 20.0,
-                color: _selectedIndex == 1
-                    ? theme.bottomNavigationBarTheme.selectedItemColor
-                    : theme.bottomNavigationBarTheme.unselectedItemColor),
+            icon: SvgPicture.asset(
+              'assets/icons/monitoring.svg',
+              width: 20.0,
+              height: 20.0,
+              color: _selectedIndex == 1
+                  ? theme.bottomNavigationBarTheme.selectedItemColor
+                  : theme.bottomNavigationBarTheme.unselectedItemColor,
+            ).toBottomBarIcon(selected: _selectedIndex == 1),
             label: locals.usageViewMyUsage,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.fmd_bad_outlined, size: 20),
+            icon: const Icon(
+              Icons.fmd_bad_outlined,
+              size: 20,
+            ).toBottomBarIcon(selected: _selectedIndex == 2),
             label: locals.usageViewInterruptions,
           ),
           BottomNavigationBarItem(
             icon: const Icon(
               Icons.support_agent_outlined,
               size: 20,
-            ),
+            ).toBottomBarIcon(selected: _selectedIndex == 3),
             label: locals.usageViewContact,
           ),
         ],

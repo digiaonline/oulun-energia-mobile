@@ -22,12 +22,15 @@ ThemeData defaultTheme = ThemeData(
     foregroundColor: Colors.black,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    selectedItemColor: Colors.black,
-    unselectedItemColor: Colors.white,
-    backgroundColor: Colors.red,
-    selectedIconTheme: bottomNavigationIconTheme.copyWith(color: Colors.black),
+    elevation: 1,
+    selectedItemColor: iconColorBlue,
+    unselectedItemColor: iconColorBlue,
+    backgroundColor: Colors.white,
+    selectedIconTheme: bottomNavigationIconTheme.copyWith(
+      color: Colors.black,
+    ),
     unselectedIconTheme:
-        bottomNavigationIconTheme.copyWith(color: Colors.white),
+        bottomNavigationIconTheme.copyWith(color: iconColorBlue),
   ),
   fontFamily: 'Eina',
   useMaterial3: true,
@@ -43,5 +46,6 @@ ThemeData defaultTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.white),
 );
 
+const Color iconColorBlue = Color(0xFF002B59);
 const Color appBarIconColor = Colors.white;
 const Color appBarBackgroundColor = Colors.transparent;

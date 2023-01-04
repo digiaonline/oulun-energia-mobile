@@ -27,4 +27,14 @@ extension WidgetExt on Widget {
       child: this,
     );
   }
+
+  Widget toBottomBarIcon({bool? selected}) {
+    return Container(
+        padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+        decoration: BoxDecoration(
+            color: selected ?? false ? Color(0xFFF1F0F4) : Colors.transparent,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        child: this);
+  }
 }
