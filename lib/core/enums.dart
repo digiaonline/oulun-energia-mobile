@@ -9,7 +9,9 @@ enum UsageViews { home, usage, interruptions, contact }
 enum MyUsageViews { main, info, settings }
 
 enum LoggedInStatus {
+  notInitialized,
   failed,
   loggedIn,
   loggedOut,
+  visitor,
 }
