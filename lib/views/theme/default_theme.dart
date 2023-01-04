@@ -43,7 +43,7 @@ ThemeData defaultTheme = ThemeData(
   ),
   textTheme: textTheme,
   iconTheme: const IconThemeData(color: Colors.white, size: 40),
-  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.white),
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
 );
 
 const Color iconColorBlue = Color(0xFF002B59);
