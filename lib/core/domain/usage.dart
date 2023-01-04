@@ -4,29 +4,46 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 class Usage {
   DateTime from;
   DateTime to;
-  bool isMeasured;
+  StatusCode statusCode;
   double value;
   UsageInterval interval;
 
   Usage(
       {required this.from,
       required this.to,
-      required this.isMeasured,
+      required this.statusCode,
       required this.value,
       required this.interval});
 
   factory Usage.fromJson(Map<String, dynamic> json, UsageInterval interval) {
     String usageValue = json['a:UsageValue'].toString();
+    StatusCode statusCode = getStatusCode(json['a:StatusCode']);
 
     return Usage(
       from: DateTime.parse(json['a:DateFrom'].toString()),
       to: DateTime.parse(json['a:DateTo'].toString()),
-      isMeasured: json['a:StatusCode'].toString().toUpperCase() == 'MITATTU',
+      statusCode: statusCode,
       value: usageValue == 'null'
           ? 0.0
           : double.parse(double.parse(usageValue).toStringAsFixed(2)),
       interval: interval,
     );
+  }
+
+  static StatusCode getStatusCode(String? status) {
+    if (status == null) {
+      return StatusCode.missing;
+    }
+    switch (status.toLowerCase()) {
+      case 'mitattu':
+        return StatusCode.measured;
+      case 'puuttuva':
+        return StatusCode.missing;
+      case 'arvioitu':
+        return StatusCode.approximated;
+      default:
+        return StatusCode.missing;
+    }
   }
 
   String _formatByHour() {
@@ -56,6 +73,6 @@ class Usage {
 
   @override
   String toString() {
-    return 'from: $from to: $to isMeasured: $isMeasured value: $value date: ${formatDate()}';
+    return 'from: $from to: $to statusCode: ${statusCode.name} value: $value date: ${formatDate()}';
   }
 }

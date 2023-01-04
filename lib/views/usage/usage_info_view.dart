@@ -24,8 +24,14 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
   void tabControllerListener() {
     if (!_tabController.indexIsChanging) {
       UsageInterval usageInterval = UsageInterval.values[_tabController.index];
-      ref.read(usageInfoProvider.notifier).changeUsageInterval(usageInterval);
+      ref
+          .read(usageInfoProvider.notifier)
+          .changeUsageInterval(usageInterval: usageInterval);
     }
+  }
+
+  void onChangeDate({required int direction}) {
+    ref.read(usageInfoProvider.notifier).changeDate(direction: direction);
   }
 
   @override
@@ -55,13 +61,22 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30.0),
                   iconColor: Colors.black,
-                  leading: const Icon(Icons.arrow_back_ios),
-                  trailing: const Icon(Icons.arrow_forward_ios),
+                  leading: GestureDetector(
+                    child: const Icon(Icons.arrow_back_ios),
+                    onTap: () => onChangeDate(direction: -1),
+                  ),
+                  trailing: GestureDetector(
+                    child: const Icon(Icons.arrow_forward_ios),
+                    onTap: () => onChangeDate(direction: 1),
+                  ),
                   title: Center(
-                    child: Text(
-                      ref.watch(usageInfoProvider).getDateString(context),
-                      style: const TextStyle(
-                          fontSize: 30.0, fontWeight: FontWeight.w300),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        ref.watch(usageInfoProvider).getDateString(context),
+                        style: const TextStyle(
+                            fontSize: 30.0, fontWeight: FontWeight.w300),
+                      ),
                     ),
                   ),
                 ),
@@ -75,7 +90,13 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
                             usageInterval:
                                 ref.watch(usageInfoProvider).usageInterval,
                           )
-                        : const SizedBox.shrink(),
+                        : Center(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .usageViewUsageNoInfo,
+                              style: const TextStyle(fontSize: 24.0),
+                            ),
+                          ),
                   ),
                 ),
                 Padding(
@@ -107,17 +128,30 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
                         unselectedLabelColor: Colors.black,
                         labelColor: const Color(0xFF009EB5),
                         tabs: <Widget>[
-                          Tab(
-                            text: AppLocalizations.of(context)!.usageViewHour,
+                          FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Tab(
+                              text: AppLocalizations.of(context)!.usageViewHour,
+                            ),
                           ),
-                          Tab(
-                            text: AppLocalizations.of(context)!.usageViewDay,
+                          FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Tab(
+                              text: AppLocalizations.of(context)!.usageViewDay,
+                            ),
                           ),
-                          Tab(
-                            text: AppLocalizations.of(context)!.usageViewMonth,
+                          FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Tab(
+                              text:
+                                  AppLocalizations.of(context)!.usageViewMonth,
+                            ),
                           ),
-                          Tab(
-                            text: AppLocalizations.of(context)!.usageViewYear,
+                          FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Tab(
+                              text: AppLocalizations.of(context)!.usageViewYear,
+                            ),
                           ),
                         ],
                       )
@@ -128,7 +162,22 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
             ),
           ),
           title: AppLocalizations.of(context)!.usageViewUsageInfo),
-      error: (error, stack) => Text(error.toString()),
+      error: (error, stack) => UsageScaffold(
+          onTap: () => widget.onChangePage(MyUsageViews.main),
+          icon: const Icon(Icons.help, color: Colors.black),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                    AppLocalizations.of(context)!.usageViewUsageErrorInfo,
+                    style: const TextStyle(fontSize: 24)),
+              ),
+            ],
+          ),
+          title: AppLocalizations.of(context)!.usageViewUsageInfo),
       loading: () => UsageScaffold(
           onTap: () => widget.onChangePage(MyUsageViews.main),
           icon: const Icon(Icons.help, color: Colors.black),

@@ -4,7 +4,7 @@ PreferredSizeWidget usageAppBar(
         {required Function() onTap, required String title, Widget? trailing}) =>
     AppBar(
       toolbarHeight: 100,
-      elevation: 0.1,
+      elevation: 0.7,
       flexibleSpace: Padding(
         padding: const EdgeInsets.only(top: 20.0),
         child: Column(

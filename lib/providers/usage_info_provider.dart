@@ -24,8 +24,7 @@ final usageProvider =
   UsageApi usageApi = UsageApi(Authentication(), F.baseUrl);
 
   UsageInterval usageInterval = ref.watch(usageInfoProvider).usageInterval;
-  Map<String, String> dates =
-      ref.watch(usageInfoProvider).getDates(usageInterval);
+  Map<String, String> dates = ref.watch(usageInfoProvider).getDates();
 
   List<Usage> usages = await usageApi.getElectricUsage(
       userAuth,
@@ -47,11 +46,36 @@ final usageProvider =
 class UsageInfoNotifier extends StateNotifier<UsageInfoState> {
   UsageInfoNotifier(super.state);
 
-  changeDate(DateTime date) {
-    state = UsageInfoState().copyWith(date: date);
+  changeDate({required int direction}) {
+    DateTime now = DateTime.now();
+    DateTime newDate = DateTime.now();
+
+    switch (state.usageInterval) {
+      case UsageInterval.hour:
+        newDate = DateTime(
+            state.date.year, state.date.month, state.date.day + direction);
+        break;
+      case UsageInterval.day:
+        newDate = DateTime(
+            state.date.year, state.date.month + direction, state.date.day);
+        break;
+      case UsageInterval.month:
+        newDate = DateTime(
+            state.date.year + direction, state.date.month, state.date.day);
+        break;
+      case UsageInterval.year:
+        break;
+    }
+
+    if (newDate.isAfter(now)) {
+      return;
+    }
+
+    state = UsageInfoState()
+        .copyWith(date: newDate, usageInterval: state.usageInterval);
   }
 
-  changeUsageInterval(UsageInterval usageInterval) {
+  changeUsageInterval({required UsageInterval usageInterval}) {
     state = UsageInfoState().copyWith(usageInterval: usageInterval);
   }
 }
@@ -91,7 +115,7 @@ class UsageInfoState {
     return dateString;
   }
 
-  Map<String, String> getDates(UsageInterval usageInterval) {
+  Map<String, String> getDates() {
     String from = '';
     String to = '';
 
@@ -113,7 +137,7 @@ class UsageInfoState {
         break;
       case UsageInterval.year:
         from = '2013-01-01T00:00:00';
-        to = '${date.year + 1}-01-01T00:00:00';
+        to = '${DateTime.now().year + 1}-01-01T00:00:00';
     }
 
     return {'from': from, 'to': to};

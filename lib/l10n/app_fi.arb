@@ -4,6 +4,8 @@
    "usageViewFetchingData": "Haetaan kulutustietoja",
    "usageViewSettings": "Asetukset",
    "usageViewUsageInfo": "Kulutustiedot",
+   "usageViewUsageNoInfo": "Kulutustietoja ei ole saatavilla",
+   "usageViewUsageErrorInfo": "Kulutustietojen hakemisessa on tilapäinen häiriö",
    "usageViewMyConsumption": "Oma Energiankulutus",
    "usageViewHistory": "Historia",
    "usageViewHour": "Tunti",

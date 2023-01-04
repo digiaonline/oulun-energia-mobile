@@ -37,11 +37,14 @@ class UsageSelectionsView extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  Text(
-                    AppLocalizations.of(context)!.usageViewMyConsumption,
-                    style: const TextStyle(
-                      color: Color(0xFF1A1C1E),
-                      fontSize: 28.0,
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      AppLocalizations.of(context)!.usageViewMyConsumption,
+                      style: const TextStyle(
+                        color: Color(0xFF1A1C1E),
+                        fontSize: 32.0,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),

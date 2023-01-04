@@ -4,6 +4,8 @@
    "usageViewFetchingData": "Fetching usage info",
    "usageViewSettings": "Settings",
    "usageViewUsageInfo": "Usage info",
+   "usageViewUsageNoInfo": "No usage info available",
+   "usageViewUsageErrorInfo": "There's is a temporary error in fetching the usage info",
    "usageViewMyConsumption": "My Energy Consumption",
    "usageViewHistory": "History",
    "usageViewHour": "Hour",

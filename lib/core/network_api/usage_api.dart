@@ -67,11 +67,15 @@ class UsageApi extends RestApiBase {
           usages = readingObj;
           break;
         default:
-          break;
+          throw TypeError();
       }
+
+      // TODO Should we include approximated values also, or just measured?
 
       return usages
           .map((reading) => Usage.fromJson(reading, usageInterval))
+          .toList()
+          .where((usage) => usage.statusCode == StatusCode.measured)
           .toList();
     } catch (e) {
       return [];
