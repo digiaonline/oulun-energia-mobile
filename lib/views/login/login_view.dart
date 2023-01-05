@@ -11,27 +11,20 @@ import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 import '../utils/snackbar.dart';
 
-class LoginView extends ConsumerStatefulWidget {
+class LoginView extends ConsumerWidget {
   static const String routeName = "login_view";
-
-  const LoginView({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() {
-    return LoginViewState();
-  }
-}
-
-class LoginViewState extends ConsumerState<ConsumerStatefulWidget> {
   var usernameController = TextEditingController(text: "mira.juola@icloud.com");
   var passwordController = TextEditingController(text: "Vaihda123456");
-  bool _acceptedTerms = false;
+  bool _acceptedTerms = false; // todo move to a provider
+
+  LoginView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var userAuth = ref.watch(loginProvider);
-    if (userAuth.loggedInStatus == LoggedInStatus.loggedIn ||
-        userAuth.loggedInStatus == LoggedInStatus.failed) {
+    if (!userAuth.loading &&
+        (userAuth.loggedInStatus == LoggedInStatus.loggedIn ||
+            userAuth.loggedInStatus == LoggedInStatus.failed)) {
       _onLogin(context, ref, userAuth.userAuth);
     }
     var theme = Theme.of(context);
@@ -41,6 +34,7 @@ class LoginViewState extends ConsumerState<ConsumerStatefulWidget> {
           buildMainAppBar(context,
               leading: null, foregroundColor: Colors.white),
           SliverFillRemaining(
+            hasScrollBody: false,
             child: Container(
               margin: Sizes.marginViewBorder,
               child: Column(
@@ -88,11 +82,7 @@ class LoginViewState extends ConsumerState<ConsumerStatefulWidget> {
                         ),
                         Row(
                           children: [
-                            Checkbox(
-                                value: _acceptedTerms,
-                                onChanged: (checked) => setState(() {
-                                      _acceptedTerms = checked!;
-                                    })),
+                            Checkbox(value: _acceptedTerms, onChanged: null),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
@@ -101,15 +91,19 @@ class LoginViewState extends ConsumerState<ConsumerStatefulWidget> {
                             )),
                           ],
                         ),
-                        TextButton(
-                          onPressed: () => _doLogin(ref,
-                              usernameController.text, passwordController.text),
-                          child: Text(
-                            "Login",
-                            style: defaultTheme.textTheme.bodyText1
-                                ?.copyWith(color: Colors.white),
-                          ),
-                        ).toButton()
+                        userAuth.loading
+                            ? const Center(child: CircularProgressIndicator())
+                            : TextButton(
+                                onPressed: () => _doLogin(
+                                    ref,
+                                    usernameController.text,
+                                    passwordController.text),
+                                child: Text(
+                                  "Login",
+                                  style: defaultTheme.textTheme.bodyText1
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ).toButton()
                       ],
                     ),
                     Column(

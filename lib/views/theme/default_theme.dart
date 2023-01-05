@@ -26,7 +26,7 @@ ThemeData defaultTheme = ThemeData(
       titleTextStyle: textTheme.headline2,
       iconTheme: appBarIconTheme,
       toolbarHeight: 60,
-      elevation: 2,
+      elevation: 1,
       shadowColor: iconColorBlue,
       backgroundColor: appBarBackgroundColor,
       foregroundColor: iconColorBlue,

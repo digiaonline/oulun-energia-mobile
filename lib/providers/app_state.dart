@@ -5,7 +5,7 @@ import 'package:oulun_energia_mobile/providers/login_provider.dart';
 
 final appStateProvider =
     StateNotifierProvider<AppStateNotifier, AppState>((ref) {
-  var loginState = ref.watch(loginProvider);
+  var loginState = ref.read(loginProvider);
   var initialState = AppStates.notInitialized;
   switch (loginState.loggedInStatus) {
     case LoggedInStatus.loggedOut:
@@ -22,6 +22,7 @@ final appStateProvider =
       initialState = AppStates.firstTimeView;
       break;
   }
+  print("${loginState.loggedInStatus.name} ${initialState.name}");
   return AppStateNotifier(AppState(initialState));
 });
 

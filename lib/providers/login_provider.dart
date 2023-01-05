@@ -42,11 +42,14 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
   }
 
   void _initialize() {
+    state = state.copyWith(loading: true);
     auth.getAuthenticationToken().then((token) {
       var tokenNotEmpty = token?.isNotEmpty ?? false;
       tokenNotEmpty
-          ? state = state.copyWith(loggedIn: LoggedInStatus.loggedOut)
+          ? state =
+              state.copyWith(loading: false, loggedIn: LoggedInStatus.loggedOut)
           : state = state.copyWith(
+              loading: false,
               loggedIn: token != null
                   ? LoggedInStatus.visitor
                   : LoggedInStatus.notInitialized);

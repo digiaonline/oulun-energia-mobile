@@ -31,7 +31,7 @@ class OEApp extends ConsumerWidget {
         SplashScreen.routeName: (context) => const SplashScreen(),
         FirstTimeView.routeName: (context) => const FirstTimeView(),
         MainView.routeName: (context) => const MainView(),
-        LoginView.routeName: (context) => const LoginView()
+        LoginView.routeName: (context) => LoginView()
       },
     );
   }
@@ -55,13 +55,16 @@ class OEApp extends ConsumerWidget {
       default:
         break;
     }
-    mainNavigatorKey.currentState
-        ?.popUntil((route) => routeName == route.settings.name);
+    print(appState.current.name);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      mainNavigatorKey.currentState
+          ?.popUntil((route) => SplashScreen.routeName == route.settings.name);
 
-    if (mainNavigatorKey.currentState?.canPop() ?? false) {
-      mainNavigatorKey.currentState?.pushReplacementNamed(routeName);
-    } else {
-      mainNavigatorKey.currentState?.pushNamed(routeName);
-    }
+      if (mainNavigatorKey.currentState?.canPop() ?? false) {
+        mainNavigatorKey.currentState?.pushReplacementNamed(routeName);
+      } else {
+        mainNavigatorKey.currentState?.pushNamed(routeName);
+      }
+    });
   }
 }
