@@ -1,9 +1,14 @@
 {
+   "electric": "Sähkö",
+   "districtHeating": "Kaukolämpö",
+   "cancel": "Peruuta",
+   "save": "Tallenna",
    "usageViewAt": "klo.",
    "usageViewDate": "Pvm.",
    "usageViewFetchingData": "Haetaan kulutustietoja",
    "usageViewSettings": "Asetukset",
    "usageViewUsageInfo": "Kulutustiedot",
+   "usageViewUsageInfoSubText": "Kulutustiedot tunti, päivä- kk- ja vuositasolla",
    "usageViewUsageNoInfo": "Kulutustietoja ei ole saatavilla",
    "usageViewUsageErrorInfo": "Kulutustietojen hakemisessa on tilapäinen häiriö",
    "usageViewMyConsumption": "Oma Energiankulutus",
@@ -15,6 +20,11 @@
    "usageViewHome": "Etusivu",
    "usageViewMyUsage": "Oma kulutus",
    "usageViewUsage": "Kulutus",
+   "usageViewUsagePlace": "Käyttöpaikka",
+   "usageViewUsageType": "Tyyppi",
+   "usageViewUsageChartInfo": "Kaavion tiedot",
+   "usageViewUsageTemperature": "Lämpötila",
+   "usageViewUsageTemperatureSubText": "Näytetään lämpötila Celcius-asteina",
    "usageViewInterruptions": "Keskeytykset",
    "usageViewContact": "Ota yhteyttä"
 }

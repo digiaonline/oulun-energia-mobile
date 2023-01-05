@@ -6,13 +6,15 @@ IconThemeData bottomNavigationIconTheme =
 
 TextTheme textTheme = const TextTheme(
   bodyText2: TextStyle(
-      fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+      fontSize: 14.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
   bodyText1: TextStyle(
-      fontSize: 16.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+      fontSize: 16.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
   headline1: TextStyle(
-      fontSize: 32.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+      fontSize: 32.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
   headline2: TextStyle(
-      fontSize: 20.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+      fontSize: 22.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
+  headline3: TextStyle(
+      fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
 );
 
 IconThemeData appBarIconTheme =
@@ -26,7 +28,6 @@ ThemeData defaultTheme = ThemeData(
       titleTextStyle: textTheme.headline2,
       iconTheme: appBarIconTheme,
       toolbarHeight: 60,
-      elevation: 2,
       shadowColor: iconColorBlue,
       backgroundColor: appBarBackgroundColor,
       foregroundColor: iconColorBlue,
@@ -35,12 +36,14 @@ ThemeData defaultTheme = ThemeData(
       systemOverlayStyle:
           const SystemUiOverlayStyle(statusBarColor: iconColorBlue)),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    elevation: 4,
+    elevation: 1,
+    unselectedLabelStyle: textTheme.labelMedium,
+    selectedLabelStyle: textTheme.labelMedium,
     selectedItemColor: iconColorBlue,
     unselectedItemColor: iconColorBlue,
     backgroundColor: Colors.white,
     selectedIconTheme: bottomNavigationIconTheme.copyWith(
-      color: Colors.black,
+      color: iconColorBlack,
     ),
     unselectedIconTheme:
         bottomNavigationIconTheme.copyWith(color: iconColorBlue),
@@ -59,6 +62,10 @@ ThemeData defaultTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
 );
 
+const Color secondaryActiveButtonColor = Color(0xFF009EB5);
+const Color dividerColor = Color(0xFFDFE2EB);
+const Color borderColor = Color(0xFF949494);
 const Color iconColorBlue = Color(0xFF002B59);
+const Color iconColorBlack = Color(0xFF002B59);
 const Color appBarIconColor = Colors.white;
 const Color appBarBackgroundColor = Colors.transparent;

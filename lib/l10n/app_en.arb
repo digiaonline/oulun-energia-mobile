@@ -1,9 +1,14 @@
 {
+   "electric": "Electric",
+   "districtHeating": "District heating",
+   "cancel": "Cancel",
+   "save": "Save",
    "usageViewAt": "at.",
    "usageViewDate": "Date",
    "usageViewFetchingData": "Fetching usage info",
    "usageViewSettings": "Settings",
    "usageViewUsageInfo": "Usage info",
+   "usageViewUsageInfoSubText": "Usage info on an hourly, daily, monthly and yearly level",
    "usageViewUsageNoInfo": "No usage info available",
    "usageViewUsageErrorInfo": "There's is a temporary error in fetching the usage info",
    "usageViewMyConsumption": "My Energy Consumption",
@@ -15,6 +20,11 @@
    "usageViewHome": "Home",
    "usageViewMyUsage": "My usage",
    "usageViewUsage": "Usage",
+   "usageViewUsagePlace": "Usage place",
+   "usageViewUsageType": "Type",
+   "usageViewUsageChartInfo": "Chart info",
+   "usageViewUsageTemperature": "Temperature",
+   "usageViewUsageTemperatureSubText": "Shows the temperature degrees in Celcius",
    "usageViewInterruptions": "Interruptions",
    "usageViewContact": "Contact us"
 }

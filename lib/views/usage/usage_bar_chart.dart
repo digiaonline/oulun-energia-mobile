@@ -60,17 +60,6 @@ class _UsageBarChartState extends State<UsageBarChart> {
 
     return Column(
       children: [
-        Container(
-          alignment: Alignment.topLeft,
-          padding: const EdgeInsets.fromLTRB(10.0, 10.0, 0.0, 15.0),
-          child: Text(
-            AppLocalizations.of(context)!.usageViewUsage,
-            style: const TextStyle(
-                color: Colors.black,
-                fontSize: 10.0,
-                fontWeight: FontWeight.bold),
-          ),
-        ),
         Expanded(
           child: Chart(
             data: widget.usages

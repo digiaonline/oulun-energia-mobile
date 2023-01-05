@@ -6,16 +6,16 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/usage_info_provider.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
 
-class UsageDataView extends ConsumerStatefulWidget {
+class UsageInfoView extends ConsumerStatefulWidget {
   static const String routeName = 'usage_info_view';
 
-  const UsageDataView({Key? key}) : super(key: key);
+  const UsageInfoView({Key? key}) : super(key: key);
 
   @override
-  UsageDataViewState createState() => UsageDataViewState();
+  UsageInfoViewState createState() => UsageInfoViewState();
 }
 
-class UsageDataViewState extends ConsumerState<UsageDataView>
+class UsageInfoViewState extends ConsumerState<UsageInfoView>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
