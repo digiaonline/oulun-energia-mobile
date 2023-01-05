@@ -7,7 +7,7 @@ import 'package:oulun_energia_mobile/flavors.dart';
 
 final loginProvider = StateNotifierProvider<UserAuthNotifier, UserAuthState>(
     (ref) => UserAuthNotifier(UserAuthState(
-        loading: false, loggedIn: LoggedInStatus.notInitialized)));
+        loading: false, loggedInStatus: LoggedInStatus.notInitialized)));
 
 class UserAuthNotifier extends StateNotifier<UserAuthState> {
   late final Authentication auth;
@@ -56,16 +56,21 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
 
 class UserAuthState {
   final bool loading;
-  final LoggedInStatus loggedIn;
+  final LoggedInStatus loggedInStatus;
   final UserAuth? userAuth;
 
-  UserAuthState({required this.loading, required this.loggedIn, this.userAuth});
+  UserAuthState(
+      {required this.loading, required this.loggedInStatus, this.userAuth});
 
   UserAuthState copyWith(
       {bool? loading, LoggedInStatus? loggedIn, UserAuth? userAuth}) {
     return UserAuthState(
         loading: loading ?? this.loading,
-        loggedIn: loggedIn ?? this.loggedIn,
+        loggedInStatus: loggedIn ?? loggedInStatus,
         userAuth: userAuth ?? this.userAuth);
+  }
+
+  bool loggedIn() {
+    return loggedInStatus == LoggedInStatus.loggedIn;
   }
 }

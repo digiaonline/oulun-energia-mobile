@@ -7,7 +7,7 @@ final appStateProvider =
     StateNotifierProvider<AppStateNotifier, AppState>((ref) {
   var loginState = ref.watch(loginProvider);
   var initialState = AppStates.notInitialized;
-  switch (loginState.loggedIn) {
+  switch (loginState.loggedInStatus) {
     case LoggedInStatus.loggedOut:
       initialState = AppStates.loginView;
       break;

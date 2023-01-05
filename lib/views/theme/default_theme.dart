@@ -6,7 +6,7 @@ IconThemeData bottomNavigationIconTheme =
 
 TextTheme textTheme = const TextTheme(
   bodyText2: TextStyle(
-      fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+      fontSize: 14.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
   bodyText1: TextStyle(
       fontSize: 16.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
   headline1: TextStyle(
@@ -60,5 +60,6 @@ ThemeData defaultTheme = ThemeData(
 );
 
 const Color iconColorBlue = Color(0xFF002B59);
+const Color iconColorBlueLight = Color(0xFF0F5EA6);
 const Color appBarIconColor = Colors.white;
 const Color appBarBackgroundColor = Colors.transparent;

@@ -19,8 +19,8 @@ class LoginView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var userAuth = ref.watch(loginProvider);
-    if (userAuth.loggedIn == LoggedInStatus.loggedIn ||
-        userAuth.loggedIn == LoggedInStatus.failed) {
+    if (userAuth.loggedInStatus == LoggedInStatus.loggedIn ||
+        userAuth.loggedInStatus == LoggedInStatus.failed) {
       _onLogin(context, ref, userAuth.userAuth);
     }
     return Scaffold(
