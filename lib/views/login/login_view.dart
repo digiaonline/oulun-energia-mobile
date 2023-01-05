@@ -6,63 +6,149 @@ import 'package:oulun_energia_mobile/providers/app_state.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
+import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 import '../utils/snackbar.dart';
 
-class LoginView extends ConsumerWidget {
+class LoginView extends ConsumerStatefulWidget {
   static const String routeName = "login_view";
-  var usernameController = TextEditingController(text: "mira.juola@icloud.com");
 
-  var passwordController = TextEditingController(text: "Vaihda123456");
+  const LoginView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return LoginViewState();
+  }
+}
+
+class LoginViewState extends ConsumerState<ConsumerStatefulWidget> {
+  var usernameController = TextEditingController(text: "mira.juola@icloud.com");
+  var passwordController = TextEditingController(text: "Vaihda123456");
+  bool _acceptedTerms = false;
+
+  @override
+  Widget build(BuildContext context) {
     var userAuth = ref.watch(loginProvider);
     if (userAuth.loggedInStatus == LoggedInStatus.loggedIn ||
         userAuth.loggedInStatus == LoggedInStatus.failed) {
       _onLogin(context, ref, userAuth.userAuth);
     }
+    var theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            title: Text(
-              "Login",
-              style: defaultTheme.textTheme.bodyText1,
-            ),
-          ),
+          buildMainAppBar(context,
+              leading: null, foregroundColor: Colors.white),
           SliverFillRemaining(
             child: Container(
               margin: Sizes.marginViewBorder,
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Username:",
-                      style: defaultTheme.textTheme.bodyText1,
+                      "Kirjaudu palveluun",
+                      style: theme.textTheme.headline2?.copyWith(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700),
                     ),
-                    TextField(
-                      maxLines: 1,
-                      controller: usernameController,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          "Username:",
+                          style: defaultTheme.textTheme.bodyText1
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        TextField(
+                          decoration: const InputDecoration(
+                              hintText: "Type user name here"),
+                          maxLines: 1,
+                          controller: usernameController,
+                        ),
+                        const SizedBox(
+                          height: Sizes.marginViewBorderSize,
+                        ),
+                        Text(
+                          "Password:",
+                          style: defaultTheme.textTheme.bodyText1
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        TextField(
+                          decoration: const InputDecoration(
+                              hintText: "Type password here"),
+                          maxLines: 1,
+                          keyboardType: TextInputType.visiblePassword,
+                          controller: passwordController,
+                        ),
+                        const SizedBox(
+                          height: Sizes.marginViewBorderSize,
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
+                                value: _acceptedTerms,
+                                onChanged: (checked) => setState(() {
+                                      _acceptedTerms = checked!;
+                                    })),
+                            Flexible(
+                                child: Text(
+                              "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
+                              style: defaultTheme.textTheme.bodyText2
+                                  ?.copyWith(color: Colors.white),
+                            )),
+                          ],
+                        ),
+                        TextButton(
+                          onPressed: () => _doLogin(ref,
+                              usernameController.text, passwordController.text),
+                          child: Text(
+                            "Login",
+                            style: defaultTheme.textTheme.bodyText1
+                                ?.copyWith(color: Colors.white),
+                          ),
+                        ).toButton()
+                      ],
                     ),
-                    Text(
-                      "Password:",
-                      style: defaultTheme.textTheme.bodyText1,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          "Tai tunnistaudu",
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyText2
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: Sizes.marginViewBorderSize,
+                        ),
+                        TextButton(
+                          onPressed: null,
+                          child: Text(
+                            "Pankkitunnuksella",
+                            style: theme.textTheme.bodyText2
+                                ?.copyWith(color: Colors.cyan),
+                          ),
+                        ).toButton(secondary: true),
+                      ],
                     ),
-                    TextField(
-                      maxLines: 1,
-                      controller: passwordController,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text("Unohtuiko",
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.bodyText2
+                                ?.copyWith(color: Colors.white)),
+                        Text(
+                          "Eikö ole tunnusta",
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodyText2
+                              ?.copyWith(color: Colors.white),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      onPressed: () => _doLogin(ref, usernameController.text,
-                          passwordController.text),
-                      child: Text(
-                        "Login",
-                        style: defaultTheme.textTheme.bodyText1,
-                      ),
-                    ).toButton()
                   ]),
             ),
           ),

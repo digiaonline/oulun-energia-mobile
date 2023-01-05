@@ -57,6 +57,35 @@ ThemeData defaultTheme = ThemeData(
   textTheme: textTheme,
   iconTheme: const IconThemeData(color: Colors.white, size: 40),
   colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
+  inputDecorationTheme: InputDecorationTheme(
+      hintStyle: textTheme.bodyText1?.copyWith(color: iconColorBlue),
+      labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.white,
+      filled: true,
+      floatingLabelAlignment: FloatingLabelAlignment.start,
+      focusedBorder:
+          const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      border: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white))),
+  checkboxTheme: CheckboxThemeData(
+    checkColor: MaterialStateProperty.resolveWith<Color>(
+      (states) {
+        return Colors.white;
+      },
+    ),
+    fillColor: MaterialStateProperty.resolveWith<Color>(
+      (states) {
+        return Colors.transparent;
+      },
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(2.0),
+    ),
+    side: MaterialStateBorderSide.resolveWith(
+      (states) => const BorderSide(width: 1.0, color: Colors.white),
+    ),
+  ),
 );
 
 const Color iconColorBlue = Color(0xFF002B59);
