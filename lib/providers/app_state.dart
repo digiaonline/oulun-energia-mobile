@@ -4,7 +4,7 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 
 final appStateProvider =
-StateNotifierProvider<AppStateNotifier, AppState>((ref) {
+    StateNotifierProvider<AppStateNotifier, AppState>((ref) {
   var loginState = ref.watch(loginProvider);
   var initialState = AppStates.notInitialized;
   switch (loginState.loggedIn) {
@@ -29,14 +29,6 @@ class AppStateNotifier extends StateNotifier<AppState> {
   AppStateNotifier(super.state);
 
   void initialize() {}
-
-  @override
-  set state(AppState value) {
-    if (mounted) {
-      print("${value.current.name}");
-      super.state = value;
-    }
-  }
 
   /// This method is used when user skips ftu & login
   void toMainView() {
