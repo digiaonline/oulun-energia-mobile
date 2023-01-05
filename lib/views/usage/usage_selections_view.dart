@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/views/usage/selection_button.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 
 class UsageSelectionsView extends StatelessWidget {
-  static String routeName = 'usage_selections_view';
-  final Function(MyUsageViews) onChangePage;
+  static const String routeName = 'usage_selections_view';
 
-  const UsageSelectionsView({Key? key, required this.onChangePage})
-      : super(key: key);
+  const UsageSelectionsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +41,15 @@ class UsageSelectionsView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 SelectionButton(
-                  onChangePage: () => onChangePage(MyUsageViews.info),
+                  onChangePage: () =>
+                      Navigator.of(context).pushNamed(UsageDataView.routeName),
                   text: AppLocalizations.of(context)!.usageViewUsageInfo,
                   widget: SvgPicture.asset('assets/icons/monitoring.svg',
                       width: 28.0, height: 28.0),
                 ),
                 SelectionButton(
-                  onChangePage: () => onChangePage(MyUsageViews.settings),
+                  onChangePage: () => Navigator.of(context)
+                      .pushNamed(UsageSettingsView.routeName),
                   text: AppLocalizations.of(context)!.usageViewSettings,
                   widget: const Icon(
                     Icons.settings_outlined,

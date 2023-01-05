@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
-import 'package:oulun_energia_mobile/views/usage/usage_view.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
@@ -21,11 +24,13 @@ class MainView extends StatefulWidget {
 
 class MainViewState extends State<MainView> {
   int _selectedIndex = 0;
+  int _appBarIndex = 0;
   bool _bottomBarExpanded = false;
   final homeViewNavigatorKey = GlobalKey<NavigatorState>();
+  final usageViewNavigatorKey = GlobalKey<NavigatorState>();
 
   final ExpandableController bottomNavigationBarController =
-      ExpandableController();
+  ExpandableController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,22 +38,81 @@ class MainViewState extends State<MainView> {
     var locals = AppLocalizations.of(context)!;
     bottomNavigationBarController.expanded = _bottomBarExpanded;
 
+    var appBars = [
+      buildMainAppBar(context,
+          backgroundColor: _selectedIndex != 0 ? Colors.white : null,
+          foregroundColor: _selectedIndex != 0 ? iconColorBlue : Colors.white,
+          iconThemeData: _selectedIndex != 0 ? appBarIconThemeSecondary : null,
+          forceElevated: _selectedIndex != 0 ? true : null,
+          leading: InkWell(
+            onTap: () => Navigator.of(context).pushNamed(LoginView.routeName),
+            child: const Icon(Icons.menu),
+          )),
+      buildMainAppBar(
+        context,
+        title: "",
+        actions: [const Icon(Icons.help)],
+        backgroundColor: Colors.white,
+        foregroundColor: iconColorBlue,
+        iconThemeData: appBarIconThemeSecondary,
+        forceElevated: true,
+        leading: InkWell(
+          onTap: () {
+            usageViewNavigatorKey.currentState?.pop();
+            setState(() {
+              _appBarIndex = 0;
+            });
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+        toolbarHeight: 80,
+        flexibleSpace: FlexibleSpaceBar(
+          titlePadding: EdgeInsets.all(10),
+          title: Text(
+            locals.usageViewSettings,
+            style: textTheme.headline2?.copyWith(color: Colors.black),
+          ),
+        ),
+      ),
+      buildMainAppBar(
+        context,
+        title: "",
+        actions: [const Icon(Icons.help)],
+        backgroundColor: Colors.white,
+        foregroundColor: iconColorBlue,
+        iconThemeData: appBarIconThemeSecondary,
+        forceElevated: true,
+        leading: InkWell(
+          onTap: () {
+            usageViewNavigatorKey.currentState?.pop();
+            setState(() {
+              _appBarIndex = 0;
+            });
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
+        toolbarHeight: 80,
+        flexibleSpace: FlexibleSpaceBar(
+          titlePadding: EdgeInsets.all(10),
+          title: Text(
+            locals.usageViewUsageInfo,
+            style: textTheme.headline2?.copyWith(color: Colors.black),
+          ),
+        ),
+      ),
+    ];
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          buildMainAppBar(context,
-              backgroundColor: _selectedIndex != 0 ? Colors.white : null,
-              foregroundColor:
-                  _selectedIndex != 0 ? iconColorBlue : Colors.white,
-              iconThemeData:
-                  _selectedIndex != 0 ? appBarIconThemeSecondary : null,
-              forceElevated: _selectedIndex != 0 ? true : null),
+          appBars[_appBarIndex],
           SliverFillRemaining(
             child: Navigator(
               key: homeViewNavigatorKey,
               initialRoute: HomeView.routeName,
               onGenerateRoute: (settings) {
                 late Widget view;
+                _appBarIndex = 0;
                 switch (settings.name) {
                   case HomeView.routeName:
                     view = HomeView(
@@ -66,8 +130,44 @@ class MainViewState extends State<MainView> {
                       ],
                     );
                     break;
-                  case UsageView.routeName:
-                    view = Container(color: Colors.white, child: UsageView());
+                  case UsageSelectionsView.routeName:
+                    view = Container(
+                      color: Colors.white,
+                      child: Navigator(
+                          key: usageViewNavigatorKey,
+                          initialRoute: UsageSelectionsView.routeName,
+                          onGenerateRoute: (settings) {
+                            late Widget view;
+                            switch (settings.name) {
+                              case UsageSettingsView.routeName:
+                                _appBarIndex = 1;
+                                view = const UsageSettingsView();
+                                break;
+                              case UsageDataView.routeName:
+                                _appBarIndex = 2;
+                                view = const UsageDataView();
+                                break;
+                              default:
+                                _appBarIndex = 0;
+                                view = const UsageSelectionsView();
+                            }
+
+                            WidgetsBinding.instance.addPostFrameCallback((
+                                timeStamp) {
+                              setState(() {
+                                _appBarIndex = _appBarIndex;
+                              });
+                            });
+
+                            return MaterialPageRoute(
+                                settings: settings,
+                                builder: (context) =>
+                                    Container(
+                                      color: Colors.white,
+                                      child: view,
+                                    ));
+                          }),
+                    );
                     break;
                 }
 
@@ -133,10 +233,8 @@ class MainViewState extends State<MainView> {
     ).withBackground();
   }
 
-  Widget _buildHomeViewButton(
-    String title,
-    String iconAsset,
-  ) {
+  Widget _buildHomeViewButton(String title,
+      String iconAsset,) {
     return SizedBox(
       width: 100,
       child: TextButton(
@@ -167,7 +265,7 @@ class MainViewState extends State<MainView> {
         break;
       case 1:
         homeViewNavigatorKey.currentState
-            ?.pushReplacementNamed(UsageView.routeName);
+            ?.pushReplacementNamed(UsageSelectionsView.routeName);
         break;
       default:
         return; // no known route
@@ -188,7 +286,9 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var textTheme = Theme.of(context).textTheme;
+    var textTheme = Theme
+        .of(context)
+        .textTheme;
     return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
       Column(
         children: [
