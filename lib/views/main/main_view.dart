@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
+import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
@@ -24,13 +25,14 @@ class MainView extends StatefulWidget {
 
 class MainViewState extends State<MainView> {
   int _selectedIndex = 0;
-  int _appBarIndex = 0;
+  bool _secondaryAppBar = false;
+  String? _appBarTitle;
   bool _bottomBarExpanded = false;
   final homeViewNavigatorKey = GlobalKey<NavigatorState>();
   final usageViewNavigatorKey = GlobalKey<NavigatorState>();
 
   final ExpandableController bottomNavigationBarController =
-  ExpandableController();
+      ExpandableController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,81 +40,80 @@ class MainViewState extends State<MainView> {
     var locals = AppLocalizations.of(context)!;
     bottomNavigationBarController.expanded = _bottomBarExpanded;
 
-    var appBars = [
-      buildMainAppBar(context,
-          backgroundColor: _selectedIndex != 0 ? Colors.white : null,
-          foregroundColor: _selectedIndex != 0 ? iconColorBlue : Colors.white,
-          iconThemeData: _selectedIndex != 0 ? appBarIconThemeSecondary : null,
-          forceElevated: _selectedIndex != 0 ? true : null,
-          leading: InkWell(
-            onTap: () => Navigator.of(context).pushNamed(LoginView.routeName),
-            child: const Icon(Icons.menu),
-          )),
-      buildMainAppBar(
-        context,
-        title: "",
-        actions: [const Icon(Icons.help)],
-        backgroundColor: Colors.white,
-        foregroundColor: iconColorBlue,
-        iconThemeData: appBarIconThemeSecondary,
-        forceElevated: true,
-        leading: InkWell(
-          onTap: () {
-            usageViewNavigatorKey.currentState?.pop();
-            setState(() {
-              _appBarIndex = 0;
-            });
-          },
-          child: const Icon(Icons.arrow_back),
-        ),
-        toolbarHeight: 80,
-        flexibleSpace: FlexibleSpaceBar(
-          titlePadding: EdgeInsets.all(10),
-          title: Text(
-            locals.usageViewSettings,
-            style: textTheme.headline2?.copyWith(color: Colors.black),
-          ),
-        ),
-      ),
-      buildMainAppBar(
-        context,
-        title: "",
-        actions: [const Icon(Icons.help)],
-        backgroundColor: Colors.white,
-        foregroundColor: iconColorBlue,
-        iconThemeData: appBarIconThemeSecondary,
-        forceElevated: true,
-        leading: InkWell(
-          onTap: () {
-            usageViewNavigatorKey.currentState?.pop();
-            setState(() {
-              _appBarIndex = 0;
-            });
-          },
-          child: const Icon(Icons.arrow_back),
-        ),
-        toolbarHeight: 80,
-        flexibleSpace: FlexibleSpaceBar(
-          titlePadding: EdgeInsets.all(10),
-          title: Text(
-            locals.usageViewUsageInfo,
-            style: textTheme.headline2?.copyWith(color: Colors.black),
-          ),
-        ),
-      ),
-    ];
+    var appBar = buildMainAppBar(
+      context,
+      backgroundColor: _selectedIndex != 0 ? Colors.white : null,
+      foregroundColor: _selectedIndex != 0 ? iconColorBlue : Colors.white,
+      iconThemeData: _selectedIndex != 0 ? appBarIconThemeSecondary : null,
+      forceElevated: _selectedIndex != 0 ? true : null,
+      toolbarHeight: !_secondaryAppBar ? theme.appBarTheme.toolbarHeight : 100,
+      actions: _secondaryAppBar
+          ? null
+          : const [
+              Padding(
+                padding: EdgeInsets.only(
+                  right: 20.0,
+                ),
+                child: Icon(
+                  Icons.face,
+                  size: 28.5,
+                ),
+              )
+            ],
+      leading: !_secondaryAppBar
+          ? InkWell(
+              onTap: () => Navigator.of(context).pushNamed(LoginView.routeName),
+              child: const Icon(Icons.menu),
+            )
+          : null,
+      titleWidget: _secondaryAppBar
+          ? Container(
+              margin: const EdgeInsets.symmetric(
+                  vertical: Sizes.marginViewBorderSize),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            usageViewNavigatorKey.currentState?.pop();
+                            setState(() {
+                              _secondaryAppBar = false;
+                            });
+                          },
+                          child: const Icon(Icons.arrow_back),
+                        ),
+                        const SizedBox(
+                          height: Sizes.marginViewBorderSize,
+                        ),
+                        Text(
+                          _appBarTitle!,
+                          style: textTheme.headline2
+                              ?.copyWith(color: Colors.black),
+                        ),
+                      ]),
+                  const Icon(Icons.help),
+                ],
+              ),
+            )
+          : null,
+    );
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          appBars[_appBarIndex],
+          appBar,
           SliverFillRemaining(
             child: Navigator(
               key: homeViewNavigatorKey,
               initialRoute: HomeView.routeName,
               onGenerateRoute: (settings) {
                 late Widget view;
-                _appBarIndex = 0;
+                _secondaryAppBar = false;
                 switch (settings.name) {
                   case HomeView.routeName:
                     view = HomeView(
@@ -140,29 +141,31 @@ class MainViewState extends State<MainView> {
                             late Widget view;
                             switch (settings.name) {
                               case UsageSettingsView.routeName:
-                                _appBarIndex = 1;
+                                _appBarTitle = locals.usageViewSettings;
+                                _secondaryAppBar = true;
                                 view = const UsageSettingsView();
                                 break;
                               case UsageDataView.routeName:
-                                _appBarIndex = 2;
+                                _appBarTitle = locals.usageViewUsageInfo;
+                                _secondaryAppBar = true;
                                 view = const UsageDataView();
                                 break;
                               default:
-                                _appBarIndex = 0;
+                                _secondaryAppBar = false;
                                 view = const UsageSelectionsView();
                             }
 
-                            WidgetsBinding.instance.addPostFrameCallback((
-                                timeStamp) {
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((timeStamp) {
                               setState(() {
-                                _appBarIndex = _appBarIndex;
+                                _appBarTitle = _appBarTitle;
+                                _secondaryAppBar = _secondaryAppBar;
                               });
                             });
 
                             return MaterialPageRoute(
                                 settings: settings,
-                                builder: (context) =>
-                                    Container(
+                                builder: (context) => Container(
                                       color: Colors.white,
                                       child: view,
                                     ));
@@ -233,8 +236,10 @@ class MainViewState extends State<MainView> {
     ).withBackground();
   }
 
-  Widget _buildHomeViewButton(String title,
-      String iconAsset,) {
+  Widget _buildHomeViewButton(
+    String title,
+    String iconAsset,
+  ) {
     return SizedBox(
       width: 100,
       child: TextButton(
@@ -286,9 +291,7 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var textTheme = Theme
-        .of(context)
-        .textTheme;
+    var textTheme = Theme.of(context).textTheme;
     return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
       Column(
         children: [
