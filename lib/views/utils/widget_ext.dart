@@ -18,11 +18,12 @@ extension WidgetExt on Widget {
         child: this);
   }
 
-  Widget toButton() {
+  Widget toButton({bool? secondary}) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
+        border: secondary != null ? Border.all(color: Colors.cyan) : null,
         shape: BoxShape.rectangle,
-        color: Colors.cyan,
+        color: secondary != null ? Colors.transparent : Colors.cyan,
       ),
       child: this,
     );
@@ -30,11 +31,13 @@ extension WidgetExt on Widget {
 
   Widget toBottomBarIcon({bool? selected}) {
     return Container(
-        padding: EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 4, bottom: 4),
         decoration: BoxDecoration(
-            color: selected ?? false ? Color(0xFFF1F0F4) : Colors.transparent,
+            color: selected ?? false
+                ? const Color(0xFFF1F0F4)
+                : Colors.transparent,
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(Radius.circular(20))),
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
         child: this);
   }
 }

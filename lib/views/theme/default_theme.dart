@@ -28,6 +28,7 @@ ThemeData defaultTheme = ThemeData(
       titleTextStyle: textTheme.headline2,
       iconTheme: appBarIconTheme,
       toolbarHeight: 60,
+      elevation: 1,
       shadowColor: iconColorBlue,
       backgroundColor: appBarBackgroundColor,
       foregroundColor: iconColorBlue,
@@ -60,6 +61,35 @@ ThemeData defaultTheme = ThemeData(
   textTheme: textTheme,
   iconTheme: const IconThemeData(color: Colors.white, size: 40),
   colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
+  inputDecorationTheme: InputDecorationTheme(
+      hintStyle: textTheme.bodyText1?.copyWith(color: iconColorBlue),
+      labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.white,
+      filled: true,
+      floatingLabelAlignment: FloatingLabelAlignment.start,
+      focusedBorder:
+          const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      border: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white))),
+  checkboxTheme: CheckboxThemeData(
+    checkColor: MaterialStateProperty.resolveWith<Color>(
+      (states) {
+        return Colors.white;
+      },
+    ),
+    fillColor: MaterialStateProperty.resolveWith<Color>(
+      (states) {
+        return Colors.transparent;
+      },
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(2.0),
+    ),
+    side: MaterialStateBorderSide.resolveWith(
+      (states) => const BorderSide(width: 1.0, color: Colors.white),
+    ),
+  ),
 );
 
 const Color secondaryActiveButtonColor = Color(0xFF009EB5);
@@ -67,5 +97,6 @@ const Color dividerColor = Color(0xFFDFE2EB);
 const Color borderColor = Color(0xFF949494);
 const Color iconColorBlue = Color(0xFF002B59);
 const Color iconColorBlack = Color(0xFF002B59);
+const Color iconColorBlueLight = Color(0xFF0F5EA6);
 const Color appBarIconColor = Colors.white;
 const Color appBarBackgroundColor = Colors.transparent;

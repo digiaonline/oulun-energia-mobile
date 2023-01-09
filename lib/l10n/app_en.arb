@@ -26,5 +26,11 @@
    "usageViewUsageTemperature": "Temperature",
    "usageViewUsageTemperatureSubText": "Shows the temperature degrees in Celcius",
    "usageViewInterruptions": "Interruptions",
-   "usageViewContact": "Contact us"
+   "usageViewContact": "Contact us",
+   "homeViewUsageInfo": "My Consumption",
+   "homeViewInterruptions": "Interruption reports",
+   "homeViewContact": "Take contact",
+   "homeViewFishHunt": "Kalatie",
+   "homeViewErrorReporting": "Error reporting",
+   "homeViewHelp": "Instructions"
 }

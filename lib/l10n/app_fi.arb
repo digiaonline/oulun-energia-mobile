@@ -26,5 +26,11 @@
    "usageViewUsageTemperature": "Lämpötila",
    "usageViewUsageTemperatureSubText": "Näytetään lämpötila Celcius-asteina",
    "usageViewInterruptions": "Keskeytykset",
-   "usageViewContact": "Ota yhteyttä"
+   "usageViewContact": "Ota yhteyttä",
+   "homeViewUsageInfo": "Omat Kulutustiedot",
+   "homeViewInterruptions": "Keskeytys- tiedotteet",
+   "homeViewContact": "Ota yhteyttä",
+   "homeViewFishHunt": "Kalatie",
+   "homeViewErrorReporting": "Vikapäivystys",
+   "homeViewHelp": "Ohjeet"
 }
