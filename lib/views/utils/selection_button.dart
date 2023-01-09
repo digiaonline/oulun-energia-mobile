@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 
 class SelectionButton extends StatelessWidget {
   final String text;
@@ -28,7 +29,7 @@ class SelectionButton extends StatelessWidget {
           color: Colors.black,
           size: 19.0,
         ),
-        title: Text(text),
+        title: Text(text, style: textTheme.bodyText2),
       ),
     );
   }

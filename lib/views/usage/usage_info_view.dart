@@ -4,18 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oulun_energia_mobile/core/domain/usage.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/usage_info_provider.dart';
+import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
 
-class UsageDataView extends ConsumerStatefulWidget {
+class UsageInfoView extends ConsumerStatefulWidget {
   static const String routeName = 'usage_info_view';
 
-  const UsageDataView({Key? key}) : super(key: key);
+  const UsageInfoView({Key? key}) : super(key: key);
 
   @override
-  UsageDataViewState createState() => UsageDataViewState();
+  UsageInfoViewState createState() => UsageInfoViewState();
 }
 
-class UsageDataViewState extends ConsumerState<UsageDataView>
+class UsageInfoViewState extends ConsumerState<UsageInfoView>
     with TickerProviderStateMixin {
   late TabController _tabController;
 
@@ -51,7 +52,8 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
           children: [
             const SizedBox(height: 20.0),
             Center(
-              child: Text(ref.watch(usageInfoProvider).getTotalUsage()),
+              child: Text(ref.watch(usageInfoProvider).getTotalUsage(),
+                  style: textTheme.bodyText1),
             ),
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -69,8 +71,7 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
                   fit: BoxFit.fitWidth,
                   child: Text(
                     ref.watch(usageInfoProvider).getDateString(context),
-                    style: const TextStyle(
-                        fontSize: 30.0, fontWeight: FontWeight.w300),
+                    style: textTheme.headline1,
                   ),
                 ),
               ),
@@ -88,7 +89,7 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
                     : Center(
                         child: Text(
                           AppLocalizations.of(context)!.usageViewUsageNoInfo,
-                          style: const TextStyle(fontSize: 24.0),
+                          style: textTheme.headline2,
                         ),
                       ),
               ),
@@ -102,24 +103,20 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
                   Container(
                     decoration: const BoxDecoration(
                         border: Border(
-                      bottom: BorderSide(color: Color(0xFFE0E0E0), width: 5.0),
+                      bottom: BorderSide(color: tabBorderColor, width: 5.0),
                     )),
                   ),
                   TabBar(
                     controller: _tabController,
-                    labelStyle: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.0,
-                    ),
+                    labelStyle: kFontSize12W400,
                     indicator: const UnderlineTabIndicator(
                       borderSide: BorderSide(
                         width: 5.0,
-                        color: Color(0xFF009EB5),
+                        color: secondaryActiveButtonColor,
                       ),
                     ),
                     unselectedLabelColor: Colors.black,
-                    labelColor: const Color(0xFF009EB5),
+                    labelColor: secondaryActiveButtonColor,
                     tabs: <Widget>[
                       FittedBox(
                         fit: BoxFit.fitWidth,
@@ -160,7 +157,7 @@ class UsageDataViewState extends ConsumerState<UsageDataView>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(AppLocalizations.of(context)!.usageViewUsageErrorInfo,
-                style: const TextStyle(fontSize: 24)),
+                style: textTheme.headline2),
           ),
         ],
       ),

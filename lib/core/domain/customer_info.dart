@@ -1,4 +1,5 @@
 import 'package:oulun_energia_mobile/core/domain/usage_place.dart';
+import 'package:oulun_energia_mobile/core/enums.dart';
 
 class CustomerInfo {
   final String? companyName;
@@ -25,6 +26,24 @@ class CustomerInfo {
       this.postcode,
       this.postPlace,
       this.street});
+
+  Map<UsageType, List<UsagePlace>> getUsagePlacesByUsageType() {
+    Map<UsageType, List<UsagePlace>> placesByType = {};
+    List<UsageType> usageTypes =
+        UsageType.values.where((type) => type != UsageType.missing).toList();
+
+    for (UsageType usageType in usageTypes) {
+      List<UsagePlace> filteredPlaces = usagePlaces
+          .where((usagePlace) => usagePlace.type == usageType)
+          .toList();
+
+      if (filteredPlaces.isNotEmpty) {
+        placesByType[usageType] = filteredPlaces;
+      }
+    }
+
+    return placesByType;
+  }
 
   static CustomerInfo fromJson(Map<String, dynamic> json) {
     List<String> customerCodes = [];
