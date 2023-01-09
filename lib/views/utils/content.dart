@@ -21,18 +21,18 @@ class Content extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          if (image != null) image!,
+          // TODO Show the image here if assigned
+          //  Container is a placeholder for the image for now
+          Container(
+            color: Colors.grey,
+            width: double.infinity,
+            height: 235.0,
+          ),
           Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
               child: Column(
                 children: [
-                  if (image != null) image!,
-                  // TODO Show the image here if assigned
-                  //  Container is a placeholder for the image for now
-                  Container(
-                    color: Colors.grey,
-                    width: double.infinity,
-                    height: 235.0,
-                  ),
                   const SizedBox(height: 20),
                   FittedBox(
                     fit: BoxFit.fitWidth,

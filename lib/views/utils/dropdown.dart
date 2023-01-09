@@ -28,21 +28,22 @@ class Dropdown extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
         ),
-        DropdownButtonFormField<dynamic>(
-          isExpanded: true,
-          value: selectedValue,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(
-                borderRadius: BorderRadius.zero,
-                borderSide: BorderSide(color: borderColor, width: 1)),
-            enabled: false,
-            contentPadding: const EdgeInsets.only(left: 15.0),
-            labelStyle: textTheme.bodyText2,
-          ),
-          icon: const Icon(Icons.expand_more, color: iconColorBlack),
-          items: items,
-          onChanged: (value) => onChanged,
-        ),
+        ButtonTheme(
+            alignedDropdown: true,
+            child: DropdownButtonFormField<dynamic>(
+              value: selectedValue,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: borderColor, width: 1)),
+                enabled: true,
+                contentPadding: const EdgeInsets.only(top: 0.0),
+                labelStyle: textTheme.bodyText2,
+              ),
+              icon: const Icon(Icons.expand_more, color: iconColorBlack),
+              items: items,
+              onChanged: (value) => onChanged,
+            )),
       ],
     );
   }

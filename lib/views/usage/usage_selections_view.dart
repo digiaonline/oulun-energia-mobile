@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oulun_energia_mobile/views/usage/selection_button.dart';
+import 'package:oulun_energia_mobile/views/utils/selection_button.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/utils/content.dart';

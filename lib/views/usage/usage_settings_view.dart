@@ -6,6 +6,7 @@ import 'package:oulun_energia_mobile/core/domain/usage_place.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
+import 'package:oulun_energia_mobile/views/utils/submit_button.dart';
 import 'package:oulun_energia_mobile/views/utils/dropdown.dart';
 
 class UsageSettingsView extends ConsumerStatefulWidget {
@@ -24,14 +25,14 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
   bool _useCelsius = true;
 
   _onSave() {
-    // TODO Save locally or via API
-    print(
-        'type: ${_selectedUsageType.name} place: ${_selectedUsagePlace.street}, ${_selectedUsagePlace.postPlace} ${_selectedUsagePlace.postCode} celsius: $_useCelsius');
+    // TODO Save locally and/or via API
+    // type: ${_selectedUsageType.name}
+    // address: ${_selectedUsagePlace.street}, ${_selectedUsagePlace.postPlace} ${_selectedUsagePlace.postCode}
+    // useCelsius: ${_useCelsius}
   }
 
   _onCancel(BuildContext context) {
-    // TODO how to handle navigator key etc pop?
-    // Pass as props?
+    Navigator.of(context).pop();
   }
 
   _onSetSelectedUsageType(dynamic usageType) {
@@ -79,7 +80,7 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
         .customerInfo
         .getUsagePlacesByUsageType();
 
-    // TODO load default user settings
+    // TODO load default user settings from somewhere (:D)
 
     UsageType usageType = _usagePlaces.keys.toList()[0];
     _selectedUsageType = usageType;
@@ -126,91 +127,65 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
                 textAlign: TextAlign.left,
               ),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: dividerColor),
-                ),
-              ),
-              child: ListTile(
-                title:
-                    Text(locals.usageViewUsageInfo, style: textTheme.bodyText1),
-                subtitle: FittedBox(
-                  child: Text(locals.usageViewUsageInfoSubText,
-                      style:
-                          textTheme.bodyText2?.copyWith(color: Colors.black)),
-                ),
-              ),
+            InfoTile(
+              title: locals.usageViewUsageInfo,
+              subtitle: locals.usageViewUsageInfoSubText,
             ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: dividerColor),
-                ),
-              ),
-              child: ListTile(
-                title: Text(locals.usageViewUsageTemperature,
-                    style: textTheme.bodyText1),
-                subtitle: FittedBox(
-                  child: Text(locals.usageViewUsageTemperatureSubText,
-                      style:
-                          textTheme.bodyText2?.copyWith(color: Colors.black)),
-                ),
-                trailing: CupertinoSwitch(
-                  value: _useCelsius,
-                  onChanged: (useCelsius) => setState(() {
-                    _useCelsius = useCelsius;
-                  }),
-                  activeColor: secondaryActiveButtonColor,
-                ),
+            InfoTile(
+              title: locals.usageViewUsageTemperature,
+              subtitle: locals.usageViewUsageTemperatureSubText,
+              trailing: CupertinoSwitch(
+                value: _useCelsius,
+                onChanged: (useCelsius) => setState(() {
+                  _useCelsius = useCelsius;
+                }),
+                activeColor: secondaryActiveButtonColor,
               ),
             ),
             const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 100.0,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        foregroundColor: secondaryActiveButtonColor,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero),
-                        side: const BorderSide(
-                          color: secondaryActiveButtonColor,
-                        )),
-                    onPressed: () => _onCancel,
-                    child: Text(
-                      locals.cancel,
-                      style: textTheme.headline3,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                SizedBox(
-                  width: 100.0,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: secondaryActiveButtonColor,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero),
-                        side: const BorderSide(
-                          color: secondaryActiveButtonColor,
-                        )),
+                SubmitButton(
+                    text: locals.cancel, onPressed: () => _onCancel(context)),
+                const SizedBox(width: 10.0),
+                SubmitButton(
+                    text: locals.save,
                     onPressed: () => _onSave(),
-                    child: Text(
-                      locals.save,
-                      style: textTheme.headline3,
-                    ),
-                  ),
-                ),
+                    invertColors: true),
               ],
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class InfoTile extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final Widget? trailing;
+
+  const InfoTile(
+      {Key? key, required this.title, required this.subtitle, this.trailing})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: dividerColor),
+        ),
+      ),
+      child: ListTile(
+        title: Text(title, style: textTheme.bodyText1),
+        subtitle: FittedBox(
+          child: Text(subtitle,
+              style: textTheme.bodyText2?.copyWith(color: Colors.black)),
+        ),
+        trailing: trailing,
       ),
     );
   }
