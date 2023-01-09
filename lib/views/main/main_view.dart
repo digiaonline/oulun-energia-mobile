@@ -262,7 +262,7 @@ class MainViewState extends ConsumerState<MainView> {
     return Opacity(
       opacity: onTap == null ? 0.6 : 1.0,
       child: SizedBox(
-        width: 110,
+        width: Sizes.mainViewIconAvatarSize,
         child: TextButton(
           onPressed: onTap,
           child: Column(
@@ -271,18 +271,18 @@ class MainViewState extends ConsumerState<MainView> {
                 alignment: Alignment.topRight,
                 children: [
                   CircleAvatar(
-                    radius: 28,
+                    radius: Sizes.mainViewIconAvatarSize / 4,
                     backgroundColor: Colors.white,
                     child: SvgPicture.asset(
                       iconAsset,
-                      width: 20.0,
-                      height: 20.0,
+                      width: Sizes.mainViewIconSize,
+                      height: Sizes.mainViewIconSize,
                       color: iconColorBlue,
                     ),
                   ),
                   marker != null
                       ? CircleAvatar(
-                          radius: 14,
+                          radius: Sizes.mainViewIconAvatarSize / 8,
                           backgroundColor: iconColorBlueLight,
                           child: marker,
                         )
