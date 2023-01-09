@@ -30,7 +30,7 @@ class MainViewState extends State<MainView> {
   final usageViewNavigatorKey = GlobalKey<NavigatorState>();
 
   final ExpandableController bottomNavigationBarController =
-  ExpandableController();
+      ExpandableController();
 
   @override
   Widget build(BuildContext context) {
@@ -143,17 +143,17 @@ class MainViewState extends State<MainView> {
                                 _appBarIndex = 1;
                                 view = const UsageSettingsView();
                                 break;
-                              case UsageDataView.routeName:
+                              case UsageInfoView.routeName:
                                 _appBarIndex = 2;
-                                view = const UsageDataView();
+                                view = const UsageInfoView();
                                 break;
                               default:
                                 _appBarIndex = 0;
                                 view = const UsageSelectionsView();
                             }
 
-                            WidgetsBinding.instance.addPostFrameCallback((
-                                timeStamp) {
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((timeStamp) {
                               setState(() {
                                 _appBarIndex = _appBarIndex;
                               });
@@ -161,8 +161,7 @@ class MainViewState extends State<MainView> {
 
                             return MaterialPageRoute(
                                 settings: settings,
-                                builder: (context) =>
-                                    Container(
+                                builder: (context) => Container(
                                       color: Colors.white,
                                       child: view,
                                     ));
@@ -233,8 +232,10 @@ class MainViewState extends State<MainView> {
     ).withBackground();
   }
 
-  Widget _buildHomeViewButton(String title,
-      String iconAsset,) {
+  Widget _buildHomeViewButton(
+    String title,
+    String iconAsset,
+  ) {
     return SizedBox(
       width: 100,
       child: TextButton(
@@ -286,9 +287,7 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var textTheme = Theme
-        .of(context)
-        .textTheme;
+    var textTheme = Theme.of(context).textTheme;
     return Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
       Column(
         children: [
