@@ -94,7 +94,7 @@ class MainViewState extends ConsumerState<MainView> {
                           height: Sizes.marginViewBorderSize,
                         ),
                         Text(
-                          _appBarTitle!,
+                          _appBarTitle ?? '',
                           style: textTheme.headline2
                               ?.copyWith(color: Colors.black),
                         ),
@@ -136,12 +136,13 @@ class MainViewState extends ConsumerState<MainView> {
                                 view = const UsageSettingsView();
                                 break;
                               case UsageInfoView.routeName:
-                                _selectedIndex = 2;
+                                _appBarTitle = locals.usageViewUsageInfo;
                                 _secondaryAppBar = true;
                                 view = const UsageInfoView();
                                 break;
                               default:
-                                _secondaryAppBar = false;
+                                _appBarTitle = locals.usageViewMyConsumption;
+                                _secondaryAppBar = true;
                                 view = const UsageSelectionsView();
                             }
 
@@ -194,8 +195,8 @@ class MainViewState extends ConsumerState<MainView> {
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   'assets/icons/monitoring.svg',
-                  width: 20.0,
-                  height: 20.0,
+                  width: Sizes.mainViewIconSize,
+                  height: Sizes.mainViewIconSize,
                   color: _selectedIndex == 1
                       ? theme.bottomNavigationBarTheme.selectedItemColor
                       : theme.bottomNavigationBarTheme.unselectedItemColor,
@@ -205,14 +206,14 @@ class MainViewState extends ConsumerState<MainView> {
               BottomNavigationBarItem(
                 icon: const Icon(
                   Icons.fmd_bad_outlined,
-                  size: 20,
+                  size: Sizes.mainViewIconSize,
                 ).toBottomBarIcon(selected: _selectedIndex == 2),
                 label: locals.usageViewInterruptions,
               ),
               BottomNavigationBarItem(
                 icon: const Icon(
                   Icons.support_agent_outlined,
-                  size: 20,
+                  size: Sizes.mainViewIconSize,
                 ).toBottomBarIcon(selected: _selectedIndex == 3),
                 label: locals.usageViewContact,
               ),

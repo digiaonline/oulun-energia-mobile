@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/selection_button.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
@@ -26,7 +27,8 @@ class UsageSelectionsView extends StatelessWidget {
         onChangePage: () => onChangePage(context, UsageInfoView.routeName),
         text: locals.usageViewUsageInfo,
         widget: SvgPicture.asset('assets/icons/monitoring.svg',
-            width: 28.0, height: 28.0),
+            width: Sizes.selectionButtonIconSize,
+            height: Sizes.selectionButtonIconSize),
       ),
       SelectionButton(
         onChangePage: () => onChangePage(context, UsageSettingsView.routeName),
@@ -34,7 +36,7 @@ class UsageSelectionsView extends StatelessWidget {
         widget: const Icon(
           Icons.settings_outlined,
           color: Colors.black,
-          size: 28.0,
+          size: Sizes.selectionButtonIconSize,
         ),
       )
     ];
