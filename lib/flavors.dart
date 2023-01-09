@@ -1,7 +1,7 @@
 enum Flavor {
-  PRODUCTION,
-  STAGING,
-  DEV,
+  production,
+  staging,
+  dev,
 }
 
 class F {
@@ -11,11 +11,11 @@ class F {
 
   static String get title {
     switch (appFlavor) {
-      case Flavor.PRODUCTION:
+      case Flavor.production:
         return 'Oulun Energia';
-      case Flavor.STAGING:
+      case Flavor.staging:
         return 'Oulun Energia -staging';
-      case Flavor.DEV:
+      case Flavor.dev:
         return 'Oulun Energia -dev';
       default:
         return 'title';
@@ -24,9 +24,9 @@ class F {
 
   static String get apiUsername {
     switch (appFlavor) {
-      case Flavor.DEV:
-      case Flavor.STAGING:
-      case Flavor.PRODUCTION:
+      case Flavor.dev:
+      case Flavor.staging:
+      case Flavor.production:
       default:
         return 'oe_app';
     }
@@ -34,9 +34,9 @@ class F {
 
   static String get apiPassword {
     switch (appFlavor) {
-      case Flavor.DEV:
-      case Flavor.STAGING:
-      case Flavor.PRODUCTION:
+      case Flavor.dev:
+      case Flavor.staging:
+      case Flavor.production:
       default:
         return '9d1d5K8inM7774ji0m';
     }
@@ -44,9 +44,9 @@ class F {
 
   static String get baseUrl {
     switch (appFlavor) {
-      case Flavor.DEV:
-      case Flavor.STAGING:
-      case Flavor.PRODUCTION:
+      case Flavor.dev:
+      case Flavor.staging:
+      case Flavor.production:
       default:
         return 'https://app.oulunenergia.fi';
     }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +29,7 @@ class OEApp extends ConsumerWidget {
       initialRoute: SplashScreen.routeName,
       routes: {
         SplashScreen.routeName: (context) => const SplashScreen(),
-        FirstTimeView.routeName: (context) => FirstTimeView(),
+        FirstTimeView.routeName: (context) => const FirstTimeView(),
         MainView.routeName: (context) => const MainView(),
         LoginView.routeName: (context) => LoginView()
       },
@@ -56,14 +55,16 @@ class OEApp extends ConsumerWidget {
       default:
         break;
     }
-    print("$appName: DEBUG -> $routeName ${appState.current}");
-    mainNavigatorKey.currentState
-        ?.popUntil((route) => routeName == route.settings.name);
+    print(appState.current.name);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      mainNavigatorKey.currentState
+          ?.popUntil((route) => SplashScreen.routeName == route.settings.name);
 
-    if (mainNavigatorKey.currentState?.canPop() ?? false) {
-      mainNavigatorKey.currentState?.pushReplacementNamed(routeName);
-    } else {
-      mainNavigatorKey.currentState?.pushNamed(routeName);
-    }
+      if (mainNavigatorKey.currentState?.canPop() ?? false) {
+        mainNavigatorKey.currentState?.pushReplacementNamed(routeName);
+      } else {
+        mainNavigatorKey.currentState?.pushNamed(routeName);
+      }
+    });
   }
 }

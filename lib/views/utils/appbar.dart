@@ -13,8 +13,10 @@ SliverAppBar buildMainAppBar(
   List<Widget>? actions,
   Widget? leading,
   Widget? flexibleSpace,
+  bool? centerTitle = true,
 }) {
   return SliverAppBar(
+    automaticallyImplyLeading: false,
     flexibleSpace: flexibleSpace,
     forceElevated: forceElevated ?? false,
     shadowColor: foregroundColor,
@@ -22,7 +24,7 @@ SliverAppBar buildMainAppBar(
     foregroundColor: foregroundColor,
     backgroundColor: backgroundColor,
     toolbarHeight: toolbarHeight ?? kToolbarHeight,
-    centerTitle: true,
+    centerTitle: centerTitle,
     title: titleWidget ??
         (title != null
             ? title.isNotEmpty
@@ -34,17 +36,6 @@ SliverAppBar buildMainAppBar(
                 width: 200,
               )),
     leading: leading,
-    actions: actions ??
-        const [
-          Padding(
-            padding: EdgeInsets.only(
-              right: 20.0,
-            ),
-            child: Icon(
-              Icons.face,
-              size: 28.5,
-            ),
-          )
-        ],
+    actions: actions,
   );
 }

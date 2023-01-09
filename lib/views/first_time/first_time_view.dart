@@ -9,7 +9,8 @@ import 'package:swipe/swipe.dart';
 
 class FirstTimeView extends ConsumerStatefulWidget {
   static const String routeName = "first_time";
-  var _stepIndex = 0;
+
+  const FirstTimeView({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
@@ -18,11 +19,13 @@ class FirstTimeView extends ConsumerStatefulWidget {
 }
 
 class FtuState extends ConsumerState<FirstTimeView> {
+  var _stepIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     var appStateNotifier = ref.read(appStateProvider.notifier);
-    var step = widget._stepIndex;
+    var step = _stepIndex;
     var sliverChild = _getViewContent(ref, step);
     var content = SliverFillRemaining(child: sliverChild);
     return Scaffold(
@@ -49,16 +52,16 @@ class FtuState extends ConsumerState<FirstTimeView> {
           ],
         ).withBackground(),
         onSwipeLeft: () {
-          if (widget._stepIndex < 2) {
+          if (_stepIndex < 2) {
             setState(() {
-              widget._stepIndex += 1;
+              _stepIndex += 1;
             });
           }
         },
         onSwipeRight: () {
-          if (widget._stepIndex > 0) {
+          if (_stepIndex > 0) {
             setState(() {
-              widget._stepIndex -= 1;
+              _stepIndex -= 1;
             });
           }
         },
@@ -67,7 +70,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
   }
 
   Widget _getViewContent(WidgetRef ref, int stepIndex) {
-    var step = widget._stepIndex;
+    var step = _stepIndex;
     var stepItem = stepData[step];
     return _buildStep(
       ref,
@@ -127,7 +130,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
           ),
           Column(
             children: [
-              Icon(Icons.stacked_bar_chart_outlined, size: 60),
+              const Icon(Icons.stacked_bar_chart_outlined, size: 60),
               const SizedBox(
                 height: Sizes.marginViewBorderSize,
               ),
@@ -187,7 +190,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
           TextButton(
             onPressed: () => ref.read(appStateProvider.notifier).toLoginView(),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,
               ),
               child: Text(
