@@ -12,6 +12,7 @@ import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import '../utils/snackbar.dart';
 
 class LoginView extends ConsumerWidget {
+  static const String routePath = "/login";
   static const String routeName = "login_view";
   var usernameController = TextEditingController(text: "mira.juola@icloud.com");
   var passwordController = TextEditingController(text: "Vaihda123456");
@@ -22,11 +23,7 @@ class LoginView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var userAuth = ref.watch(loginProvider);
-    if (!userAuth.loading &&
-        (userAuth.loggedInStatus == LoggedInStatus.loggedIn ||
-            userAuth.loggedInStatus == LoggedInStatus.failed)) {
-      _onLogin(context, ref, userAuth.userAuth);
-    }
+
     var theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
@@ -94,7 +91,7 @@ class LoginView extends ConsumerWidget {
                         userAuth.loading
                             ? const Center(child: CircularProgressIndicator())
                             : TextButton(
-                                onPressed: () => _doLogin(
+                                onPressed: () async => await _doLogin(
                                     ref,
                                     usernameController.text,
                                     passwordController.text),
@@ -151,19 +148,23 @@ class LoginView extends ConsumerWidget {
     );
   }
 
-  void _doLogin(WidgetRef ref, String username, String password) {
+  Future<void> _doLogin(WidgetRef ref, String username, String password) async {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
-    loginProviderNotifier.login(username, password);
-  }
-
-  void _onLogin(BuildContext context, WidgetRef ref, UserAuth? success) {
-    return success != null
-        ? loginSuccess(context, ref)
-        : showSnackbar("Kirjautuminen epäonnistui!");
-  }
-
-  void loginSuccess(BuildContext context, WidgetRef ref) {
-    ref.read(appStateProvider.notifier).loggedIn();
-    showSnackbar("Jee kirjauduit sisään!");
+    await loginProviderNotifier.login(username, password);
+    //
+    // var loginProv = ref.read(loginProvider);
+    // LoggedInStatus loggedInStatus = loginProv.loggedInStatus;
+    //
+    // switch (loggedInStatus) {
+    //   case LoggedInStatus.loggedIn:
+    //     showSnackbar("Jee kirjauduit sisään!");
+    //     break;
+    //   case LoggedInStatus.failed:
+    //     showSnackbar("Kirjautuminen epäonnistui!");
+    //     break;
+    //   default:
+    //     showSnackbar("Jotain meni pieleen!");
+    //     break;
+    // }
   }
 }

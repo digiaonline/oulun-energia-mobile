@@ -16,6 +16,7 @@ import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class MainView extends ConsumerStatefulWidget {
+  static const String routePath = "/";
   static const String routeName = "home_page";
 
   const MainView({super.key});
@@ -119,7 +120,7 @@ class MainViewState extends ConsumerState<MainView> {
                 _secondaryAppBar = false;
                 switch (settings.name) {
                   case HomeView.routeName:
-                    view = _buildHomeView(locals);
+                    view = Container();
                     break;
                   case UsageSelectionsView.routeName:
                     view = Container(
@@ -225,33 +226,6 @@ class MainViewState extends ConsumerState<MainView> {
         ),
       ),
     ).withBackground();
-  }
-
-  HomeView _buildHomeView(AppLocalizations locals) {
-    var loginState = ref.watch(loginProvider);
-    var isLoggedIn = loginState.loggedInStatus == LoggedInStatus.loggedIn;
-    return HomeView(
-      mainControls: [
-        _buildHomeViewButton(
-            locals.homeViewUsageInfo, 'assets/icons/monitoring.svg',
-            onTap: isLoggedIn ? () => _selectedMainContent(1) : null,
-            marker: !isLoggedIn
-                ? const Icon(
-                    Icons.lock_outline,
-                    size: 14,
-                  )
-                : null),
-        _buildHomeViewButton(
-            locals.homeViewInterruptions, 'assets/icons/news.svg'),
-        _buildHomeViewButton(
-            locals.homeViewContact, 'assets/icons/support_agent.svg'),
-        _buildHomeViewButton(
-            locals.homeViewFishHunt, 'assets/icons/set_meal.svg'),
-        _buildHomeViewButton(
-            locals.homeViewErrorReporting, 'assets/icons/calendar.svg'),
-        _buildHomeViewButton(locals.homeViewHelp, 'assets/icons/menu_book.svg'),
-      ],
-    );
   }
 
   Widget _buildHomeViewButton(

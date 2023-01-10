@@ -19,26 +19,28 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     _initialize();
   }
 
-  void login(String user, String password) {
+  Future<void> login(String user, String password) async {
     state = state.copyWith(loading: true);
-    api.requestToken().then((token) {
-      if (token != null) {
-        auth
-            .setAuthenticationToken(token)
-            .then((value) => api.login(username: user, password: password))
-            .then((userAuth) => state = state.copyWith(
-                loading: false,
-                loggedIn: userAuth != null
-                    ? LoggedInStatus.loggedIn
-                    : LoggedInStatus.failed,
-                userAuth: userAuth));
+    var token = await api.requestToken();
+
+    if (token != null) {
+      await auth.setAuthenticationToken(token);
+      UserAuth? userAuth = await api.login(username: user, password: password);
+
+      if (userAuth != null) {
+        state = state.copyWith(
+            loading: false,
+            loggedIn: userAuth != null
+                ? LoggedInStatus.loggedIn
+                : LoggedInStatus.failed,
+            userAuth: userAuth);
       } else {
         state = state.copyWith(
           loading: false,
           loggedIn: LoggedInStatus.failed,
         );
       }
-    });
+    }
   }
 
   void _initialize() {
