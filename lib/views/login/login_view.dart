@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/app_state.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
+import 'package:oulun_energia_mobile/views/main/main_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
@@ -14,9 +16,11 @@ import '../utils/snackbar.dart';
 class LoginView extends ConsumerWidget {
   static const String routePath = "/login";
   static const String routeName = "login_view";
-  var usernameController = TextEditingController(text: "mira.juola@icloud.com");
-  var passwordController = TextEditingController(text: "Vaihda123456");
-  bool _acceptedTerms = false; // todo move to a provider
+  final TextEditingController usernameController =
+      TextEditingController(text: "mira.juola@icloud.com");
+  final TextEditingController passwordController =
+      TextEditingController(text: "Vaihda123456");
+  final bool _acceptedTerms = false; // todo move to a provider
 
   LoginView({super.key});
 
@@ -151,20 +155,20 @@ class LoginView extends ConsumerWidget {
   Future<void> _doLogin(WidgetRef ref, String username, String password) async {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
     await loginProviderNotifier.login(username, password);
-    //
-    // var loginProv = ref.read(loginProvider);
-    // LoggedInStatus loggedInStatus = loginProv.loggedInStatus;
-    //
-    // switch (loggedInStatus) {
-    //   case LoggedInStatus.loggedIn:
-    //     showSnackbar("Jee kirjauduit sisään!");
-    //     break;
-    //   case LoggedInStatus.failed:
-    //     showSnackbar("Kirjautuminen epäonnistui!");
-    //     break;
-    //   default:
-    //     showSnackbar("Jotain meni pieleen!");
-    //     break;
-    // }
+
+    var loginProv = ref.read(loginProvider);
+    LoggedInStatus loggedInStatus = loginProv.loggedInStatus;
+
+    switch (loggedInStatus) {
+      case LoggedInStatus.loggedIn:
+        showSnackbar("Jee kirjauduit sisään!");
+        break;
+      case LoggedInStatus.failed:
+        showSnackbar("Kirjautuminen epäonnistui!");
+        break;
+      default:
+        showSnackbar("Jotain meni pieleen!");
+        break;
+    }
   }
 }

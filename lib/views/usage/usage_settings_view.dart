@@ -10,6 +10,7 @@ import 'package:oulun_energia_mobile/views/utils/submit_button.dart';
 import 'package:oulun_energia_mobile/views/utils/dropdown.dart';
 
 class UsageSettingsView extends ConsumerStatefulWidget {
+  static const String routePath = 'settings';
   static const String routeName = 'usage_settings_view';
 
   const UsageSettingsView({Key? key}) : super(key: key);

@@ -8,6 +8,7 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:swipe/swipe.dart';
 
 class FirstTimeView extends ConsumerStatefulWidget {
+  static const String routePath = '/first_time';
   static const String routeName = "first_time";
 
   const FirstTimeView({super.key});

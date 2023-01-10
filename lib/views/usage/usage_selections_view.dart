@@ -8,6 +8,7 @@ import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/utils/content.dart';
 
 class UsageSelectionsView extends StatelessWidget {
+  static const String routePath = '/usage';
   static const String routeName = 'usage_selections_view';
 
   const UsageSelectionsView({Key? key}) : super(key: key);

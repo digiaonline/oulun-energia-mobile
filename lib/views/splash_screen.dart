@@ -5,6 +5,7 @@ import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class SplashScreen extends ConsumerWidget {
+  static const String routePath = '/splash';
   static const String routeName = "splash_screen";
 
   const SplashScreen({super.key});

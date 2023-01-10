@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class HomeView extends ConsumerWidget {
@@ -56,17 +58,19 @@ class HomeView extends ConsumerWidget {
         runAlignment: WrapAlignment.spaceBetween,
         crossAxisAlignment: WrapCrossAlignment.start,
         alignment: WrapAlignment.center,
-        children: _buildControls(isLoggedIn, locals),
+        children: _buildControls(context, isLoggedIn, locals),
       ),
     ]);
   }
 }
 
-List<Widget> _buildControls(bool isLoggedIn, AppLocalizations locals) {
+List<Widget> _buildControls(
+    BuildContext context, bool isLoggedIn, AppLocalizations locals) {
   return [
     _buildHomeViewButton(
         locals.homeViewUsageInfo, 'assets/icons/monitoring.svg',
-        onTap: isLoggedIn ? () => null : null,
+        onTap:
+            isLoggedIn ? () => context.go(UsageSelectionsView.routePath) : null,
         marker: !isLoggedIn
             ? const Icon(
                 Icons.lock_outline,

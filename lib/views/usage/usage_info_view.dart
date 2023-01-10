@@ -8,6 +8,7 @@ import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
 
 class UsageInfoView extends ConsumerStatefulWidget {
+  static const String routePath = 'info';
   static const String routeName = 'usage_info_view';
 
   const UsageInfoView({Key? key}) : super(key: key);
