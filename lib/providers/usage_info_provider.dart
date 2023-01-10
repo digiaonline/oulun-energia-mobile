@@ -105,8 +105,7 @@ class UsageInfoState {
         dateString = StringUtils.getMonth(date, locale);
         break;
       case UsageInterval.month:
-        dateString =
-            '${AppLocalizations.of(context)!.usageViewYear} ${date.year}';
+        dateString = date.year.toString();
         break;
       case UsageInterval.year:
         dateString = '2013-${date.year}';

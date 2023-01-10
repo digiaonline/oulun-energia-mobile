@@ -76,23 +76,21 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
                 ),
               ),
             ),
+            const SizedBox(
+              height: 50.0,
+            ),
             Expanded(
-              child: SizedBox(
-                height: 275,
-                width: double.infinity,
-                child: usages.isNotEmpty
-                    ? UsageBarChart(
-                        usages: usages,
-                        usageInterval:
-                            ref.watch(usageInfoProvider).usageInterval,
-                      )
-                    : Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.usageViewUsageNoInfo,
-                          style: textTheme.headline2,
-                        ),
+              child: usages.isNotEmpty
+                  ? UsageBarChart(
+                      usages: usages,
+                      usageInterval: ref.watch(usageInfoProvider).usageInterval,
+                    )
+                  : Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.usageViewUsageNoInfo,
+                        style: textTheme.headline2,
                       ),
-              ),
+                    ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 15.0),
