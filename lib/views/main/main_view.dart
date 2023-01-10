@@ -94,7 +94,7 @@ class MainViewState extends ConsumerState<MainView> {
                           height: Sizes.marginViewBorderSize,
                         ),
                         Text(
-                          _appBarTitle ?? '',
+                          _appBarTitle!,
                           style: textTheme.headline2
                               ?.copyWith(color: Colors.black),
                         ),
@@ -133,7 +133,14 @@ class MainViewState extends ConsumerState<MainView> {
                               case UsageSettingsView.routeName:
                                 _appBarTitle = locals.usageViewSettings;
                                 _secondaryAppBar = true;
-                                view = const UsageSettingsView();
+                                view = UsageSettingsView(
+                                  onCancel: () {
+                                    usageViewNavigatorKey.currentState?.pop();
+                                    setState(() {
+                                      _secondaryAppBar = false;
+                                    });
+                                  },
+                                );
                                 break;
                               case UsageInfoView.routeName:
                                 _appBarTitle = locals.usageViewUsageInfo;
@@ -142,7 +149,7 @@ class MainViewState extends ConsumerState<MainView> {
                                 break;
                               default:
                                 _appBarTitle = locals.usageViewMyConsumption;
-                                _secondaryAppBar = true;
+                                _secondaryAppBar = false;
                                 view = const UsageSelectionsView();
                             }
 

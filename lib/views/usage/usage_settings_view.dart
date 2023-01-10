@@ -12,7 +12,9 @@ import 'package:oulun_energia_mobile/views/utils/dropdown.dart';
 class UsageSettingsView extends ConsumerStatefulWidget {
   static const String routeName = 'usage_settings_view';
 
-  const UsageSettingsView({Key? key}) : super(key: key);
+  final Function onCancel;
+
+  const UsageSettingsView({Key? key, required this.onCancel}) : super(key: key);
 
   @override
   ConsumerState<UsageSettingsView> createState() => _UsageSettingsViewState();
@@ -29,10 +31,6 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
     // type: ${_selectedUsageType.name}
     // address: ${_selectedUsagePlace.street}, ${_selectedUsagePlace.postPlace} ${_selectedUsagePlace.postCode}
     // useCelsius: ${_useCelsius}
-  }
-
-  _onCancel(BuildContext context) {
-    Navigator.of(context).pop();
   }
 
   _onSetSelectedUsageType(dynamic usageType) {
@@ -147,7 +145,7 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SubmitButton(
-                    text: locals.cancel, onPressed: () => _onCancel(context)),
+                    text: locals.cancel, onPressed: () => widget.onCancel()),
                 const SizedBox(width: 10.0),
                 SubmitButton(
                     text: locals.save,
