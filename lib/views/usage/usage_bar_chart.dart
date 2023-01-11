@@ -136,6 +136,8 @@ class _UsageBarChartState extends State<UsageBarChart> {
   Widget build(BuildContext context) {
     var locals = AppLocalizations.of(context)!;
     var config = getConfig(context, widget.usageInterval);
+    bool isLandscapeMode =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     double currMax =
         widget.usages.map((usage) => usage.value).toList().reduce(max);
@@ -161,313 +163,307 @@ class _UsageBarChartState extends State<UsageBarChart> {
     }
 
     double groupsSpace = config['groupsSpace'];
+
     double barWidth = config['barWidth'];
     double reservedSize = config['reservedSize'];
     String abbrv = config['abbrv'];
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: double.infinity,
-          height: 410,
-          child: Stack(
-            children: [
-              BarChart(
-                BarChartData(
-                    groupsSpace: groupsSpace,
-                    alignment: BarChartAlignment.center,
-                    borderData: FlBorderData(
-                      show: true,
-                      border: const Border.symmetric(
-                        horizontal: BorderSide(
-                          color: Color(0xFFececec),
-                        ),
-                      ),
-                    ),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      leftTitles: AxisTitles(
-                        drawBehindEverything: true,
-                        sideTitles: SideTitles(
-                          reservedSize: reservedSize,
-                          interval: interval,
-                          showTitles: false,
-                          getTitlesWidget: (value, meta) =>
-                              const SizedBox.shrink(),
-                        ),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: (value, meta) {
-                            final idx = value.toInt();
+    if (isLandscapeMode) {
+      groupsSpace *= 1.5;
+      barWidth *= 2;
+    }
 
-                            if (idx.isEven) {
-                              if (widget.usageInterval == UsageInterval.day) {
-                                List<String> text = widget.usages[idx]
-                                    .formatDate(context)
-                                    .split(' ');
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Stack(
-                                    children: [
-                                      SizedBox(
-                                        width: 20.0,
-                                        child: Text(
-                                          text[0].substring(0, 2),
-                                          style: kFontSize12W400,
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      Transform.translate(
-                                          offset: const Offset(0.0, 10.0),
-                                          child: SizedBox(
-                                            width: 20.0,
-                                            child: Text(text[1],
-                                                style: kFontSize12W400,
-                                                textAlign: TextAlign.center),
-                                          )),
-                                    ],
-                                  ),
-                                );
-                              }
-
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Text(
-                                  widget.usages[idx].formatDate(context),
-                                  style: kFontSize12W400,
-                                  textAlign: TextAlign.left,
-                                ),
-                              );
-                            }
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                      ),
-                      rightTitles: AxisTitles(),
-                      topTitles: AxisTitles(),
-                    ),
-                    gridData: FlGridData(
-                      show: true,
-                      horizontalInterval: interval,
-                      drawVerticalLine: false,
-                      getDrawingHorizontalLine: (value) => FlLine(
-                        color: const Color(0xFFececec),
-                        strokeWidth: 1,
-                      ),
-                    ),
-                    barGroups: getBarData(usages: widget.usages)
-                        .asMap()
-                        .entries
-                        .map((e) {
-                      final index = e.key;
-                      final data = e.value;
-                      return generateBarGroup(
-                          index, data.color, data.value, barWidth, false);
-                    }).toList(),
-                    maxY: maxValue,
-                    barTouchData: BarTouchData(
-                      enabled: true,
-                      handleBuiltInTouches: false,
-                      touchCallback: (event, response) {
-                        if (event.isInterestedForInteractions &&
-                            response != null &&
-                            response.spot != null) {
-                          setState(() {
-                            touchedGroupIndex =
-                                response.spot!.touchedBarGroupIndex;
-                          });
-                        } else {
-                          setState(() {
-                            touchedGroupIndex = -1;
-                          });
-                        }
-                      },
-                    )),
-              ),
-              IgnorePointer(
-                child: Padding(
-                  padding: const EdgeInsets.all(35),
-                  child: LineChart(
-                    LineChartData(
-                      titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          rightTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          topTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          )),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      gridData: FlGridData(
-                        show: false,
-                      ),
-                      lineTouchData: LineTouchData(enabled: false),
-                      lineBarsData: [
-                        LineChartBarData(
-                          color: Colors.red,
-                          barWidth: 1,
-                          isCurved: true,
-                          spots: getLineBarSpots([]),
-                          dotData: FlDotData(
-                            show: false,
-                          ),
-                          belowBarData: BarAreaData(show: false),
-                          aboveBarData: BarAreaData(show: false),
-                        )
-                      ],
+    return SizedBox(
+      width: double.infinity,
+      height: 410,
+      child: Stack(
+        children: [
+          BarChart(
+            BarChartData(
+                groupsSpace: groupsSpace,
+                alignment: BarChartAlignment.center,
+                borderData: FlBorderData(
+                  show: true,
+                  border: const Border.symmetric(
+                    horizontal: BorderSide(
+                      color: Color(0xFFececec),
                     ),
                   ),
                 ),
-              ),
-              IgnorePointer(
-                child: BarChart(
-                  BarChartData(
-                    alignment: BarChartAlignment.center,
-                    groupsSpace: groupsSpace,
-                    borderData: FlBorderData(
-                      show: false,
+                titlesData: FlTitlesData(
+                  show: true,
+                  leftTitles: AxisTitles(
+                    drawBehindEverything: true,
+                    sideTitles: SideTitles(
+                      reservedSize: reservedSize,
+                      interval: interval,
+                      showTitles: false,
+                      getTitlesWidget: (value, meta) => const SizedBox.shrink(),
                     ),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      leftTitles: AxisTitles(
-                        drawBehindEverything: true,
-                        sideTitles: SideTitles(
-                          reservedSize: reservedSize,
-                          interval: interval,
-                          showTitles: true,
-                          getTitlesWidget: (value, meta) {
-                            final isLast = meta.max.toInt() == value.toInt();
-                            const style = TextStyle(
-                              color: Color(0xFF606060),
-                              fontSize: 12,
-                            );
-                            final text =
-                                '${value.toInt().toString()} ${isLast ? 'kWh  ' : ''}';
-                            final size = _textSize(text, style);
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        final idx = value.toInt();
 
-                            return Transform.translate(
-                              offset: const Offset(0, -10),
-                              child: IgnorePointer(
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      height: 20,
-                                      width: size.width + 10,
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xFFE0E0E0),
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(10),
-                                        ),
-                                      ),
+                        if (isLandscapeMode || idx.isEven) {
+                          if (widget.usageInterval == UsageInterval.day) {
+                            List<String> text = widget.usages[idx]
+                                .formatDate(context)
+                                .split(' ');
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Stack(
+                                children: [
+                                  SizedBox(
+                                    width: 20.0,
+                                    child: Text(
+                                      text[0].substring(0, 2),
+                                      style: kFontSize12W400,
+                                      textAlign: TextAlign.center,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 4,
-                                        left: 5,
-                                      ),
-                                      child: Text(text, style: style),
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  Transform.translate(
+                                      offset: const Offset(0.0, 10.0),
+                                      child: SizedBox(
+                                        width: 20.0,
+                                        child: Text(text[1],
+                                            style: kFontSize12W400,
+                                            textAlign: TextAlign.center),
+                                      )),
+                                ],
                               ),
                             );
-                          },
-                        ),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: (value, meta) {
-                            return const SizedBox.shrink();
-                          },
-                        ),
+                          }
+
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              widget.usages[idx].formatDate(context),
+                              style: kFontSize12W400,
+                              textAlign: TextAlign.left,
+                            ),
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ),
+                  rightTitles: AxisTitles(),
+                  topTitles: AxisTitles(),
+                ),
+                gridData: FlGridData(
+                  show: true,
+                  horizontalInterval: interval,
+                  drawVerticalLine: false,
+                  getDrawingHorizontalLine: (value) => FlLine(
+                    color: const Color(0xFFececec),
+                    strokeWidth: 1,
+                  ),
+                ),
+                barGroups:
+                    getBarData(usages: widget.usages).asMap().entries.map((e) {
+                  final index = e.key;
+                  final data = e.value;
+                  return generateBarGroup(
+                      index, data.color, data.value, barWidth, false);
+                }).toList(),
+                maxY: maxValue,
+                barTouchData: BarTouchData(
+                  enabled: true,
+                  handleBuiltInTouches: false,
+                  touchCallback: (event, response) {
+                    if (event.isInterestedForInteractions &&
+                        response != null &&
+                        response.spot != null) {
+                      setState(() {
+                        touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+                      });
+                    } else {
+                      setState(() {
+                        touchedGroupIndex = -1;
+                      });
+                    }
+                  },
+                )),
+          ),
+          IgnorePointer(
+            child: Padding(
+              padding: const EdgeInsets.all(35),
+              child: LineChart(
+                LineChartData(
+                  titlesData: FlTitlesData(
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
                       ),
                       rightTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                            reservedSize: reservedSize,
-                            showTitles: true,
-                            getTitlesWidget: (value, meta) {
-                              return const SizedBox.shrink();
-                            }),
+                        sideTitles: SideTitles(showTitles: false),
                       ),
-                      topTitles: AxisTitles(),
-                    ),
-                    gridData: FlGridData(
-                      show: true,
-                      drawVerticalLine: false,
-                      drawHorizontalLine: false,
-                    ),
-                    barGroups:
-                        getBarData(usages: widget.usages, isTransparent: true)
-                            .asMap()
-                            .entries
-                            .map((e) {
-                      final index = e.key;
-                      final data = e.value;
-                      return generateBarGroup(
-                          index, data.color, data.value, barWidth, true);
-                    }).toList(),
-                    maxY: maxValue,
-                    barTouchData: BarTouchData(
-                      enabled: false,
-                      handleBuiltInTouches: false,
-                      touchTooltipData: BarTouchTooltipData(
-                        direction: TooltipDirection.bottom,
-                        fitInsideHorizontally: true,
-                        fitInsideVertically: true,
-                        maxContentWidth: 300.0,
-                        tooltipBgColor: Colors.blue,
-                        tooltipMargin: -200.0,
-                        getTooltipItem: (
-                          BarChartGroupData group,
-                          int groupIndex,
-                          BarChartRodData rod,
-                          int rodIndex,
-                        ) {
-                          final time =
-                              widget.usages[groupIndex].formatDate(context);
-                          final value = widget.usages[groupIndex].value;
-                          // TODO add temperature
-                          // final temperature = temp[groupIndex]['y'];
-                          bool hasTemp = false;
-                          final text =
-                              '$abbrv: $time\n${locals.usageViewUsage}: $value kWh${hasTemp ? '\nTemp: 0 °C' : ''}';
-                          return BarTooltipItem(
-                            text,
-                            const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 13,
-                              shadows: [
-                                Shadow(
-                                  color: Colors.black26,
-                                  blurRadius: 12,
+                      topTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      )),
+                  borderData: FlBorderData(
+                    show: false,
+                  ),
+                  gridData: FlGridData(
+                    show: false,
+                  ),
+                  lineTouchData: LineTouchData(enabled: false),
+                  lineBarsData: [
+                    LineChartBarData(
+                      color: Colors.red,
+                      barWidth: 1,
+                      isCurved: true,
+                      spots: getLineBarSpots([]),
+                      dotData: FlDotData(
+                        show: false,
+                      ),
+                      belowBarData: BarAreaData(show: false),
+                      aboveBarData: BarAreaData(show: false),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          IgnorePointer(
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.center,
+                groupsSpace: groupsSpace,
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                titlesData: FlTitlesData(
+                  show: true,
+                  leftTitles: AxisTitles(
+                    drawBehindEverything: true,
+                    sideTitles: SideTitles(
+                      reservedSize: reservedSize,
+                      interval: interval,
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        final isLast = meta.max.toInt() == value.toInt();
+                        const style = TextStyle(
+                          color: Color(0xFF606060),
+                          fontSize: 12,
+                        );
+                        final text =
+                            '${value.toInt().toString()} ${isLast ? 'kWh  ' : ''}';
+                        final size = _textSize(text, style);
+
+                        return Transform.translate(
+                          offset: const Offset(0, -9.5),
+                          child: IgnorePointer(
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: size.width + 10,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFE0E0E0),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 4,
+                                    left: 5,
+                                  ),
+                                  child: Text(text, style: style),
                                 )
                               ],
                             ),
-                            textAlign: TextAlign.left,
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                  ),
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                        reservedSize: reservedSize,
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          return const SizedBox.shrink();
+                        }),
+                  ),
+                  topTitles: AxisTitles(),
+                ),
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  drawHorizontalLine: false,
+                ),
+                barGroups:
+                    getBarData(usages: widget.usages, isTransparent: true)
+                        .asMap()
+                        .entries
+                        .map((e) {
+                  final index = e.key;
+                  final data = e.value;
+                  return generateBarGroup(
+                      index, data.color, data.value, barWidth, true);
+                }).toList(),
+                maxY: maxValue,
+                barTouchData: BarTouchData(
+                  enabled: false,
+                  handleBuiltInTouches: false,
+                  touchTooltipData: BarTouchTooltipData(
+                    direction: TooltipDirection.bottom,
+                    fitInsideHorizontally: true,
+                    fitInsideVertically: true,
+                    maxContentWidth: 300.0,
+                    tooltipBgColor: Colors.blue,
+                    tooltipMargin: -200.0,
+                    getTooltipItem: (
+                      BarChartGroupData group,
+                      int groupIndex,
+                      BarChartRodData rod,
+                      int rodIndex,
+                    ) {
+                      final time =
+                          widget.usages[groupIndex].formatDate(context);
+                      final value = widget.usages[groupIndex].value;
+                      // TODO add temperature
+                      final text =
+                          '$abbrv: $time\n${locals.usageViewUsage}: $value kWh\nTemp: 0 °C';
+                      return BarTooltipItem(
+                        text,
+                        const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 13,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black26,
+                              blurRadius: 12,
+                            )
+                          ],
+                        ),
+                        textAlign: TextAlign.left,
+                      );
+                    },
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

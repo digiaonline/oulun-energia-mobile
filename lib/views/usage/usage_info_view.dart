@@ -42,6 +42,9 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
 
   @override
   Widget build(BuildContext context) {
+    bool isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     final AsyncValue<List<Usage>> fetchUsage =
         ref.watch(usageProvider(context));
     return fetchUsage.when(
@@ -50,7 +53,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
         length: 4,
         child: Column(
           children: [
-            const SizedBox(height: 20.0),
+            SizedBox(height: isLandscape ? 5.0 : 20.0),
             Center(
               child: Text(ref.watch(usageInfoProvider).getTotalUsage(),
                   style: textTheme.bodyText1),
@@ -76,8 +79,8 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
                 ),
               ),
             ),
-            const SizedBox(
-              height: 50.0,
+            SizedBox(
+              height: isLandscape ? 20.0 : 50.0,
             ),
             Expanded(
               child: usages.isNotEmpty

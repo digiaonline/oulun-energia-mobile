@@ -31,7 +31,13 @@ class OEApp extends ConsumerWidget {
         SplashScreen.routeName: (context) => const SplashScreen(),
         FirstTimeView.routeName: (context) => const FirstTimeView(),
         MainView.routeName: (context) => const MainView(),
-        LoginView.routeName: (context) => LoginView()
+        LoginView.routeName: (context) => const LoginView()
+      },
+      builder: (BuildContext context, Widget? child) {
+        return OrientationBuilder(
+            builder: (BuildContext context, Orientation orientation) {
+          return child!;
+        });
       },
     );
   }
