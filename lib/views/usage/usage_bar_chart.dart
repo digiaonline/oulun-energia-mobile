@@ -84,7 +84,7 @@ List<BarData> getBarData(
 
 class _UsageBarChartState extends State<UsageBarChart> {
   BarChartGroupData generateBarGroup(
-      int x, Color color, double value, double width) {
+      int x, Color color, double value, double width, bool showTooltip) {
     return BarChartGroupData(
       x: x,
       barRods: [
@@ -95,6 +95,11 @@ class _UsageBarChartState extends State<UsageBarChart> {
           borderRadius: BorderRadius.zero,
         ),
       ],
+      showingTooltipIndicators: !showTooltip
+          ? null
+          : touchedGroupIndex == x
+              ? [0]
+              : [],
     );
   }
 
@@ -129,12 +134,32 @@ class _UsageBarChartState extends State<UsageBarChart> {
 
   @override
   Widget build(BuildContext context) {
+    var locals = AppLocalizations.of(context)!;
     var config = getConfig(context, widget.usageInterval);
+
     double currMax =
         widget.usages.map((usage) => usage.value).toList().reduce(max);
-    // TODO calculate max for graph
     double interval = config['interval'];
-    double maxValue = config['maxValue'];
+    double maxValue = 0.0;
+
+    if (currMax > maxValue) {
+      while (currMax > maxValue) {
+        maxValue += interval;
+      }
+    }
+
+    int tickCount = (maxValue / interval).floor().toInt();
+
+    if (tickCount > 7) {
+      for (int i = 7; i > 0; i--) {
+        // Checks if the double is a whole number
+        if ((maxValue / i) % 1 == 0) {
+          interval = maxValue / i;
+          break;
+        }
+      }
+    }
+
     double groupsSpace = config['groupsSpace'];
     double barWidth = config['barWidth'];
     double reservedSize = config['reservedSize'];
@@ -227,6 +252,7 @@ class _UsageBarChartState extends State<UsageBarChart> {
                     ),
                     gridData: FlGridData(
                       show: true,
+                      horizontalInterval: interval,
                       drawVerticalLine: false,
                       getDrawingHorizontalLine: (value) => FlLine(
                         color: const Color(0xFFececec),
@@ -240,7 +266,7 @@ class _UsageBarChartState extends State<UsageBarChart> {
                       final index = e.key;
                       final data = e.value;
                       return generateBarGroup(
-                          index, data.color, data.value, barWidth);
+                          index, data.color, data.value, barWidth, false);
                     }).toList(),
                     maxY: maxValue,
                     barTouchData: BarTouchData(
@@ -307,6 +333,7 @@ class _UsageBarChartState extends State<UsageBarChart> {
               IgnorePointer(
                 child: BarChart(
                   BarChartData(
+                    alignment: BarChartAlignment.center,
                     groupsSpace: groupsSpace,
                     borderData: FlBorderData(
                       show: false,
@@ -388,19 +415,20 @@ class _UsageBarChartState extends State<UsageBarChart> {
                             .map((e) {
                       final index = e.key;
                       final data = e.value;
-                      return generateBarGroup2(
-                        index,
-                        data.color,
-                        data.value,
-                      );
+                      return generateBarGroup(
+                          index, data.color, data.value, barWidth, true);
                     }).toList(),
                     maxY: maxValue,
                     barTouchData: BarTouchData(
                       enabled: false,
                       handleBuiltInTouches: false,
                       touchTooltipData: BarTouchTooltipData(
+                        direction: TooltipDirection.bottom,
+                        fitInsideHorizontally: true,
+                        fitInsideVertically: true,
+                        maxContentWidth: 300.0,
                         tooltipBgColor: Colors.blue,
-                        tooltipMargin: 0,
+                        tooltipMargin: -200.0,
                         getTooltipItem: (
                           BarChartGroupData group,
                           int groupIndex,
@@ -410,8 +438,11 @@ class _UsageBarChartState extends State<UsageBarChart> {
                           final time =
                               widget.usages[groupIndex].formatDate(context);
                           final value = widget.usages[groupIndex].value;
-                          //final temperature = temp[groupIndex]['y'];
-                          final text = '$abbrv: $time\n$value kWh\nTemp: 0 °C';
+                          // TODO add temperature
+                          // final temperature = temp[groupIndex]['y'];
+                          bool hasTemp = false;
+                          final text =
+                              '$abbrv: $time\n${locals.usageViewUsage}: $value kWh${hasTemp ? '\nTemp: 0 °C' : ''}';
                           return BarTooltipItem(
                             text,
                             const TextStyle(
