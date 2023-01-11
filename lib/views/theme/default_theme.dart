@@ -107,3 +107,6 @@ const Color iconColorBlack = Color(0xFF002B59);
 const Color iconColorBlueLight = Color(0xFF0F5EA6);
 const Color appBarIconColor = Colors.white;
 const Color appBarBackgroundColor = Colors.transparent;
+const Color buttonPrimaryBackground = Color(0xFF009EB5);
+const Color ftuNavigationSelected = Color(0xFFFFFFFF);
+const Color ftuNavigationUnSelected = Color(0xFF1A4590);

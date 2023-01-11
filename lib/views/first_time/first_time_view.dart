@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oulun_energia_mobile/providers/app_state.dart';
@@ -5,7 +6,6 @@ import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:swipe/swipe.dart';
 
 import '../main/main_view.dart';
 
@@ -25,101 +25,105 @@ class FtuState extends ConsumerState<FirstTimeView> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     var textTheme = Theme.of(context).textTheme;
     var appStateNotifier = ref.read(appStateProvider.notifier);
-    var step = _stepIndex;
-    var sliverChild = _getViewContent(ref, step);
-    var content = SliverFillRemaining(child: sliverChild);
+    const double bottomBarHeight = 80;
+    final double paddingTop = MediaQuery.of(context).padding.top;
+    final double paddingBottom = MediaQuery.of(context).padding.bottom;
+    final double toolbarHeight =
+        theme.appBarTheme.toolbarHeight ?? kToolbarHeight;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double height = screenHeight -
+        paddingTop -
+        toolbarHeight -
+        paddingBottom -
+        bottomBarHeight;
     return Scaffold(
-      body: Swipe(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              leading: null,
-              automaticallyImplyLeading: false,
-              actions: [
-                InkWell(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                    top: Sizes.marginViewBorderSizeLarge * 2),
+                height: height,
+                child: CarouselSlider.builder(
+                  itemCount: stepData.length,
+                  itemBuilder: (context, index, realIndex) {
+                    return _getViewContent(ref, index);
+                  },
+                  options: CarouselOptions(
+                      onPageChanged: (index, reason) => setState(() {
+                            _stepIndex = index;
+                          }),
+                      viewportFraction: 1,
+                      enableInfiniteScroll: false,
+                      enlargeCenterPage: true,
+                      enlargeFactor: 1,
+                      height: screenHeight),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
                   onTap: () => appStateNotifier.toMainView(),
                   child: Container(
-                    margin: Sizes.marginViewBorder,
+                    margin: Sizes.marginViewBorder
+                        .copyWith(top: Sizes.marginViewBorderSizeLarge),
                     child: Text(
                       "Ohita",
                       style: textTheme.bodyText2?.copyWith(color: Colors.white),
                     ),
                   ),
                 ),
-              ],
+              ),
+            ],
+          ),
+          Container(
+            height: bottomBarHeight,
+            padding: Sizes.marginViewBorder,
+            child: Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: StepProgressIndicator(
+                  totalSteps: 3,
+                  currentStep: _stepIndex,
+                  size: Sizes.mainViewIconSize,
+                  selectedSize: Sizes.mainViewIconSize,
+                  roundedEdges:
+                      const Radius.circular(Sizes.mainViewIconSize / 2),
+                  customStep: (index, color, __) => Icon(
+                    Icons.circle,
+                    size: Sizes.mainViewIconSize,
+                    color: _stepIndex == index
+                        ? ftuNavigationSelected
+                        : ftuNavigationUnSelected,
+                  ),
+                ),
+              ),
             ),
-            content,
-          ],
-        ).withBackground(),
-        onSwipeLeft: () {
-          if (_stepIndex < 2) {
-            setState(() {
-              _stepIndex += 1;
-            });
-          }
-        },
-        onSwipeRight: () {
-          if (_stepIndex > 0) {
-            setState(() {
-              _stepIndex -= 1;
-            });
-          }
-        },
+          )
+        ],
       ),
-    );
+    ).withBackground();
   }
 
   Widget _getViewContent(WidgetRef ref, int stepIndex) {
-    var step = _stepIndex;
-    var stepItem = stepData[step];
+    var stepItem = stepData[stepIndex];
     return _buildStep(
       ref,
       context: context,
       title: stepItem['title']!,
       description: stepItem['description']!,
       iconArea: stepItem['iconArea']!,
-      step: step,
+      step: stepIndex,
     );
   }
-
-  List<Map<String, dynamic>> stepData = [
-    {
-      "title": "Keskeytykset kartalla ja tiedotteina",
-      "description":
-          "Löydät nopeasti tiedon mahdollisista sähkön- ja lämmönjakelun keskeytyksistä",
-      "iconArea": buildHomeViewButton(
-        "Keskeytys-kartta",
-        'assets/icons/news.svg',
-        onTap: () => {},
-      ),
-    },
-    {
-      "title": "Kaikki yhteystiedot sovelluksessa",
-      "description":
-          "Oulun Energian asiakaspalvelu auttaa sinua kaikissa sähköä ja lämpöä sekä niiden laskutusta koskevissa kysymyksissä",
-      "iconArea": buildHomeViewButton(
-        "Ota yhteyttä",
-        'assets/icons/support_agent.svg',
-        onTap: () => {},
-      ),
-    },
-    {
-      "title": "Omat energian kulutustiedot",
-      "description":
-          "Kun tunnistaudut Oulun Energian mobiilisovelluksen käyttäjäksi, pääset seuraamaan helposti energiankulutustasi",
-      "iconArea": buildHomeViewButton(
-        "Omat kulutustiedot",
-        'assets/icons/monitoring.svg',
-        onTap: () => {},
-        marker: const Icon(
-          Icons.lock_outline,
-          size: 14,
-        ),
-      ),
-    },
-  ];
 
   Widget _buildStep(WidgetRef ref,
       {required BuildContext context,
@@ -131,56 +135,32 @@ class FtuState extends ConsumerState<FirstTimeView> {
     var textTheme = Theme.of(context).textTheme;
     return Container(
       margin: Sizes.marginViewBorder,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "$title\n\n",
-                  maxLines: 3,
-                  style: textTheme.headline1?.copyWith(color: Colors.white),
-                ),
-                const SizedBox(
-                  height: Sizes.marginViewBorderSize,
-                ),
-                Text(
-                  "$description\n\n\n",
-                  maxLines: 4,
-                  style: textTheme.bodyText1?.copyWith(color: Colors.white),
-                ),
-                const SizedBox(
-                  height: Sizes.marginViewBorderSize,
-                ),
-                iconArea,
-                content ?? const SizedBox.shrink(),
-                const SizedBox(
-                  height: Sizes.marginViewBorderSize,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 100,
-            child: StepProgressIndicator(
-              totalSteps: 3,
-              currentStep: step,
-              size: Sizes.mainViewIconSize,
-              selectedSize: Sizes.mainViewIconSize,
-              roundedEdges: const Radius.circular(Sizes.mainViewIconSize / 2),
-              customStep: (index, color, __) => Icon(
-                Icons.circle,
-                size: Sizes.mainViewIconSize,
-                color: step == index
-                    ? const Color(0xFFFFFFFF)
-                    : const Color(0xFF1A4590),
+      child: SingleChildScrollView(
+        child: IntrinsicHeight(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "$title\n\n",
+                maxLines: 2,
+                style: textTheme.headline1?.copyWith(color: Colors.white),
               ),
-            ),
+              const SizedBox(
+                height: Sizes.marginViewBorderSize,
+              ),
+              Text(
+                "$description\n\n\n",
+                maxLines: 4,
+                style: textTheme.bodyText1?.copyWith(color: Colors.white),
+              ),
+              const SizedBox(
+                height: Sizes.marginViewBorderSize,
+              ),
+              iconArea.toExpanded(),
+              content ?? const SizedBox.shrink(),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -198,9 +178,9 @@ class FtuState extends ConsumerState<FirstTimeView> {
             child: Text(
               "Jatka ilman kirjautumista",
               style: defaultTheme.textTheme.bodyText1
-                  ?.copyWith(color: Colors.white),
+                  ?.copyWith(color: buttonPrimaryBackground),
             ),
-          ).toButton(),
+          ).toButton(secondary: true),
           const SizedBox(
             height: Sizes.marginViewBorderSize,
           ),
@@ -231,4 +211,50 @@ class FtuState extends ConsumerState<FirstTimeView> {
     }
     return null;
   }
+
+  List<Map<String, dynamic>> stepData = [
+    {
+      "title": "Keskeytykset kartalla ja tiedotteina",
+      "description":
+          "Löydät nopeasti tiedon mahdollisista sähkön- ja lämmönjakelun keskeytyksistä",
+      "iconArea": buildHomeViewButton(
+        avatarSize: Sizes.mainViewIconAvatarSize * 2,
+        fontSize: 20,
+        iconSize: 56,
+        "Keskeytys-kartta",
+        'assets/icons/fmd_bad.svg',
+        onTap: () => {},
+      ),
+    },
+    {
+      "title": "Kaikki yhteystiedot sovelluksessa",
+      "description":
+          "Oulun Energian asiakaspalvelu auttaa sinua kaikissa sähköä ja lämpöä sekä niiden laskutusta koskevissa kysymyksissä",
+      "iconArea": buildHomeViewButton(
+        avatarSize: Sizes.mainViewIconAvatarSize * 2,
+        fontSize: 20,
+        iconSize: 56,
+        "Ota yhteyttä",
+        'assets/icons/support_agent.svg',
+        onTap: () => {},
+      ),
+    },
+    {
+      "title": "Omat energian kulutustiedot",
+      "description":
+          "Kun tunnistaudut Oulun Energian mobiilisovelluksen käyttäjäksi, pääset seuraamaan helposti energiankulutustasi",
+      "iconArea": buildHomeViewButton(
+        avatarSize: Sizes.mainViewIconAvatarSize * 2,
+        fontSize: 20,
+        iconSize: 56,
+        "Omat kulutustiedot",
+        'assets/icons/monitoring.svg',
+        onTap: () => {},
+        marker: const Icon(
+          Icons.lock_outline,
+          size: 28,
+        ),
+      ),
+    },
+  ];
 }

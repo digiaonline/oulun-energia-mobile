@@ -281,16 +281,16 @@ class MainViewState extends ConsumerState<MainView> {
   }
 }
 
-Widget buildHomeViewButton(
-  String title,
-  String iconAsset, {
-  Function()? onTap,
-  Widget? marker,
-}) {
+Widget buildHomeViewButton(String title, String iconAsset,
+    {Function()? onTap,
+    Widget? marker,
+    double avatarSize = Sizes.mainViewIconAvatarSize,
+    double iconSize = Sizes.mainViewIconSize,
+    double fontSize = 13}) {
   return Opacity(
     opacity: onTap == null ? 0.6 : 1.0,
     child: SizedBox(
-      width: Sizes.mainViewIconAvatarSize,
+      width: avatarSize,
       child: TextButton(
         onPressed: onTap,
         child: Column(
@@ -299,30 +299,33 @@ Widget buildHomeViewButton(
               alignment: Alignment.topRight,
               children: [
                 CircleAvatar(
-                  radius: Sizes.mainViewIconAvatarSize / 4,
+                  radius: avatarSize / 4,
                   backgroundColor: Colors.white,
                   child: SvgPicture.asset(
                     iconAsset,
-                    width: Sizes.mainViewIconSize,
-                    height: Sizes.mainViewIconSize,
+                    width: iconSize,
+                    height: iconSize,
                     color: iconColorBlue,
                   ),
                 ),
                 marker != null
                     ? CircleAvatar(
-                        radius: Sizes.mainViewIconAvatarSize / 8,
+                        radius: avatarSize / 8,
                         backgroundColor: iconColorBlueLight,
                         child: marker,
                       )
                     : const SizedBox.shrink()
               ],
             ),
+            const SizedBox(
+              height: Sizes.marginViewBorderSize,
+            ),
             Text(
               title,
               textAlign: TextAlign.center,
               style: textTheme.bodyText2?.copyWith(
                   color: Colors.white,
-                  fontSize: 13,
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w400),
             ),
           ],
