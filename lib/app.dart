@@ -14,7 +14,7 @@ final mainNavigatorKey = GlobalKey<NavigatorState>();
 class OEApp extends ConsumerWidget {
   final String appName;
 
-  OEApp({super.key, required this.appName});
+  const OEApp({super.key, required this.appName});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,7 +54,6 @@ class OEApp extends ConsumerWidget {
       default:
         break;
     }
-    print(appState.current.name);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       mainNavigatorKey.currentState?.popAndPushNamed(routeName);
     });

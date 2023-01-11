@@ -7,6 +7,8 @@ import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:swipe/swipe.dart';
 
+import '../main/main_view.dart';
+
 class FirstTimeView extends ConsumerStatefulWidget {
   static const String routeName = "first_time";
 
@@ -74,37 +76,57 @@ class FtuState extends ConsumerState<FirstTimeView> {
     var stepItem = stepData[step];
     return _buildStep(
       ref,
-      context,
-      stepItem['title']!,
-      stepItem['description']!,
-      stepItem['iconText']!,
-      step,
+      context: context,
+      title: stepItem['title']!,
+      description: stepItem['description']!,
+      iconArea: stepItem['iconArea']!,
+      step: step,
     );
   }
 
-  var stepData = [
+  List<Map<String, dynamic>> stepData = [
     {
       "title": "Keskeytykset kartalla ja tiedotteina",
       "description":
           "Löydät nopeasti tiedon mahdollisista sähkön- ja lämmönjakelun keskeytyksistä",
-      "iconText": "Keskeytys-kartta",
+      "iconArea": buildHomeViewButton(
+        "Keskeytys-kartta",
+        'assets/icons/news.svg',
+        onTap: () => {},
+      ),
     },
     {
       "title": "Kaikki yhteystiedot sovelluksessa",
       "description":
           "Oulun Energian asiakaspalvelu auttaa sinua kaikissa sähköä ja lämpöä sekä niiden laskutusta koskevissa kysymyksissä",
-      "iconText": "Ota yhteyttä",
+      "iconArea": buildHomeViewButton(
+        "Ota yhteyttä",
+        'assets/icons/support_agent.svg',
+        onTap: () => {},
+      ),
     },
     {
       "title": "Omat energian kulutustiedot",
       "description":
           "Kun tunnistaudut Oulun Energian mobiilisovelluksen käyttäjäksi, pääset seuraamaan helposti energiankulutustasi",
-      "iconText": "Omat kulutustiedot",
+      "iconArea": buildHomeViewButton(
+        "Omat kulutustiedot",
+        'assets/icons/monitoring.svg',
+        onTap: () => {},
+        marker: const Icon(
+          Icons.lock_outline,
+          size: 14,
+        ),
+      ),
     },
   ];
 
-  Widget _buildStep(WidgetRef ref, BuildContext context, String title,
-      String description, String iconText, int step) {
+  Widget _buildStep(WidgetRef ref,
+      {required BuildContext context,
+      required String title,
+      required String description,
+      required Widget iconArea,
+      required int step}) {
     Widget? content = _getStepAdditionalContent(ref, step);
     var textTheme = Theme.of(context).textTheme;
     return Container(
@@ -113,53 +135,48 @@ class FtuState extends ConsumerState<FirstTimeView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
-            children: [
-              Text(
-                title,
-                style: textTheme.headline1?.copyWith(color: Colors.white),
-              ),
-              const SizedBox(
-                height: Sizes.marginViewBorderSize,
-              ),
-              Text(
-                description,
-                style: textTheme.bodyText1?.copyWith(color: Colors.white),
-              )
-            ],
-          ),
-          Column(
-            children: [
-              const Icon(Icons.stacked_bar_chart_outlined, size: 60),
-              const SizedBox(
-                height: Sizes.marginViewBorderSize,
-              ),
-              Text(
-                iconText,
-                style: textTheme.headline2?.copyWith(color: Colors.white),
-              ),
-              content ?? const SizedBox.shrink()
-            ],
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 100,
-                child: StepProgressIndicator(
-                  totalSteps: 3,
-                  currentStep: step,
-                  size: 20,
-                  selectedSize: 20,
-                  roundedEdges: const Radius.circular(10),
-                  customStep: (index, color, __) => Icon(
-                    Icons.circle,
-                    size: 20,
-                    color: step == index
-                        ? const Color(0xFFFFFFFF)
-                        : const Color(0xFF1A4590),
-                  ),
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "$title\n\n",
+                  maxLines: 3,
+                  style: textTheme.headline1?.copyWith(color: Colors.white),
                 ),
+                const SizedBox(
+                  height: Sizes.marginViewBorderSize,
+                ),
+                Text(
+                  "$description\n\n\n",
+                  maxLines: 4,
+                  style: textTheme.bodyText1?.copyWith(color: Colors.white),
+                ),
+                const SizedBox(
+                  height: Sizes.marginViewBorderSize,
+                ),
+                iconArea,
+                content ?? const SizedBox.shrink(),
+                const SizedBox(
+                  height: Sizes.marginViewBorderSize,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 100,
+            child: StepProgressIndicator(
+              totalSteps: 3,
+              currentStep: step,
+              size: Sizes.mainViewIconSize,
+              selectedSize: Sizes.mainViewIconSize,
+              roundedEdges: const Radius.circular(Sizes.mainViewIconSize / 2),
+              customStep: (index, color, __) => Icon(
+                Icons.circle,
+                size: Sizes.mainViewIconSize,
+                color: step == index
+                    ? const Color(0xFFFFFFFF)
+                    : const Color(0xFF1A4590),
               ),
             ),
           ),

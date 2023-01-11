@@ -239,7 +239,7 @@ class MainViewState extends ConsumerState<MainView> {
     var isLoggedIn = loginState.loggedInStatus == LoggedInStatus.loggedIn;
     return HomeView(
       mainControls: [
-        _buildHomeViewButton(
+        buildHomeViewButton(
             locals.homeViewUsageInfo, 'assets/icons/monitoring.svg',
             onTap: isLoggedIn ? () => _selectedMainContent(1) : null,
             marker: !isLoggedIn
@@ -248,67 +248,16 @@ class MainViewState extends ConsumerState<MainView> {
                     size: 14,
                   )
                 : null),
-        _buildHomeViewButton(
+        buildHomeViewButton(
             locals.homeViewInterruptions, 'assets/icons/news.svg'),
-        _buildHomeViewButton(
+        buildHomeViewButton(
             locals.homeViewContact, 'assets/icons/support_agent.svg'),
-        _buildHomeViewButton(
+        buildHomeViewButton(
             locals.homeViewFishHunt, 'assets/icons/set_meal.svg'),
-        _buildHomeViewButton(
+        buildHomeViewButton(
             locals.homeViewErrorReporting, 'assets/icons/calendar.svg'),
-        _buildHomeViewButton(locals.homeViewHelp, 'assets/icons/menu_book.svg'),
+        buildHomeViewButton(locals.homeViewHelp, 'assets/icons/menu_book.svg'),
       ],
-    );
-  }
-
-  Widget _buildHomeViewButton(
-    String title,
-    String iconAsset, {
-    Function()? onTap,
-    Widget? marker,
-  }) {
-    return Opacity(
-      opacity: onTap == null ? 0.6 : 1.0,
-      child: SizedBox(
-        width: Sizes.mainViewIconAvatarSize,
-        child: TextButton(
-          onPressed: onTap,
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  CircleAvatar(
-                    radius: Sizes.mainViewIconAvatarSize / 4,
-                    backgroundColor: Colors.white,
-                    child: SvgPicture.asset(
-                      iconAsset,
-                      width: Sizes.mainViewIconSize,
-                      height: Sizes.mainViewIconSize,
-                      color: iconColorBlue,
-                    ),
-                  ),
-                  marker != null
-                      ? CircleAvatar(
-                          radius: Sizes.mainViewIconAvatarSize / 8,
-                          backgroundColor: iconColorBlueLight,
-                          child: marker,
-                        )
-                      : const SizedBox.shrink()
-                ],
-              ),
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: textTheme.bodyText2?.copyWith(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 
@@ -330,4 +279,55 @@ class MainViewState extends ConsumerState<MainView> {
       _bottomBarExpanded = index != 0;
     });
   }
+}
+
+Widget buildHomeViewButton(
+  String title,
+  String iconAsset, {
+  Function()? onTap,
+  Widget? marker,
+}) {
+  return Opacity(
+    opacity: onTap == null ? 0.6 : 1.0,
+    child: SizedBox(
+      width: Sizes.mainViewIconAvatarSize,
+      child: TextButton(
+        onPressed: onTap,
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                CircleAvatar(
+                  radius: Sizes.mainViewIconAvatarSize / 4,
+                  backgroundColor: Colors.white,
+                  child: SvgPicture.asset(
+                    iconAsset,
+                    width: Sizes.mainViewIconSize,
+                    height: Sizes.mainViewIconSize,
+                    color: iconColorBlue,
+                  ),
+                ),
+                marker != null
+                    ? CircleAvatar(
+                        radius: Sizes.mainViewIconAvatarSize / 8,
+                        backgroundColor: iconColorBlueLight,
+                        child: marker,
+                      )
+                    : const SizedBox.shrink()
+              ],
+            ),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: textTheme.bodyText2?.copyWith(
+                  color: Colors.white,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

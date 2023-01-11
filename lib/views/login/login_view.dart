@@ -82,7 +82,7 @@ class LoginView extends ConsumerWidget {
                         ),
                         Row(
                           children: [
-                            Checkbox(value: false, onChanged: null),
+                            const Checkbox(value: false, onChanged: null),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
