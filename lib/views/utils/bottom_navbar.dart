@@ -2,7 +2,9 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:oulun_energia_mobile/views/main/main_view.dart';
+import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_selections_view.dart';
+import 'package:oulun_energia_mobile/views/main/home_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
@@ -77,12 +79,20 @@ class _BottomNavbarState extends State<BottomNavbar> {
           onTap: (int index) {
             switch (index) {
               case 0:
-                context.go(MainView.routePath);
+                context.go(HomeView.routePath);
                 break;
               case 1:
                 context.go(UsageSelectionsView.routePath);
                 break;
+              case 2:
+                context.go(InterruptionsSelectionsView.routePath);
+                break;
+
+              case 3:
+                context.go(ContactUsView.routePath);
+                break;
               default:
+                context.go(HomeView.routePath);
                 break;
             }
           },

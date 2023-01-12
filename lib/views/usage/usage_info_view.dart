@@ -6,6 +6,7 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/usage_info_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
+import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageInfoView extends ConsumerStatefulWidget {
   static const String routePath = '/usage/info';
@@ -150,7 +151,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
             ),
           ],
         ),
-      ),
+      ).withBackgroundColor(Colors.white),
       error: (error, stack) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +162,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
                 style: textTheme.headline2),
           ),
         ],
-      ),
+      ).withBackgroundColor(Colors.white),
       loading: () => Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -173,7 +174,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
             const CircularProgressIndicator(),
           ],
         ),
-      ),
+      ).withBackgroundColor(Colors.white),
     );
   }
 }

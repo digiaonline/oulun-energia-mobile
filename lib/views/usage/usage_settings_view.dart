@@ -10,6 +10,7 @@ import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/utils/submit_button.dart';
 import 'package:oulun_energia_mobile/views/utils/dropdown.dart';
+import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageSettingsView extends ConsumerStatefulWidget {
   static const String routePath = '/usage/settings';
@@ -162,7 +163,7 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
           ],
         ),
       ),
-    );
+    ).withBackgroundColor(Colors.white);
   }
 }
 

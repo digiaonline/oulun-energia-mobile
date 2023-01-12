@@ -104,7 +104,7 @@ class _ScaffoldNavbarState extends State<ScaffoldNavbar> {
           ),
           SliverFillRemaining(child: widget.child),
         ],
-      ).withBackground(widget.currentIndex == 0),
+      ).withBackground(),
       bottomNavigationBar: BottomNavbar(
           initialExpanded: widget.initialExpanded,
           currentIndex: widget.currentIndex),

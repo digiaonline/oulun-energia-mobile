@@ -8,7 +8,6 @@ import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
-import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class HomeView extends ConsumerWidget {
   static const String routePath = "/";

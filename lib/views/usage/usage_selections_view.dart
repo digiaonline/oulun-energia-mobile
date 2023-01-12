@@ -7,6 +7,7 @@ import 'package:oulun_energia_mobile/views/utils/selection_button.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/utils/content.dart';
+import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageSelectionsView extends StatelessWidget {
   static const String routePath = '/usage';
@@ -45,9 +46,10 @@ class UsageSelectionsView extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Content(
-          title: locals.usageViewMyConsumption,
-          text: bodyText,
-          children: selections),
+              title: locals.usageViewMyConsumption,
+              text: bodyText,
+              children: selections)
+          .withBackgroundColor(Colors.white),
     );
   }
 }

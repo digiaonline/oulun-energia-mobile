@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:oulun_energia_mobile/providers/app_state.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
-import 'package:oulun_energia_mobile/views/main/main_view.dart';
+import 'package:oulun_energia_mobile/views/main/home_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
@@ -28,7 +27,6 @@ class FtuState extends ConsumerState<FirstTimeView> {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    var appStateNotifier = ref.read(appStateProvider.notifier);
     var step = _stepIndex;
     var sliverChild = _getViewContent(ref, step);
     var content = SliverFillRemaining(child: sliverChild);
@@ -41,7 +39,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
               automaticallyImplyLeading: false,
               actions: [
                 InkWell(
-                  onTap: () => context.go(MainView.routePath),
+                  onTap: () => context.go(HomeView.routePath),
                   child: Container(
                     margin: Sizes.marginViewBorder,
                     child: Text(
@@ -54,7 +52,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             ),
             content,
           ],
-        ).withBackground(true),
+        ).withBackground(),
         onSwipeLeft: () {
           if (_stepIndex < 2) {
             setState(() {
@@ -181,7 +179,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             height: Sizes.marginViewBorderSizeLarge,
           ),
           TextButton(
-            onPressed: () => context.go(MainView.routePath),
+            onPressed: () => context.go(HomeView.routePath),
             child: Text(
               "Jatka ilman kirjautumista",
               style: defaultTheme.textTheme.bodyText1

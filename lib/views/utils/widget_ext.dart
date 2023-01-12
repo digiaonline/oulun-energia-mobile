@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 extension WidgetExt on Widget {
-  Widget withBackground(bool show) {
-    if (!show) {
-      return SizedBox(child: this);
-    }
+  Widget withBackground() {
     return Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -19,6 +16,10 @@ extension WidgetExt on Widget {
           ),
         ),
         child: this);
+  }
+
+  Widget withBackgroundColor(Color color) {
+    return Container(color: color, child: this);
   }
 
   Widget toButton({bool? secondary}) {

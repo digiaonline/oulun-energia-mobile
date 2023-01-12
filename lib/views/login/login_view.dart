@@ -6,27 +6,20 @@ import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
-class LoginView extends ConsumerStatefulWidget {
+class LoginView extends ConsumerWidget {
   static const String routePath = "/login";
   static const String routeName = "login_view";
 
   const LoginView({super.key});
 
   @override
-  ConsumerState<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends ConsumerState<LoginView> {
-  TextEditingController usernameController =
-      TextEditingController(text: "mira.juola@icloud.com");
-
-  TextEditingController passwordController =
-      TextEditingController(text: "Vaihda123456");
-
-  bool hasAcceptedTerms = false;
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var userAuth = ref.watch(loginProvider);
+
+    var usernameController =
+        TextEditingController(text: "mira.juola@icloud.com");
+    var passwordController = TextEditingController(text: "Vaihda123456");
+    bool _acceptedTerms = false; // todo move to a provider
 
     var theme = Theme.of(context);
     return Scaffold(
@@ -83,7 +76,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         ),
                         Row(
                           children: [
-                            Checkbox(value: hasAcceptedTerms, onChanged: null),
+                            Checkbox(value: _acceptedTerms, onChanged: null),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
@@ -95,7 +88,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         userAuth.loading
                             ? const Center(child: CircularProgressIndicator())
                             : TextButton(
-                                onPressed: () async => await _doLogin(
+                                onPressed: () => _doLogin(
                                     ref,
                                     usernameController.text,
                                     passwordController.text),
@@ -148,12 +141,12 @@ class _LoginViewState extends ConsumerState<LoginView> {
             ),
           ),
         ],
-      ).withBackground(true),
+      ).withBackground(),
     );
   }
 
-  Future<void> _doLogin(WidgetRef ref, String username, String password) async {
+  void _doLogin(WidgetRef ref, String username, String password) {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
-    await loginProviderNotifier.login(username, password);
+    loginProviderNotifier.login(username, password);
   }
 }
