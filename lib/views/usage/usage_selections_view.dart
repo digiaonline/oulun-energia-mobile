@@ -46,10 +46,9 @@ class UsageSelectionsView extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Content(
-              title: locals.usageViewMyConsumption,
-              text: bodyText,
-              children: selections)
-          .withBackgroundColor(Colors.white),
-    );
+          title: locals.usageViewMyConsumption,
+          text: bodyText,
+          children: selections),
+    ).withBackgroundColor(Colors.white);
   }
 }
