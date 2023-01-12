@@ -1,15 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oulun_energia_mobile/providers/app_state.dart';
+import 'package:go_router/go_router.dart';
+import 'package:oulun_energia_mobile/views/login/login_view.dart';
+import 'package:oulun_energia_mobile/views/main/home_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import '../main/main_view.dart';
-
 class FirstTimeView extends ConsumerStatefulWidget {
+  static const String routePath = '/first_time';
   static const String routeName = "first_time";
 
   const FirstTimeView({super.key});
@@ -27,7 +28,6 @@ class FtuState extends ConsumerState<FirstTimeView> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = Theme.of(context).textTheme;
-    var appStateNotifier = ref.read(appStateProvider.notifier);
     const double bottomBarHeight = 80;
     final double paddingTop = MediaQuery.of(context).padding.top;
     final double paddingBottom = MediaQuery.of(context).padding.bottom;
@@ -69,7 +69,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
               Align(
                 alignment: Alignment.centerRight,
                 child: InkWell(
-                  onTap: () => appStateNotifier.toMainView(),
+                  onTap: () => context.go(HomeView.routePath),
                   child: Container(
                     margin: Sizes.marginViewBorder
                         .copyWith(top: Sizes.marginViewBorderSizeLarge),
@@ -174,7 +174,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             height: Sizes.marginViewBorderSizeLarge,
           ),
           TextButton(
-            onPressed: () => ref.read(appStateProvider.notifier).toMainView(),
+            onPressed: () => context.go(HomeView.routePath),
             child: Text(
               "Jatka ilman kirjautumista",
               style: defaultTheme.textTheme.bodyText1
@@ -185,7 +185,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             height: Sizes.marginViewBorderSize,
           ),
           TextButton(
-            onPressed: () => ref.read(appStateProvider.notifier).toLoginView(),
+            onPressed: () => context.go(LoginView.routePath),
             child: Container(
               decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,

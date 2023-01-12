@@ -2,19 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/core/domain/usage_place.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/utils/submit_button.dart';
 import 'package:oulun_energia_mobile/views/utils/dropdown.dart';
+import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageSettingsView extends ConsumerStatefulWidget {
+  static const String routePath = '/usage/settings';
   static const String routeName = 'usage_settings_view';
 
-  final Function onCancel;
-
-  const UsageSettingsView({Key? key, required this.onCancel}) : super(key: key);
+  const UsageSettingsView({Key? key}) : super(key: key);
 
   @override
   ConsumerState<UsageSettingsView> createState() => _UsageSettingsViewState();
@@ -26,11 +28,16 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
   late UsagePlace _selectedUsagePlace;
   bool _useCelsius = true;
 
-  _onSave() {
+  _onSave(BuildContext context) {
     // TODO Save locally and/or via API
     // type: ${_selectedUsageType.name}
     // address: ${_selectedUsagePlace.street}, ${_selectedUsagePlace.postPlace} ${_selectedUsagePlace.postCode}
     // useCelsius: ${_useCelsius}
+    context.go(UsageSelectionsView.routePath);
+  }
+
+  _onCancel(BuildContext context) {
+    context.go(UsageSelectionsView.routePath);
   }
 
   _onSetSelectedUsageType(dynamic usageType) {
@@ -145,18 +152,18 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SubmitButton(
-                    text: locals.cancel, onPressed: () => widget.onCancel()),
+                    text: locals.cancel, onPressed: () => _onCancel(context)),
                 const SizedBox(width: 10.0),
                 SubmitButton(
                     text: locals.save,
-                    onPressed: () => _onSave(),
+                    onPressed: () => _onSave(context),
                     invertColors: true),
               ],
             )
           ],
         ),
       ),
-    );
+    ).withBackgroundColor(Colors.white);
   }
 }
 

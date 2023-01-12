@@ -19,6 +19,10 @@ extension WidgetExt on Widget {
         child: this);
   }
 
+  Widget withBackgroundColor(Color color) {
+    return Container(color: color, child: this);
+  }
+
   Widget toButton({bool? secondary}) {
     return Container(
       decoration: BoxDecoration(
