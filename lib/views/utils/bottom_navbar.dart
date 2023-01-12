@@ -87,7 +87,6 @@ class _BottomNavbarState extends State<BottomNavbar> {
               case 2:
                 context.go(InterruptionsSelectionsView.routePath);
                 break;
-
               case 3:
                 context.go(ContactUsView.routePath);
                 break;

@@ -11,8 +11,8 @@ import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 class ScaffoldNavbar extends StatefulWidget {
   const ScaffoldNavbar(
       {Key? key,
-      required this.title,
-      required this.routePath,
+      this.title,
+      this.routePath,
       required this.initialExpanded,
       required this.secondaryAppBar,
       required this.currentIndex,
@@ -22,8 +22,8 @@ class ScaffoldNavbar extends StatefulWidget {
   final Widget child;
   final bool initialExpanded;
   final bool secondaryAppBar;
-  final String routePath;
-  final String title;
+  final String? routePath;
+  final String? title;
   final int currentIndex;
 
   @override
@@ -83,7 +83,9 @@ class _ScaffoldNavbarState extends State<ScaffoldNavbar> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  context.go(widget.routePath);
+                                  if (widget.routePath != null) {
+                                    context.go(widget.routePath!);
+                                  }
                                 },
                                 child: const Icon(Icons.arrow_back),
                               ),
@@ -91,7 +93,7 @@ class _ScaffoldNavbarState extends State<ScaffoldNavbar> {
                                 height: Sizes.marginViewBorderSize,
                               ),
                               Text(
-                                widget.title,
+                                widget.title ?? '',
                                 style: textTheme.headline2
                                     ?.copyWith(color: Colors.black),
                               ),

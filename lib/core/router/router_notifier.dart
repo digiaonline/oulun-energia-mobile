@@ -16,17 +16,24 @@ import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/utils/scaffold_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
 
+/*
+    Used Riverpod official example Riverpod + Go Router
+    https://github.com/lucavenir/go_router_riverpod/blob/master/complete_example/lib/router/router_notifier.dart
+ */
 class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     implements Listenable {
   VoidCallback? routerListener;
-  UserAuthState userAuthState = UserAuthState(
-      loading: true, loggedInStatus: LoggedInStatus.notInitialized);
+  late UserAuthState userAuthState;
 
   @override
   Future<void> build() async {
+    // Can add more provider to watch
+
     userAuthState = ref.watch(loginProvider);
 
     ref.listenSelf((_, __) {
+      // Additional redirection logic goes here
+
       if (state.isLoading) return;
       routerListener?.call();
     });
@@ -36,11 +43,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     if (this.state.isLoading || this.state.hasError) return null;
 
     LoggedInStatus loggedInStatus = userAuthState.loggedInStatus;
-
-    if (userAuthState.loading &&
-        loggedInStatus == LoggedInStatus.notInitialized) {
-      return SplashScreen.routePath;
-    }
 
     if (state.location == '/splash') {
       if (!userAuthState.loading) {
@@ -62,7 +64,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     return null;
   }
 
-  /// Our application routes. Obtained through code generation
   List<RouteBase> get routes => <RouteBase>[
         GoRoute(
             path: SplashScreen.routePath,
