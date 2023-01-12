@@ -17,11 +17,9 @@ class LoginView extends ConsumerWidget {
     final usernameController =
         TextEditingController(text: "mira.juola@icloud.com");
     final passwordController = TextEditingController(text: "Vaihda123456");
+
     var userAuth = ref.watch(loginProvider);
 
-    var usernameController =
-        TextEditingController(text: "mira.juola@icloud.com");
-    var passwordController = TextEditingController(text: "Vaihda123456");
     bool _acceptedTerms = false; // todo move to a provider
 
     var theme = Theme.of(context);
