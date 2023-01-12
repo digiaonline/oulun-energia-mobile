@@ -55,7 +55,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
         length: 4,
         child: Column(
           children: [
-            SizedBox(height: isLandscape ? 5.0 : 20.0),
+            const SizedBox(height: 20.0),
             Center(
               child: Text(ref.watch(usageInfoProvider).getTotalUsage(),
                   style: textTheme.bodyText1),
