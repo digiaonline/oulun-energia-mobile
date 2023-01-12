@@ -29,6 +29,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   @override
   Widget build(BuildContext context) {
+    bottomNavigationBarController.expanded = widget.initialExpanded;
     var locals = AppLocalizations.of(context)!;
 
     return ExpandableNotifier(
