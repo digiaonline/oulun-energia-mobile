@@ -137,9 +137,14 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   }),
             ],
             builder: (BuildContext context, GoRouterState state, Widget child) {
+              var isLandscapeMode =
+                  MediaQuery.of(context).orientation == Orientation.landscape;
+
               var locals = AppLocalizations.of(context)!;
               String title = '';
               bool secondaryAppBar = true;
+              bool initialExpanded = true;
+              bool hideAppBar = false;
               int currentIndex = 0;
 
               switch (state.location) {
@@ -148,6 +153,11 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   currentIndex = 1;
                   break;
                 case '/usage/info':
+                  if (isLandscapeMode) {
+                    secondaryAppBar = false;
+                    initialExpanded = false;
+                    hideAppBar = true;
+                  }
                   title = locals.usageViewUsageInfo;
                   currentIndex = 1;
                   break;
@@ -169,10 +179,11 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
               }
               return ScaffoldNavbar(
                   title: title,
+                  hideAppBar: hideAppBar,
                   routePath: UsageSelectionsView.routePath,
                   currentIndex: currentIndex,
                   secondaryAppBar: secondaryAppBar,
-                  initialExpanded: true,
+                  initialExpanded: initialExpanded,
                   child: child);
             }),
       ];
