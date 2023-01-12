@@ -14,6 +14,9 @@ class LoginView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final usernameController =
+        TextEditingController(text: "mira.juola@icloud.com");
+    final passwordController = TextEditingController(text: "Vaihda123456");
     var userAuth = ref.watch(loginProvider);
 
     var usernameController =
@@ -76,7 +79,7 @@ class LoginView extends ConsumerWidget {
                         ),
                         Row(
                           children: [
-                            Checkbox(value: _acceptedTerms, onChanged: null),
+                            const Checkbox(value: false, onChanged: null),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",

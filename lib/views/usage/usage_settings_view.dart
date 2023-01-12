@@ -16,7 +16,9 @@ class UsageSettingsView extends ConsumerStatefulWidget {
   static const String routePath = '/usage/settings';
   static const String routeName = 'usage_settings_view';
 
-  const UsageSettingsView({Key? key}) : super(key: key);
+  final Function onCancel;
+
+  const UsageSettingsView({Key? key, required this.onCancel}) : super(key: key);
 
   @override
   ConsumerState<UsageSettingsView> createState() => _UsageSettingsViewState();

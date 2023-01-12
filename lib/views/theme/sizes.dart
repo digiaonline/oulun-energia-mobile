@@ -7,6 +7,6 @@ class Sizes {
   static const double marginViewBorderSize = 20;
   static const double marginViewBorderSizeLarge = 40;
 
-  static EdgeInsetsGeometry marginViewBorder =
+  static EdgeInsets marginViewBorder =
       const EdgeInsets.all(marginViewBorderSize);
 }

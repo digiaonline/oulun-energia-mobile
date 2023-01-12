@@ -66,8 +66,7 @@ class HomeView extends ConsumerWidget {
 List<Widget> _buildControls(
     BuildContext context, bool isLoggedIn, AppLocalizations locals) {
   return [
-    _buildHomeViewButton(
-        locals.homeViewUsageInfo, 'assets/icons/monitoring.svg',
+    buildHomeViewButton(locals.homeViewUsageInfo, 'assets/icons/monitoring.svg',
         onTap:
             isLoggedIn ? () => context.go(UsageSelectionsView.routePath) : null,
         marker: !isLoggedIn
@@ -76,26 +75,26 @@ List<Widget> _buildControls(
                 size: 14,
               )
             : null),
-    _buildHomeViewButton(locals.homeViewInterruptions, 'assets/icons/news.svg'),
-    _buildHomeViewButton(
+    buildHomeViewButton(locals.homeViewInterruptions, 'assets/icons/news.svg'),
+    buildHomeViewButton(
         locals.homeViewContact, 'assets/icons/support_agent.svg'),
-    _buildHomeViewButton(locals.homeViewFishHunt, 'assets/icons/set_meal.svg'),
-    _buildHomeViewButton(
+    buildHomeViewButton(locals.homeViewFishHunt, 'assets/icons/set_meal.svg'),
+    buildHomeViewButton(
         locals.homeViewErrorReporting, 'assets/icons/calendar.svg'),
-    _buildHomeViewButton(locals.homeViewHelp, 'assets/icons/menu_book.svg'),
+    buildHomeViewButton(locals.homeViewHelp, 'assets/icons/menu_book.svg'),
   ];
 }
 
-Widget _buildHomeViewButton(
-  String title,
-  String iconAsset, {
-  Function()? onTap,
-  Widget? marker,
-}) {
+Widget buildHomeViewButton(String title, String iconAsset,
+    {Function()? onTap,
+    Widget? marker,
+    double avatarSize = Sizes.mainViewIconAvatarSize,
+    double iconSize = Sizes.mainViewIconSize,
+    double fontSize = 13}) {
   return Opacity(
     opacity: onTap == null ? 0.6 : 1.0,
     child: SizedBox(
-      width: Sizes.mainViewIconAvatarSize,
+      width: avatarSize,
       child: TextButton(
         onPressed: onTap,
         child: Column(
@@ -104,30 +103,33 @@ Widget _buildHomeViewButton(
               alignment: Alignment.topRight,
               children: [
                 CircleAvatar(
-                  radius: Sizes.mainViewIconAvatarSize / 4,
+                  radius: avatarSize / 4,
                   backgroundColor: Colors.white,
                   child: SvgPicture.asset(
                     iconAsset,
-                    width: Sizes.mainViewIconSize,
-                    height: Sizes.mainViewIconSize,
+                    width: iconSize,
+                    height: iconSize,
                     color: iconColorBlue,
                   ),
                 ),
                 marker != null
                     ? CircleAvatar(
-                        radius: Sizes.mainViewIconAvatarSize / 8,
+                        radius: avatarSize / 8,
                         backgroundColor: iconColorBlueLight,
                         child: marker,
                       )
                     : const SizedBox.shrink()
               ],
             ),
+            const SizedBox(
+              height: Sizes.marginViewBorderSize,
+            ),
             Text(
               title,
               textAlign: TextAlign.center,
               style: textTheme.bodyText2?.copyWith(
                   color: Colors.white,
-                  fontSize: 13,
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w400),
             ),
           ],
