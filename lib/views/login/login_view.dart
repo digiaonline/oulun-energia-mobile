@@ -1,32 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
-import 'package:oulun_energia_mobile/core/enums.dart';
-import 'package:oulun_energia_mobile/providers/app_state.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
-import '../utils/snackbar.dart';
-
 class LoginView extends ConsumerWidget {
+  static const String routePath = "/login";
   static const String routeName = "login_view";
-  var usernameController = TextEditingController(text: "mira.juola@icloud.com");
-  var passwordController = TextEditingController(text: "Vaihda123456");
-  bool _acceptedTerms = false; // todo move to a provider
 
-  LoginView({super.key});
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final usernameController =
+        TextEditingController(text: "mira.juola@icloud.com");
+    final passwordController = TextEditingController(text: "Vaihda123456");
+
     var userAuth = ref.watch(loginProvider);
-    if (!userAuth.loading &&
-        (userAuth.loggedInStatus == LoggedInStatus.loggedIn ||
-            userAuth.loggedInStatus == LoggedInStatus.failed)) {
-      _onLogin(context, ref, userAuth.userAuth);
-    }
+
+    bool _acceptedTerms = false; // todo move to a provider
+
     var theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
@@ -82,7 +77,7 @@ class LoginView extends ConsumerWidget {
                         ),
                         Row(
                           children: [
-                            Checkbox(value: _acceptedTerms, onChanged: null),
+                            const Checkbox(value: false, onChanged: null),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
@@ -154,16 +149,5 @@ class LoginView extends ConsumerWidget {
   void _doLogin(WidgetRef ref, String username, String password) {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
     loginProviderNotifier.login(username, password);
-  }
-
-  void _onLogin(BuildContext context, WidgetRef ref, UserAuth? success) {
-    return success != null
-        ? loginSuccess(context, ref)
-        : showSnackbar("Kirjautuminen epäonnistui!");
-  }
-
-  void loginSuccess(BuildContext context, WidgetRef ref) {
-    ref.read(appStateProvider.notifier).loggedIn();
-    showSnackbar("Jee kirjauduit sisään!");
   }
 }

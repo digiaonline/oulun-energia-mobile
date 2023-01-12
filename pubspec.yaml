@@ -27,6 +27,8 @@ dependencies:
   swipe: ^0.0.1
   expandable: ^5.0.1
   fl_chart: ^0.55.2
+  go_router: ^6.0.1
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
