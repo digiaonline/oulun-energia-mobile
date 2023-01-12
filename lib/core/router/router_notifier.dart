@@ -93,18 +93,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   return const HomeView();
                 },
               ),
-            ],
-            builder: (BuildContext context, GoRouterState state, Widget child) {
-              return ScaffoldNavbar(
-                  title: '',
-                  routePath: '',
-                  initialExpanded: false,
-                  secondaryAppBar: false,
-                  currentIndex: 0,
-                  child: child);
-            }),
-        ShellRoute(
-            routes: <RouteBase>[
               GoRoute(
                   path: UsageSelectionsView.routePath,
                   name: UsageSelectionsView.routeName,
@@ -174,6 +162,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   secondaryAppBar = false;
                   break;
                 default:
+                  initialExpanded = false;
                   secondaryAppBar = false;
                   break;
               }
