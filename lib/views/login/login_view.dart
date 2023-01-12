@@ -13,14 +13,14 @@ import '../utils/snackbar.dart';
 
 class LoginView extends ConsumerWidget {
   static const String routeName = "login_view";
-  var usernameController = TextEditingController(text: "mira.juola@icloud.com");
-  var passwordController = TextEditingController(text: "Vaihda123456");
-  bool _acceptedTerms = false; // todo move to a provider
 
-  LoginView({super.key});
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final usernameController =
+        TextEditingController(text: "mira.juola@icloud.com");
+    final passwordController = TextEditingController(text: "Vaihda123456");
     var userAuth = ref.watch(loginProvider);
     if (!userAuth.loading &&
         (userAuth.loggedInStatus == LoggedInStatus.loggedIn ||
@@ -82,7 +82,7 @@ class LoginView extends ConsumerWidget {
                         ),
                         Row(
                           children: [
-                            Checkbox(value: _acceptedTerms, onChanged: null),
+                            const Checkbox(value: false, onChanged: null),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",

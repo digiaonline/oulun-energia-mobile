@@ -22,7 +22,6 @@ final appStateProvider =
       initialState = AppStates.firstTimeView;
       break;
   }
-  print("${loginState.loggedInStatus.name} ${initialState.name}");
   return AppStateNotifier(AppState(initialState));
 });
 

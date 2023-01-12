@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 
 extension WidgetExt on Widget {
   Widget withBackground() {
@@ -21,9 +22,11 @@ extension WidgetExt on Widget {
   Widget toButton({bool? secondary}) {
     return Container(
       decoration: BoxDecoration(
-        border: secondary != null ? Border.all(color: Colors.cyan) : null,
+        border: secondary != null
+            ? Border.all(color: buttonPrimaryBackground)
+            : null,
         shape: BoxShape.rectangle,
-        color: secondary != null ? Colors.transparent : Colors.cyan,
+        color: secondary != null ? Colors.transparent : buttonPrimaryBackground,
       ),
       child: this,
     );
@@ -39,5 +42,13 @@ extension WidgetExt on Widget {
             shape: BoxShape.rectangle,
             borderRadius: const BorderRadius.all(Radius.circular(20))),
         child: this);
+  }
+
+  Expanded toExpanded() {
+    return Expanded(child: this);
+  }
+
+  Flexible toFlexible() {
+    return Flexible(child: this);
   }
 }
