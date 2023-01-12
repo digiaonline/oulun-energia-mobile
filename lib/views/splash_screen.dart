@@ -26,7 +26,7 @@ class SplashScreen extends ConsumerWidget {
           ),
           SvgPicture.asset("assets/images/oe_logo.svg", color: Colors.white)
         ],
-      ).withBackground(),
+      ).withBackground(true),
     );
   }
 }

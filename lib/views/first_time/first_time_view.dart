@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/providers/app_state.dart';
+import 'package:oulun_energia_mobile/views/login/login_view.dart';
+import 'package:oulun_energia_mobile/views/main/main_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
@@ -38,7 +41,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
               automaticallyImplyLeading: false,
               actions: [
                 InkWell(
-                  onTap: () => appStateNotifier.toMainView(),
+                  onTap: () => context.go(MainView.routePath),
                   child: Container(
                     margin: Sizes.marginViewBorder,
                     child: Text(
@@ -51,7 +54,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             ),
             content,
           ],
-        ).withBackground(),
+        ).withBackground(true),
         onSwipeLeft: () {
           if (_stepIndex < 2) {
             setState(() {
@@ -178,7 +181,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             height: Sizes.marginViewBorderSizeLarge,
           ),
           TextButton(
-            onPressed: () => ref.read(appStateProvider.notifier).toMainView(),
+            onPressed: () => context.go(MainView.routePath),
             child: Text(
               "Jatka ilman kirjautumista",
               style: defaultTheme.textTheme.bodyText1
@@ -189,7 +192,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             height: Sizes.marginViewBorderSize,
           ),
           TextButton(
-            onPressed: () => ref.read(appStateProvider.notifier).toLoginView(),
+            onPressed: () => context.go(LoginView.routePath),
             child: Container(
               decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,

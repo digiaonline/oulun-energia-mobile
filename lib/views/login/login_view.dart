@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
-import 'package:oulun_energia_mobile/core/enums.dart';
-import 'package:oulun_energia_mobile/providers/app_state.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
-import 'package:oulun_energia_mobile/views/main/main_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
-import '../utils/snackbar.dart';
-
-class LoginView extends ConsumerWidget {
+class LoginView extends ConsumerStatefulWidget {
   static const String routePath = "/login";
   static const String routeName = "login_view";
-  final TextEditingController usernameController =
-      TextEditingController(text: "mira.juola@icloud.com");
-  final TextEditingController passwordController =
-      TextEditingController(text: "Vaihda123456");
-  final bool _acceptedTerms = false; // todo move to a provider
 
-  LoginView({super.key});
+  const LoginView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends ConsumerState<LoginView> {
+  TextEditingController usernameController =
+      TextEditingController(text: "mira.juola@icloud.com");
+
+  TextEditingController passwordController =
+      TextEditingController(text: "Vaihda123456");
+
+  bool hasAcceptedTerms = false;
+  @override
+  Widget build(BuildContext context) {
     var userAuth = ref.watch(loginProvider);
 
     var theme = Theme.of(context);
@@ -83,7 +83,7 @@ class LoginView extends ConsumerWidget {
                         ),
                         Row(
                           children: [
-                            Checkbox(value: _acceptedTerms, onChanged: null),
+                            Checkbox(value: hasAcceptedTerms, onChanged: null),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
@@ -148,27 +148,12 @@ class LoginView extends ConsumerWidget {
             ),
           ),
         ],
-      ).withBackground(),
+      ).withBackground(true),
     );
   }
 
   Future<void> _doLogin(WidgetRef ref, String username, String password) async {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
     await loginProviderNotifier.login(username, password);
-
-    var loginProv = ref.read(loginProvider);
-    LoggedInStatus loggedInStatus = loginProv.loggedInStatus;
-
-    switch (loggedInStatus) {
-      case LoggedInStatus.loggedIn:
-        showSnackbar("Jee kirjauduit sisään!");
-        break;
-      case LoggedInStatus.failed:
-        showSnackbar("Kirjautuminen epäonnistui!");
-        break;
-      default:
-        showSnackbar("Jotain meni pieleen!");
-        break;
-    }
   }
 }

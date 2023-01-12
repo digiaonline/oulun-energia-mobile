@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 extension WidgetExt on Widget {
-  Widget withBackground() {
+  Widget withBackground(bool show) {
+    if (!show) {
+      return SizedBox(child: this);
+    }
     return Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

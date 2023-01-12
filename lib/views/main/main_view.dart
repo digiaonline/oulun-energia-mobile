@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:oulun_energia_mobile/core/enums.dart';
-import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/main/home_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
@@ -174,7 +172,7 @@ class MainViewState extends ConsumerState<MainView> {
             ),
           ),
         ],
-      ).withBackground(),
+      ).withBackground(true),
       bottomNavigationBar: ExpandableNotifier(
         child: Expandable(
           controller: bottomNavigationBarController,
@@ -225,7 +223,7 @@ class MainViewState extends ConsumerState<MainView> {
           collapsed: const SizedBox.shrink(),
         ),
       ),
-    ).withBackground();
+    ).withBackground(true);
   }
 
   Widget _buildHomeViewButton(
