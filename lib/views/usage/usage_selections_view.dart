@@ -46,6 +46,7 @@ class UsageSelectionsView extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Content(
+          image: const SizedBox.shrink(),
           title: locals.usageViewMyConsumption,
           text: bodyText,
           children: selections),

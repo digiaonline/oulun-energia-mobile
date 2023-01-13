@@ -19,21 +19,23 @@ class Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        width: double.infinity,
         color: Colors.white,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (image != null) image!,
             // TODO Show the image here if assigned
             //  Container is a placeholder for the image for now
-            Container(
-              color: Colors.grey,
-              width: double.infinity,
-              height: 235.0,
-            ),
+            if (image != null)
+              Container(
+                color: Colors.grey,
+                width: double.infinity,
+                height: 235.0,
+              ),
             Padding(
                 padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
                     FittedBox(
@@ -50,8 +52,12 @@ class Content extends StatelessWidget {
                       style: defaultTheme.textTheme.bodyText2,
                     ),
                     const SizedBox(height: 20),
-                    Column(
-                      children: children,
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: children,
+                      ),
                     ),
                   ],
                 ))

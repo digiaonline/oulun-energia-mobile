@@ -6,6 +6,9 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/first_time/first_time_view.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_fault_view.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_map_view.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_selections_view.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/main/home_view.dart';
@@ -118,6 +121,24 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                     return const InterruptionsSelectionsView();
                   }),
               GoRoute(
+                  path: InterruptionsMapView.routePath,
+                  name: InterruptionsMapView.routeName,
+                  builder: (BuildContext context, GoRouterState state) {
+                    return const InterruptionsMapView();
+                  }),
+              GoRoute(
+                  path: InterruptionsNoticesView.routePath,
+                  name: InterruptionsNoticesView.routeName,
+                  builder: (BuildContext context, GoRouterState state) {
+                    return const InterruptionsNoticesView();
+                  }),
+              GoRoute(
+                  path: InterruptionsFaultView.routePath,
+                  name: InterruptionsFaultView.routeName,
+                  builder: (BuildContext context, GoRouterState state) {
+                    return const InterruptionsFaultView();
+                  }),
+              GoRoute(
                   path: ContactUsView.routePath,
                   name: ContactUsView.routeName,
                   builder: (BuildContext context, GoRouterState state) {
@@ -136,11 +157,15 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
               int currentIndex = 0;
 
               switch (state.location) {
-                case '/usage/settings':
+                case UsageSelectionsView.routePath:
+                  currentIndex = 1;
+                  secondaryAppBar = false;
+                  break;
+                case UsageSettingsView.routePath:
                   title = locals.usageViewSettings;
                   currentIndex = 1;
                   break;
-                case '/usage/info':
+                case UsageInfoView.routePath:
                   if (isLandscapeMode) {
                     secondaryAppBar = false;
                     initialExpanded = false;
@@ -149,15 +174,21 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   title = locals.usageViewUsageInfo;
                   currentIndex = 1;
                   break;
-                case '/usage':
-                  currentIndex = 1;
-                  secondaryAppBar = false;
-                  break;
-                case '/interruptions':
+                case InterruptionsSelectionsView.routePath:
                   currentIndex = 2;
                   secondaryAppBar = false;
                   break;
-                case '/contact_us':
+                case InterruptionsMapView.routePath:
+                  currentIndex = 2;
+                  break;
+                case InterruptionsNoticesView.routePath:
+                  currentIndex = 2;
+                  break;
+                case InterruptionsFaultView.routePath:
+                  currentIndex = 2;
+                  title = locals.interruptionsViewFault;
+                  break;
+                case ContactUsView.routePath:
                   currentIndex = 3;
                   secondaryAppBar = false;
                   break;

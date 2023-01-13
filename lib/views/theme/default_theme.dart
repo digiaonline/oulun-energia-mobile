@@ -21,6 +21,8 @@ TextTheme textTheme = const TextTheme(
       fontSize: 22.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
   headline3: TextStyle(
       fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+  headline4: TextStyle(
+      fontSize: 28.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
 );
 
 IconThemeData appBarIconTheme =
@@ -101,6 +103,7 @@ ThemeData defaultTheme = ThemeData(
 const Color secondaryActiveButtonColor = Color(0xFF009EB5);
 const Color dividerColor = Color(0xFFDFE2EB);
 const Color borderColor = Color(0xFF949494);
+const Color hintTextColor = Color(0xFF8D8D8D);
 const Color tabBorderColor = Color(0xFFE0E0E0);
 const Color iconColorBlue = Color(0xFF002B59);
 const Color iconColorBlack = Color(0xFF002B59);

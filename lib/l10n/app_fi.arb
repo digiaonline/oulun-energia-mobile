@@ -32,5 +32,15 @@
    "homeViewContact": "Ota yhteyttä",
    "homeViewFishHunt": "Kalatie",
    "homeViewErrorReporting": "Vikapäivystys",
-   "homeViewHelp": "Ohjeet"
+   "homeViewHelp": "Ohjeet",
+   "interruptionsViewTitle": "Keskeytykset",
+   "interruptionsViewText": "Keskeytykset sähkön- ja lämmönjakelussa ovat ikäviä ja silloin voimme palvella sinua parhaiten jakamalla tietoa. Keskeytystiedotteissa julkaistavat sähkön ja kaukolämmön vikatiedotteet koskevat Oulun Energian jakeluverkkoja. Koko Suomen sähkökatkoista saat tietoa keskeytyskartalta.",
+   "interruptionsViewMap": "Keskeytyskartta",
+   "interruptionsViewNotices": "Keskeytystiedotteet",
+   "interruptionsViewFault": "Ilmoita viasta",
+   "interruptionsViewFaultTitle": "Vikapäivystys 24 h",
+   "interruptionsViewFaultText": "Vikapäivystys palvelee Oulun Energian sähkö- ja kaukolämpöverkon vikatilanteissa. Ilmoita aina puhelimitse kiireellisistä vioista ja vioista, jotka voivat aiheuttaa vaaran hengelle ja terveydelle. Kiireettömissä asioissa voit lähettää viestin.",
+   "interruptionsViewFaultElectric": "Sähkönjakelu",
+   "interruptionsViewFaultHeat": "Lämmönjakelu"
+
 }
