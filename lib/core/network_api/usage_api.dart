@@ -75,8 +75,6 @@ class UsageApi extends RestApiBase {
 
       return usages
           .map((reading) => Usage.fromJson(reading, usageInterval))
-          .toList()
-          .where((usage) => usage.statusCode == StatusCode.measured)
           .toList();
     } catch (e) {
       return [];

@@ -61,7 +61,7 @@ class Usage {
         date = _formatByHour(locale);
         break;
       case UsageInterval.day:
-        date = DateFormat('d', locale).format(from);
+        date = DateFormat('E d', locale).format(from);
         break;
       case UsageInterval.month:
         date = DateFormat('MMM', locale).format(from);

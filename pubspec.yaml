@@ -23,10 +23,10 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   flutter_riverpod: ^2.1.1
   xml2json: ^5.3.5
-  graphic: ^1.0.1
   step_progress_indicator: ^1.0.2
   swipe: ^0.0.1
   expandable: ^5.0.1
+  fl_chart: ^0.55.2
   go_router: ^6.0.1
   carousel_slider: ^4.2.1
 
