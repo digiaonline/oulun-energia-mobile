@@ -7,7 +7,9 @@ import 'package:oulun_energia_mobile/flavors.dart';
 
 final loginProvider = StateNotifierProvider<UserAuthNotifier, UserAuthState>(
     (ref) => UserAuthNotifier(UserAuthState(
-        loading: false, loggedInStatus: LoggedInStatus.notInitialized)));
+        loading: false,
+        loggedInStatus: LoggedInStatus.notInitialized,
+        termsAccepted: false)));
 
 class UserAuthNotifier extends StateNotifier<UserAuthState> {
   late final Authentication auth;
@@ -41,6 +43,10 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     });
   }
 
+  void acceptTerms(bool accept) {
+    state = state.copyWith(termsAccepted: accept);
+  }
+
   void _initialize() {
     state = state.copyWith(loading: true);
     auth.getAuthenticationToken().then((token) {
@@ -61,16 +67,24 @@ class UserAuthState {
   final bool loading;
   final LoggedInStatus loggedInStatus;
   final UserAuth? userAuth;
+  final bool termsAccepted;
 
   UserAuthState(
-      {required this.loading, required this.loggedInStatus, this.userAuth});
+      {required this.loading,
+      required this.loggedInStatus,
+      required this.termsAccepted,
+      this.userAuth});
 
   UserAuthState copyWith(
-      {bool? loading, LoggedInStatus? loggedIn, UserAuth? userAuth}) {
+      {bool? loading,
+      LoggedInStatus? loggedIn,
+      UserAuth? userAuth,
+      bool? termsAccepted}) {
     return UserAuthState(
         loading: loading ?? this.loading,
         loggedInStatus: loggedIn ?? loggedInStatus,
-        userAuth: userAuth ?? this.userAuth);
+        userAuth: userAuth ?? this.userAuth,
+        termsAccepted: termsAccepted ?? this.termsAccepted);
   }
 
   bool loggedIn() {

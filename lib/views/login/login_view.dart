@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
@@ -17,11 +18,8 @@ class LoginView extends ConsumerWidget {
     final usernameController =
         TextEditingController(text: "mira.juola@icloud.com");
     final passwordController = TextEditingController(text: "Vaihda123456");
-
     var userAuth = ref.watch(loginProvider);
-
-    bool _acceptedTerms = false; // todo move to a provider
-
+    var loginNotifier = ref.read(loginProvider.notifier);
     var theme = Theme.of(context);
     return Scaffold(
       body: CustomScrollView(
@@ -55,6 +53,7 @@ class LoginView extends ConsumerWidget {
                           decoration: const InputDecoration(
                               hintText: "Type user name here"),
                           maxLines: 1,
+                          autofillHints: const [AutofillHints.username],
                           controller: usernameController,
                         ),
                         const SizedBox(
@@ -69,6 +68,9 @@ class LoginView extends ConsumerWidget {
                           decoration: const InputDecoration(
                               hintText: "Type password here"),
                           maxLines: 1,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autofillHints: const [AutofillHints.password],
                           keyboardType: TextInputType.visiblePassword,
                           controller: passwordController,
                         ),
@@ -77,7 +79,11 @@ class LoginView extends ConsumerWidget {
                         ),
                         Row(
                           children: [
-                            const Checkbox(value: false, onChanged: null),
+                            Checkbox(
+                              value: userAuth.termsAccepted,
+                              onChanged: (value) =>
+                                  loginNotifier.acceptTerms(value ?? false),
+                            ),
                             Flexible(
                                 child: Text(
                               "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
@@ -89,52 +95,44 @@ class LoginView extends ConsumerWidget {
                         userAuth.loading
                             ? const Center(child: CircularProgressIndicator())
                             : TextButton(
-                                onPressed: () => _doLogin(
-                                    ref,
-                                    usernameController.text,
-                                    passwordController.text),
+                                onPressed: userAuth.termsAccepted
+                                    ? () => _doLogin(
+                                        ref,
+                                        usernameController.text,
+                                        passwordController.text)
+                                    : null,
                                 child: Text(
                                   "Login",
                                   style: defaultTheme.textTheme.bodyText1
                                       ?.copyWith(color: Colors.white),
                                 ),
-                              ).toButton()
+                              ).toButton(enabled: userAuth.termsAccepted)
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          "Tai tunnistaudu",
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyText2
-                              ?.copyWith(color: Colors.white),
-                        ),
-                        const SizedBox(
-                          height: Sizes.marginViewBorderSize,
-                        ),
-                        TextButton(
-                          onPressed: null,
+                        InkWell(
+                          onTap: () => _openForgotPassword(context),
                           child: Text(
-                            "Pankkitunnuksella",
-                            style: theme.textTheme.bodyText2
-                                ?.copyWith(color: Colors.cyan),
-                          ),
-                        ).toButton(secondary: true),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text("Unohtuiko",
+                            "Unohtuiko salasana",
                             textAlign: TextAlign.center,
-                            style: theme.textTheme.bodyText2
-                                ?.copyWith(color: Colors.white)),
-                        Text(
-                          "Eikö ole tunnusta",
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyText2
-                              ?.copyWith(color: Colors.white),
+                            style: theme.textTheme.bodyText2?.copyWith(
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () => _openRegistering(context),
+                          child: Text(
+                            "Eikö ole tunnusta",
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.bodyText2?.copyWith(
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -149,5 +147,19 @@ class LoginView extends ConsumerWidget {
   void _doLogin(WidgetRef ref, String username, String password) {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
     loginProviderNotifier.login(username, password);
+  }
+
+  void _openRegistering(BuildContext context) {
+    context.goNamed("register", params: {
+      "title": "Register",
+      "url": "https://www.energiatili.fi/eServices/Online/RegisterIndex"
+    });
+  }
+
+  void _openForgotPassword(BuildContext context) {
+    context.goNamed("register", params: {
+      "title": "Passwd",
+      "url": "https://www.energiatili.fi/eServices/Online/ForgotPassword"
+    });
   }
 }

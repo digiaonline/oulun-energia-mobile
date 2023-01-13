@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,64 +25,50 @@ class FtuState extends ConsumerState<FirstTimeView> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     var textTheme = Theme.of(context).textTheme;
-    const double bottomBarHeight = 80;
-    final double paddingTop = MediaQuery.of(context).padding.top;
-    final double paddingBottom = MediaQuery.of(context).padding.bottom;
-    final double toolbarHeight =
-        theme.appBarTheme.toolbarHeight ?? kToolbarHeight;
-    final double screenHeight = MediaQuery.of(context).size.height;
-    final double height = screenHeight -
-        paddingTop -
-        toolbarHeight -
-        paddingBottom -
-        bottomBarHeight;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Stack(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(
-                    top: Sizes.marginViewBorderSizeLarge * 2),
-                height: height,
-                child: CarouselSlider.builder(
-                  itemCount: stepData.length,
-                  itemBuilder: (context, index, realIndex) {
-                    return _getViewContent(ref, index);
-                  },
-                  options: CarouselOptions(
-                      onPageChanged: (index, reason) => setState(() {
-                            _stepIndex = index;
-                          }),
-                      viewportFraction: 1,
-                      enableInfiniteScroll: false,
-                      enlargeCenterPage: true,
-                      enlargeFactor: 1,
-                      height: screenHeight),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: InkWell(
-                  onTap: () => context.go(HomeView.routePath),
-                  child: Container(
-                    margin: Sizes.marginViewBorder
-                        .copyWith(top: Sizes.marginViewBorderSizeLarge),
-                    child: Text(
-                      "Ohita",
-                      style: textTheme.bodyText2?.copyWith(color: Colors.white),
+          Expanded(
+            child: Stack(
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(
+                        top: Sizes.marginViewBorderSizeLarge * 2,
+                        left: Sizes.marginViewBorderSize,
+                        right: Sizes.marginViewBorderSize),
+                    child: PageView(
+                      onPageChanged: (value) => setState(() {
+                        _stepIndex = value;
+                      }),
+                      children: [
+                        _getViewContent(ref, 0),
+                        _getViewContent(ref, 1),
+                        _getViewContent(ref, 2),
+                      ],
+                    )),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    onTap: () => context.go(HomeView.routePath),
+                    child: Container(
+                      margin: Sizes.marginViewBorder
+                          .copyWith(top: Sizes.marginViewBorderSizeLarge),
+                      child: Text(
+                        "Ohita",
+                        style:
+                            textTheme.bodyText2?.copyWith(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Container(
-            height: bottomBarHeight,
+            height: 80,
             padding: Sizes.marginViewBorder,
             child: Align(
               alignment: Alignment.center,
@@ -133,33 +118,30 @@ class FtuState extends ConsumerState<FirstTimeView> {
       required int step}) {
     Widget? content = _getStepAdditionalContent(ref, step);
     var textTheme = Theme.of(context).textTheme;
-    return Container(
-      margin: Sizes.marginViewBorder,
-      child: SingleChildScrollView(
-        child: IntrinsicHeight(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "$title\n\n",
-                maxLines: 2,
-                style: textTheme.headline1?.copyWith(color: Colors.white),
-              ),
-              const SizedBox(
-                height: Sizes.marginViewBorderSize,
-              ),
-              Text(
-                "$description\n\n\n",
-                maxLines: 4,
-                style: textTheme.bodyText1?.copyWith(color: Colors.white),
-              ),
-              const SizedBox(
-                height: Sizes.marginViewBorderSize,
-              ),
-              iconArea.toExpanded(),
-              content ?? const SizedBox.shrink(),
-            ],
-          ),
+    return SingleChildScrollView(
+      child: IntrinsicHeight(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "$title\n\n",
+              maxLines: 2,
+              style: textTheme.headline1?.copyWith(color: Colors.white),
+            ),
+            const SizedBox(
+              height: Sizes.marginViewBorderSize,
+            ),
+            Text(
+              "$description\n\n\n",
+              maxLines: 4,
+              style: textTheme.bodyText1?.copyWith(color: Colors.white),
+            ),
+            const SizedBox(
+              height: Sizes.marginViewBorderSize,
+            ),
+            iconArea.toExpanded(),
+            content ?? const SizedBox.shrink(),
+          ],
         ),
       ),
     );
