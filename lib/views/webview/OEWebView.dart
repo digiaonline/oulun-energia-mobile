@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -14,8 +16,15 @@ class OEWebView extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     controller.setJavaScriptMode(JavaScriptMode.unrestricted);
     controller.loadRequest(Uri.parse(args['url']!));
+    final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {
+      Factory(() => EagerGestureRecognizer())
+    };
+
     return Scaffold(
-      body: WebViewWidget(controller: controller),
+      body: WebViewWidget(
+        controller: controller,
+        gestureRecognizers: gestureRecognizers,
+      ),
     );
   }
 }
