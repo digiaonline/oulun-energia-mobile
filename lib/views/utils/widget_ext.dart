@@ -23,8 +23,8 @@ extension WidgetExt on Widget {
     return Container(color: color, child: this);
   }
 
-  Widget toButton({bool? secondary}) {
-    return Container(
+  Widget toButton({bool? secondary, bool? enabled}) {
+    var container = Container(
       decoration: BoxDecoration(
         border: secondary != null
             ? Border.all(color: buttonPrimaryBackground)
@@ -33,6 +33,15 @@ extension WidgetExt on Widget {
         color: secondary != null ? Colors.transparent : buttonPrimaryBackground,
       ),
       child: this,
+    );
+
+    if (enabled ?? true) {
+      return container;
+    }
+
+    return Opacity(
+      opacity: 0.6,
+      child: container,
     );
   }
 
@@ -54,5 +63,9 @@ extension WidgetExt on Widget {
 
   Flexible toFlexible() {
     return Flexible(child: this);
+  }
+
+  InkWell toClickable({required Function() onTap}) {
+    return InkWell(onTap: onTap, child: this);
   }
 }
