@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
@@ -18,6 +18,8 @@ import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/utils/scaffold_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
+
+import '../../views/webview/OEWebView.dart';
 
 /*
     Used Riverpod official example Riverpod + Go Router
@@ -90,12 +92,42 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
         ShellRoute(
             routes: <RouteBase>[
               GoRoute(
+                path: "/register/:url/:title",
+                name: "register",
+                builder: (BuildContext context, GoRouterState state) {
+                  return OEWebView();
+                },
+              ),
+            ],
+            builder: (BuildContext context, GoRouterState state, Widget child) {
+              return ScaffoldNavbar(
+                  title: state.params['title'],
+                  backRoutePath: LoginView.routePath,
+                  initialExpanded: false,
+                  secondaryAppBar: true,
+                  bottomBarIndex: 1,
+                  child: child);
+            }),
+        ShellRoute(
+            routes: <RouteBase>[
+              GoRoute(
                 name: HomeView.routeName,
                 path: HomeView.routePath,
                 builder: (BuildContext context, GoRouterState state) {
                   return const HomeView();
                 },
               ),
+            ],
+            builder: (BuildContext context, GoRouterState state, Widget child) {
+              return ScaffoldNavbar(
+                  title: '',
+                  initialExpanded: false,
+                  secondaryAppBar: false,
+                  bottomBarIndex: 0,
+                  child: child);
+            }),
+        ShellRoute(
+            routes: <RouteBase>[
               GoRoute(
                   path: UsageSelectionsView.routePath,
                   name: UsageSelectionsView.routeName,
@@ -200,9 +232,10 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
               return ScaffoldNavbar(
                   title: title,
                   hideAppBar: hideAppBar,
-                  routePath: UsageSelectionsView.routePath,
-                  currentIndex: currentIndex,
+                  backRoutePath: UsageSelectionsView.routePath,
+                  bottomBarIndex: currentIndex,
                   secondaryAppBar: secondaryAppBar,
+                  secondaryAppBarStyle: true,
                   initialExpanded: initialExpanded,
                   child: child);
             }),

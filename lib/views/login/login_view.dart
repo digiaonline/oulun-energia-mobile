@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
+import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class LoginView extends ConsumerWidget {
@@ -17,12 +20,10 @@ class LoginView extends ConsumerWidget {
     final usernameController =
         TextEditingController(text: "mira.juola@icloud.com");
     final passwordController = TextEditingController(text: "Vaihda123456");
-
     var userAuth = ref.watch(loginProvider);
-
-    bool _acceptedTerms = false; // todo move to a provider
-
+    var loginNotifier = ref.read(loginProvider.notifier);
     var theme = Theme.of(context);
+    var locals = AppLocalizations.of(context)!;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -37,7 +38,7 @@ class LoginView extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Kirjaudu palveluun",
+                      locals.loginViewLogin,
                       style: theme.textTheme.headline2?.copyWith(
                           color: Colors.white,
                           fontSize: 24,
@@ -47,28 +48,32 @@ class LoginView extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          "Username:",
+                          locals.loginViewUsername,
                           style: defaultTheme.textTheme.bodyText1
                               ?.copyWith(color: Colors.white),
                         ),
                         TextField(
-                          decoration: const InputDecoration(
-                              hintText: "Type user name here"),
+                          decoration: InputDecoration(
+                              hintText: locals.loginViewUsernameHint),
                           maxLines: 1,
+                          autofillHints: const [AutofillHints.username],
                           controller: usernameController,
                         ),
                         const SizedBox(
                           height: Sizes.marginViewBorderSize,
                         ),
                         Text(
-                          "Password:",
+                          locals.loginViewPassword,
                           style: defaultTheme.textTheme.bodyText1
                               ?.copyWith(color: Colors.white),
                         ),
                         TextField(
-                          decoration: const InputDecoration(
-                              hintText: "Type password here"),
+                          decoration: InputDecoration(
+                              hintText: locals.loginViewPasswordHint),
                           maxLines: 1,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autofillHints: const [AutofillHints.password],
                           keyboardType: TextInputType.visiblePassword,
                           controller: passwordController,
                         ),
@@ -77,65 +82,92 @@ class LoginView extends ConsumerWidget {
                         ),
                         Row(
                           children: [
-                            const Checkbox(value: false, onChanged: null),
-                            Flexible(
-                                child: Text(
-                              "Hyväksyn sovelluksen käyttöehdot\nTutustu tietosuojaselosteeseen",
-                              style: defaultTheme.textTheme.bodyText2
-                                  ?.copyWith(color: Colors.white),
-                            )),
+                            Checkbox(
+                              value: userAuth.termsAccepted,
+                              onChanged: (value) =>
+                                  loginNotifier.acceptTerms(value ?? false),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text.rich(
+                                  TextSpan(
+                                    text: locals.loginViewTermsLinkPrefix,
+                                    style: defaultTheme.textTheme.bodyText2
+                                        ?.copyWith(color: Colors.white),
+                                    children: [
+                                      TextSpan(
+                                        text: locals.loginViewTermsLink,
+                                        style: defaultTheme.textTheme.bodyText2
+                                            ?.copyWith(
+                                                color: Colors.white,
+                                                decoration:
+                                                    TextDecoration.underline),
+                                      ),
+                                    ],
+                                  ),
+                                ).toClickable(onTap: () => _openTermsLink()),
+                                Text(
+                                  locals.loginViewPrivacyStatementLink,
+                                  style: defaultTheme.textTheme.bodyText2
+                                      ?.copyWith(
+                                          color: Colors.white,
+                                          decoration: TextDecoration.underline),
+                                ).toClickable(
+                                    onTap: () =>
+                                        _openPrivacyStatement(context)),
+                              ],
+                            ),
                           ],
-                        ),
-                        userAuth.loading
-                            ? const Center(child: CircularProgressIndicator())
-                            : TextButton(
-                                onPressed: () => _doLogin(
-                                    ref,
-                                    usernameController.text,
-                                    passwordController.text),
-                                child: Text(
-                                  "Login",
-                                  style: defaultTheme.textTheme.bodyText1
-                                      ?.copyWith(color: Colors.white),
-                                ),
-                              ).toButton()
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          "Tai tunnistaudu",
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyText2
-                              ?.copyWith(color: Colors.white),
                         ),
                         const SizedBox(
                           height: Sizes.marginViewBorderSize,
                         ),
-                        TextButton(
-                          onPressed: null,
-                          child: Text(
-                            "Pankkitunnuksella",
-                            style: theme.textTheme.bodyText2
-                                ?.copyWith(color: Colors.cyan),
-                          ),
-                        ).toButton(secondary: true),
+                        userAuth.loading
+                            ? const Center(child: CircularProgressIndicator())
+                            : TextButton(
+                                onPressed: userAuth.termsAccepted
+                                    ? () => _doLogin(
+                                        ref,
+                                        usernameController.text,
+                                        passwordController.text)
+                                    : null,
+                                child: Text(
+                                  locals.loginViewLoginButton,
+                                  style: defaultTheme.textTheme.bodyText1
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ).toButton(enabled: userAuth.termsAccepted)
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text("Unohtuiko",
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.bodyText2
-                                ?.copyWith(color: Colors.white)),
                         Text(
-                          "Eikö ole tunnusta",
+                          locals.loginViewForgotPasswordLink,
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyText2
-                              ?.copyWith(color: Colors.white),
-                        ),
+                          style: theme.textTheme.bodyText2?.copyWith(
+                            color: Colors.white,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ).toClickable(
+                            onTap: () => _openForgotPassword(context)),
+                        Text.rich(
+                          TextSpan(
+                            text: locals.loginViewRegisterLinkPrefix,
+                            style: defaultTheme.textTheme.bodyText2
+                                ?.copyWith(color: Colors.white),
+                            children: [
+                              TextSpan(
+                                text: locals.loginViewRegisterLink,
+                                style: defaultTheme.textTheme.bodyText2
+                                    ?.copyWith(
+                                        color: Colors.white,
+                                        decoration: TextDecoration.underline),
+                              ),
+                            ],
+                          ),
+                        ).toClickable(onTap: () => _openRegistering(context)),
                       ],
                     ),
                   ]),
@@ -149,5 +181,31 @@ class LoginView extends ConsumerWidget {
   void _doLogin(WidgetRef ref, String username, String password) {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
     loginProviderNotifier.login(username, password);
+  }
+
+  void _openRegistering(BuildContext context) {
+    context.goNamed("register", params: {
+      "title": AppLocalizations.of(context)!.registerPageTitle,
+      "url": "https://www.energiatili.fi/eServices/Online/RegisterIndex"
+    });
+  }
+
+  void _openForgotPassword(BuildContext context) {
+    context.goNamed("register", params: {
+      "title": AppLocalizations.of(context)!.forgotPasswordPageTitle,
+      "url": "https://www.energiatili.fi/eServices/Online/ForgotPassword"
+    });
+  }
+
+  void _openPrivacyStatement(BuildContext context) {
+    context.goNamed("register", params: {
+      "title": AppLocalizations.of(context)!.loginViewPrivacyStatementLink,
+      "url":
+          "https://www.oulunenergia.fi/tietosuojaselosteet/tietosuojaseloste-asiakkaille/"
+    });
+  }
+
+  void _openTermsLink() {
+    showSnackbar("TODO open page to Terms of service");
   }
 }

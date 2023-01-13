@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
@@ -12,21 +11,23 @@ class ScaffoldNavbar extends StatelessWidget {
   const ScaffoldNavbar(
       {Key? key,
       this.title,
-      this.routePath,
+      this.backRoutePath,
       required this.initialExpanded,
       required this.secondaryAppBar,
       this.hideAppBar = false,
-      required this.currentIndex,
+      this.secondaryAppBarStyle,
+      required this.bottomBarIndex,
       required this.child})
       : super(key: key);
 
   final Widget child;
   final bool initialExpanded;
   final bool secondaryAppBar;
+  final bool? secondaryAppBarStyle;
   final bool hideAppBar;
-  final String? routePath;
+  final String? backRoutePath;
   final String? title;
-  final int currentIndex;
+  final int bottomBarIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +37,16 @@ class ScaffoldNavbar extends StatelessWidget {
           if (!hideAppBar)
             buildMainAppBar(
               context,
-              backgroundColor: currentIndex != 0 ? Colors.white : null,
-              foregroundColor: currentIndex != 0 ? iconColorBlue : Colors.white,
-              iconThemeData:
-                  currentIndex != 0 ? appBarIconThemeSecondary : null,
-              forceElevated: currentIndex != 0 ? true : null,
+              backgroundColor:
+                  secondaryAppBarStyle ?? secondaryAppBar ? Colors.white : null,
+              foregroundColor: secondaryAppBarStyle ?? secondaryAppBar
+                  ? iconColorBlue
+                  : Colors.white,
+              iconThemeData: secondaryAppBarStyle ?? secondaryAppBar
+                  ? appBarIconThemeSecondary
+                  : null,
+              forceElevated:
+                  secondaryAppBarStyle ?? secondaryAppBar ? true : null,
               toolbarHeight: !secondaryAppBar
                   ? defaultTheme.appBarTheme.toolbarHeight
                   : 100,
@@ -77,8 +83,8 @@ class ScaffoldNavbar extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    if (routePath != null) {
-                                      context.go(routePath!);
+                                    if (backRoutePath != null) {
+                                      context.go(backRoutePath!);
                                     }
                                   },
                                   child: const Icon(Icons.arrow_back),
@@ -102,7 +108,7 @@ class ScaffoldNavbar extends StatelessWidget {
         ],
       ).withBackground(),
       bottomNavigationBar: BottomNavbar(
-          initialExpanded: initialExpanded, currentIndex: currentIndex),
+          initialExpanded: initialExpanded, currentIndex: bottomBarIndex),
     );
   }
 }
