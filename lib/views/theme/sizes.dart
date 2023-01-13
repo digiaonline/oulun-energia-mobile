@@ -5,6 +5,7 @@ class Sizes {
   static const double mainViewIconAvatarSize = 112;
   static const double selectionButtonIconSize = 28;
   static const double bannerIconSize = 38;
+  static const double inputMargin = 24;
   static const double marginViewBorderSize = 20;
   static const double marginViewBorderSizeLarge = 40;
 

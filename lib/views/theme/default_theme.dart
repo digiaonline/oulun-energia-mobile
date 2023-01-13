@@ -80,6 +80,16 @@ ThemeData defaultTheme = ThemeData(
           const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
       border: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white))),
+  radioTheme: const RadioThemeData(
+    overlayColor: MaterialStatePropertyAll(
+      Color(0xFF949494),
+    ),
+    splashRadius: 1.0,
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    visualDensity: VisualDensity(
+        horizontal: VisualDensity.minimumDensity,
+        vertical: VisualDensity.minimumDensity),
+  ),
   checkboxTheme: CheckboxThemeData(
     checkColor: MaterialStateProperty.resolveWith<Color>(
       (states) {
