@@ -64,4 +64,8 @@ extension WidgetExt on Widget {
   Flexible toFlexible() {
     return Flexible(child: this);
   }
+
+  InkWell toClickable({required Function() onTap}) {
+    return InkWell(onTap: onTap, child: this);
+  }
 }

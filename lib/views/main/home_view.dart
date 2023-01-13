@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,6 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 
 class HomeView extends ConsumerWidget {
@@ -27,7 +27,10 @@ class HomeView extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Tervetuloa!',
+            isLoggedIn
+                ? locals.homeViewWelcomeUser(
+                    loginStatus.userAuth?.customerInfo.firstName ?? "")
+                : locals.homeViewWelcome,
             style: textTheme.headline2?.copyWith(color: Colors.white),
           ),
           Container(
@@ -41,9 +44,8 @@ class HomeView extends ConsumerWidget {
                     : const Icon(Icons.lock_outline, size: 16),
                 Expanded(
                   child: Text(
-                    loginStatus.loggedIn()
-                        ? 'Ei tiedotteita TBD'
-                        : 'Lukkosymbolilla merkityt osiot näet kirjautumalla palveluun',
+                    locals.homeViewMessageSumUp(isLoggedIn ? 0 : -1),
+                    // todo get message count
                     textAlign: TextAlign.center,
                     style: textTheme.bodyText2?.copyWith(color: Colors.white),
                   ),
