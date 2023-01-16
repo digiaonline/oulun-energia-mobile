@@ -36,8 +36,9 @@ ThemeData defaultTheme = ThemeData(
       titleTextStyle: textTheme.headline2,
       iconTheme: appBarIconTheme,
       toolbarHeight: 60,
-      elevation: 1,
-      shadowColor: iconColorBlue,
+      shape: const Border.fromBorderSide(BorderSide(
+          width: 1.0, strokeAlign: StrokeAlign.outside, color: tabBorderColor)),
+      shadowColor: Colors.transparent,
       backgroundColor: appBarBackgroundColor,
       foregroundColor: iconColorBlue,
       surfaceTintColor: Colors.white,

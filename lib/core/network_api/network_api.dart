@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:oulun_energia_mobile/core/authentication/authentication.dart';
+import 'package:oulun_energia_mobile/core/network_api/authentication_api.dart';
 
 @protected
 abstract class RestApiBase {
@@ -18,6 +19,15 @@ abstract class RestApiBase {
   Future<Map<String, String>> getAuthenticationHeaders(
       {String? username, String? passwd}) async {
     var token = await authentication.getAuthenticationToken();
+
+    if (token == null) {
+      var authenticationApi = AuthenticationApi(authentication, baseUrl);
+      String? token = await authenticationApi.requestToken();
+      if (token != null) {
+        await authentication.setAuthenticationToken(token);
+      }
+    }
+
     var accessStr = username != null && passwd != null
         ? "$username:$passwd"
         : "$token:unused";
@@ -35,6 +45,7 @@ class RestClient {
 
   Future<dynamic> getContent(String uri, Map<String, String> headers) async {
     RestApiResponse response = await get(Uri.parse(uri), headers: headers);
+
     if (response.response?.statusCode == HttpStatus.ok) {
       var content = await response.bodyContent();
       return content;

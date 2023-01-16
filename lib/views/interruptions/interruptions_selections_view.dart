@@ -22,7 +22,8 @@ class InterruptionsSelectionsView extends StatelessWidget {
 
     List<SelectionButton> selections = [
       SelectionButton(
-        onChangePage: () => context.go(InterruptionsMapView.routePath),
+        onChangePage: () => context.goNamed(InterruptionsMapView.routeName,
+            params: {"url": InterruptionsMapView.targetUrl}),
         text: locals.interruptionsViewMap,
         widget: SvgPicture.asset('assets/icons/fmd_bad.svg',
             width: Sizes.selectionButtonIconSize,
@@ -48,12 +49,11 @@ class InterruptionsSelectionsView extends StatelessWidget {
       )
     ];
 
-    return SingleChildScrollView(
-      child: Content(
-          image: const SizedBox.shrink(),
-          title: locals.interruptionsViewTitle,
-          text: locals.interruptionsViewText,
-          children: selections),
-    ).withBackgroundColor(Colors.white);
+    return Content(
+            image: const SizedBox.shrink(),
+            title: locals.interruptionsViewTitle,
+            text: locals.interruptionsViewText,
+            children: selections)
+        .withBackgroundColor(Colors.white);
   }
 }

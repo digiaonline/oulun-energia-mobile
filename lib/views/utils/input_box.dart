@@ -3,7 +3,6 @@ import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 
 class InputBox extends StatelessWidget {
-  final TextEditingController controller;
   final String hintText;
   final String title;
   final TextInputType inputType;
@@ -11,12 +10,14 @@ class InputBox extends StatelessWidget {
   final String? errorText;
   final bool multiline;
 
+  final void Function(String) onChanged;
+
   const InputBox(
       {super.key,
-      required this.controller,
       required this.hintText,
       required this.title,
       required this.inputType,
+      required this.onChanged,
       this.showError,
       this.errorText,
       required this.multiline});
@@ -35,11 +36,12 @@ class InputBox extends StatelessWidget {
             : (showError != null && showError == true)
                 ? 72
                 : 48,
-        child: TextField(
+        child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          onChanged: onChanged,
           keyboardType: inputType,
           minLines: multiline ? null : 1,
           maxLines: multiline ? 20 : 1,
-          controller: controller,
           decoration: InputDecoration(
             errorText: (showError == true) ? errorText : null,
             hintText: hintText,

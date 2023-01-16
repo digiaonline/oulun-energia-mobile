@@ -96,72 +96,70 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
   Widget build(BuildContext context) {
     AppLocalizations locals = AppLocalizations.of(context)!;
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                locals.usageViewUsagePlace,
-                style: textTheme.headline1,
-                textAlign: TextAlign.left,
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              locals.usageViewUsagePlace,
+              style: textTheme.headline1,
+              textAlign: TextAlign.left,
             ),
-            Dropdown(
-              selectedValue: _selectedUsageType,
-              onChanged: _onSetSelectedUsageType,
-              items: _getUsageTypeItems(locals),
-              title: locals.usageViewUsageType,
+          ),
+          Dropdown(
+            selectedValue: _selectedUsageType,
+            onChanged: _onSetSelectedUsageType,
+            items: _getUsageTypeItems(locals),
+            title: locals.usageViewUsageType,
+          ),
+          const SizedBox(height: 30.0),
+          Dropdown(
+            selectedValue: _selectedUsagePlace,
+            onChanged: _onSetSelectedUsagePlace,
+            items: _getUsagePlaceItems(),
+            title: locals.usageViewUsagePlace,
+          ),
+          const SizedBox(height: 30.0),
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              locals.usageViewUsageChartInfo,
+              style: textTheme.headline1,
+              textAlign: TextAlign.left,
             ),
-            const SizedBox(height: 30.0),
-            Dropdown(
-              selectedValue: _selectedUsagePlace,
-              onChanged: _onSetSelectedUsagePlace,
-              items: _getUsagePlaceItems(),
-              title: locals.usageViewUsagePlace,
+          ),
+          InfoTile(
+            title: locals.usageViewUsageInfo,
+            subtitle: locals.usageViewUsageInfoSubText,
+          ),
+          InfoTile(
+            title: locals.usageViewUsageTemperature,
+            subtitle: locals.usageViewUsageTemperatureSubText,
+            trailing: CupertinoSwitch(
+              value: _useCelsius,
+              onChanged: (useCelsius) => setState(() {
+                _useCelsius = useCelsius;
+              }),
+              activeColor: secondaryActiveButtonColor,
             ),
-            const SizedBox(height: 30.0),
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                locals.usageViewUsageChartInfo,
-                style: textTheme.headline1,
-                textAlign: TextAlign.left,
-              ),
-            ),
-            InfoTile(
-              title: locals.usageViewUsageInfo,
-              subtitle: locals.usageViewUsageInfoSubText,
-            ),
-            InfoTile(
-              title: locals.usageViewUsageTemperature,
-              subtitle: locals.usageViewUsageTemperatureSubText,
-              trailing: CupertinoSwitch(
-                value: _useCelsius,
-                onChanged: (useCelsius) => setState(() {
-                  _useCelsius = useCelsius;
-                }),
-                activeColor: secondaryActiveButtonColor,
-              ),
-            ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SubmitButton(
-                    text: locals.cancel, onPressed: () => _onCancel(context)),
-                const SizedBox(width: 10.0),
-                SubmitButton(
-                    text: locals.save,
-                    onPressed: () => _onSave(context),
-                    invertColors: true),
-              ],
-            )
-          ],
-        ),
+          ),
+          const SizedBox(height: 20.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SubmitButton(
+                  text: locals.cancel, onPressed: () => _onCancel(context)),
+              const SizedBox(width: 10.0),
+              SubmitButton(
+                  text: locals.save,
+                  onPressed: () => _onSave(context),
+                  invertColors: true),
+            ],
+          )
+        ],
       ),
     ).withBackgroundColor(Colors.white);
   }
