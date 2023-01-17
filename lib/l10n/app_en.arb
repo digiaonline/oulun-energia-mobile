@@ -70,5 +70,6 @@
   "loginViewRegisterLink": "Rekisteröidy",
   "loginViewLoginButton": "Login",
   "registerPageTitle": "Register",
-  "forgotPasswordPageTitle": "Retrieve password"
+  "forgotPasswordPageTitle": "Retrieve password",
+  "navigationDrawerLogin": "Login"
 }

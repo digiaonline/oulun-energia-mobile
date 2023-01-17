@@ -29,74 +29,75 @@ IconThemeData appBarIconThemeSecondary =
     const IconThemeData(size: 20, color: iconColorBlue);
 
 ThemeData defaultTheme = ThemeData(
-  appBarTheme: AppBarTheme(
-      toolbarTextStyle: textTheme.headline2,
-      titleTextStyle: textTheme.headline2,
-      iconTheme: appBarIconTheme,
-      toolbarHeight: 60,
+    appBarTheme: AppBarTheme(
+        toolbarTextStyle: textTheme.headline2,
+        titleTextStyle: textTheme.headline2,
+        iconTheme: appBarIconTheme,
+        toolbarHeight: 60,
+        elevation: 1,
+        shadowColor: iconColorBlue,
+        backgroundColor: appBarBackgroundColor,
+        foregroundColor: iconColorBlue,
+        surfaceTintColor: Colors.white,
+        centerTitle: true,
+        systemOverlayStyle:
+            const SystemUiOverlayStyle(statusBarColor: iconColorBlue)),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
       elevation: 1,
-      shadowColor: iconColorBlue,
-      backgroundColor: appBarBackgroundColor,
-      foregroundColor: iconColorBlue,
-      surfaceTintColor: Colors.white,
-      centerTitle: true,
-      systemOverlayStyle:
-          const SystemUiOverlayStyle(statusBarColor: iconColorBlue)),
-  bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    elevation: 1,
-    unselectedLabelStyle: textTheme.labelMedium,
-    selectedLabelStyle: textTheme.labelMedium,
-    selectedItemColor: iconColorBlue,
-    unselectedItemColor: iconColorBlue,
-    backgroundColor: Colors.white,
-    selectedIconTheme: bottomNavigationIconTheme.copyWith(
-      color: iconColorBlack,
+      unselectedLabelStyle: textTheme.labelMedium,
+      selectedLabelStyle: textTheme.labelMedium,
+      selectedItemColor: iconColorBlue,
+      unselectedItemColor: iconColorBlue,
+      backgroundColor: Colors.white,
+      selectedIconTheme: bottomNavigationIconTheme.copyWith(
+        color: iconColorBlack,
+      ),
+      unselectedIconTheme:
+          bottomNavigationIconTheme.copyWith(color: iconColorBlue),
     ),
-    unselectedIconTheme:
-        bottomNavigationIconTheme.copyWith(color: iconColorBlue),
-  ),
-  fontFamily: 'Eina',
-  useMaterial3: true,
-  buttonTheme: ButtonThemeData(
-    textTheme: ButtonTextTheme.primary,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20),
-      side: BorderSide.none,
+    fontFamily: 'Eina',
+    useMaterial3: true,
+    buttonTheme: ButtonThemeData(
+      textTheme: ButtonTextTheme.primary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide.none,
+      ),
     ),
-  ),
-  textTheme: textTheme,
-  iconTheme: const IconThemeData(color: Colors.white, size: 40),
-  colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
-  inputDecorationTheme: InputDecorationTheme(
-      hintStyle: textTheme.bodyText1?.copyWith(color: iconColorBlue),
-      labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.white,
-      filled: true,
-      floatingLabelAlignment: FloatingLabelAlignment.start,
-      focusedBorder:
-          const OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-      border: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white))),
-  checkboxTheme: CheckboxThemeData(
-    checkColor: MaterialStateProperty.resolveWith<Color>(
-      (states) {
-        return Colors.white;
-      },
+    textTheme: textTheme,
+    iconTheme: const IconThemeData(color: Colors.white, size: 40),
+    colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
+    inputDecorationTheme: InputDecorationTheme(
+        hintStyle: textTheme.bodyText1?.copyWith(color: iconColorBlue),
+        labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        fillColor: Colors.white,
+        filled: true,
+        floatingLabelAlignment: FloatingLabelAlignment.start,
+        focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white)),
+        border: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white))),
+    checkboxTheme: CheckboxThemeData(
+      checkColor: MaterialStateProperty.resolveWith<Color>(
+        (states) {
+          return Colors.white;
+        },
+      ),
+      fillColor: MaterialStateProperty.resolveWith<Color>(
+        (states) {
+          return Colors.transparent;
+        },
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+      side: MaterialStateBorderSide.resolveWith(
+        (states) => const BorderSide(width: 1.0, color: Colors.white),
+      ),
     ),
-    fillColor: MaterialStateProperty.resolveWith<Color>(
-      (states) {
-        return Colors.transparent;
-      },
-    ),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(2.0),
-    ),
-    side: MaterialStateBorderSide.resolveWith(
-      (states) => const BorderSide(width: 1.0, color: Colors.white),
-    ),
-  ),
-);
+    dividerColor: const Color(0xFF949494),
+    listTileTheme: const ListTileThemeData(horizontalTitleGap: 0));
 
 const Color secondaryActiveButtonColor = Color(0xFF009EB5);
 const Color dividerColor = Color(0xFFDFE2EB);

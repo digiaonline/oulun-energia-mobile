@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/bottom_navbar.dart';
+import 'package:oulun_energia_mobile/views/utils/navigation_drawer.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class ScaffoldNavbar extends StatelessWidget {
@@ -32,6 +32,10 @@ class ScaffoldNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerEnableOpenDragGesture: false,
+      drawer: const Drawer(
+        child: NavigationDrawer(),
+      ),
       body: CustomScrollView(
         slivers: [
           if (!hideAppBar)
@@ -64,9 +68,11 @@ class ScaffoldNavbar extends StatelessWidget {
                       )
                     ],
               leading: !secondaryAppBar
-                  ? InkWell(
-                      onTap: () => context.go(LoginView.routePath),
-                      child: const Icon(Icons.menu),
+                  ? Builder(
+                      builder: (context) => InkWell(
+                        onTap: () => Scaffold.of(context).openDrawer(),
+                        child: const Icon(Icons.menu),
+                      ),
                     )
                   : null,
               titleWidget: secondaryAppBar

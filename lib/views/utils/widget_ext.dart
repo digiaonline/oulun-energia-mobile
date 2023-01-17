@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 
+const double disabledOpacity = 0.6;
+
 extension WidgetExt on Widget {
   Widget withBackground() {
     return Container(
@@ -39,10 +41,7 @@ extension WidgetExt on Widget {
       return container;
     }
 
-    return Opacity(
-      opacity: 0.6,
-      child: container,
-    );
+    return container.toDisabledOpacity();
   }
 
   Widget toBottomBarIcon({bool? selected}) {
@@ -65,7 +64,16 @@ extension WidgetExt on Widget {
     return Flexible(child: this);
   }
 
-  InkWell toClickable({required Function() onTap}) {
+  InkWell toClickable({required Function()? onTap}) {
     return InkWell(onTap: onTap, child: this);
+  }
+
+  Widget toDisabledOpacity({bool disabled = true}) {
+    return disabled
+        ? Opacity(
+            opacity: disabledOpacity,
+            child: this,
+          )
+        : this;
   }
 }
