@@ -8,7 +8,7 @@ class UsagePlace {
   final String? postCode;
   final String? postPlace;
   final String? street;
-  final UsageType type;
+  final String typeString;
   final List<Contract> contracts;
 
   UsagePlace({
@@ -19,8 +19,24 @@ class UsagePlace {
     this.postCode,
     this.postPlace,
     this.street,
-    this.type = UsageType.electric,
+    this.typeString = "sähkö",
   });
+
+  get type => getUsageType(typeString);
+
+  Map toJson() {
+    var map = {
+      'company': isCompany,
+      'id': id,
+      'network': network,
+      'postcode': postCode,
+      'postplace': postPlace,
+      'street': street,
+      'type': typeString,
+      'contracts': contracts
+    };
+    return map;
+  }
 
   factory UsagePlace.fromJson(Map<String, dynamic> json) {
     List<Contract> contracts = [];
@@ -35,7 +51,7 @@ class UsagePlace {
         postCode: json['postcode'],
         postPlace: json['postplace'],
         street: json['street'],
-        type: getUsageType(json['type']),
+        typeString: json['type'],
         contracts: contracts);
   }
 

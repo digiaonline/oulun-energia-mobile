@@ -47,8 +47,11 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     LoggedInStatus loggedInStatus = userAuthState.loggedInStatus;
 
     if (state.location == '/splash') {
-      if (!userAuthState.loading) {
+      if (!userAuthState.loading &&
+          userAuthState.loggedInStatus != LoggedInStatus.loggedIn) {
         return FirstTimeView.routePath;
+      } else if (userAuthState.loggedInStatus == LoggedInStatus.loggedIn) {
+        return HomeView.routePath;
       }
     }
 

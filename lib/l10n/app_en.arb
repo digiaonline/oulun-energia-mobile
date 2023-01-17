@@ -71,5 +71,6 @@
   "loginViewLoginButton": "Login",
   "registerPageTitle": "Register",
   "forgotPasswordPageTitle": "Retrieve password",
-  "navigationDrawerLogin": "Login"
+  "navigationDrawerLogin": "Login",
+  "loginViewRememberSignIn": "Remember me"
 }
