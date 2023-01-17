@@ -70,5 +70,6 @@
   "loginViewRegisterLink": "Rekisteröidy",
   "loginViewLoginButton": "Login",
   "registerPageTitle": "Rekisteröidy",
-  "forgotPasswordPageTitle": "Palauta salasanasi"
+  "forgotPasswordPageTitle": "Palauta salasanasi",
+  "navigationDrawerLogin": "Kirjaudu"
 }
