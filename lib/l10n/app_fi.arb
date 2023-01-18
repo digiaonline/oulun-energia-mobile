@@ -71,5 +71,6 @@
   "loginViewLoginButton": "Login",
   "registerPageTitle": "Rekisteröidy",
   "forgotPasswordPageTitle": "Palauta salasanasi",
-  "navigationDrawerLogin": "Kirjaudu"
+  "navigationDrawerLogin": "Kirjaudu",
+  "loginViewRememberSignIn": "Muista minut"
 }

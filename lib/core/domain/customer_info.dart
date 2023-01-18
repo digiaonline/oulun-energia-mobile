@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:oulun_energia_mobile/core/domain/usage_place.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 
@@ -45,9 +47,30 @@ class CustomerInfo {
     return placesByType;
   }
 
-  static CustomerInfo fromJson(Map<String, dynamic> json) {
+  String toJson() {
+    var map = toMap();
+    return jsonEncode(map);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'first_name': firstName,
+      'last_name': lastName,
+      'usage_places': usagePlaces,
+      'company_name': companyName,
+      'email': email,
+      'name': name,
+      'phone': phone,
+      'postcode': postcode,
+      'postplace': postPlace,
+      'street': street,
+      'customer_codes': customerCodes
+    };
+  }
+
+  factory CustomerInfo.fromJson(Map<String, dynamic> json) {
     List<String> customerCodes = [];
-    for (var customerCode in json['customer_codes']) {
+    for (String customerCode in json['customer_codes']) {
       customerCodes.add(customerCode);
     }
 

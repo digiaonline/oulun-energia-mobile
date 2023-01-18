@@ -17,7 +17,7 @@ class Authentication {
     return await _storage.read(_userAuthStorageKey);
   }
 
-  Future<void> setUserAuth(String auth) async {
-    return await _storage.write(_userAuthStorageKey, auth);
+  Future<void> setUserAuth(String? auth) async {
+    return await _storage.write(_userAuthStorageKey, auth ?? "");
   }
 }
