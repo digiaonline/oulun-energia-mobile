@@ -206,7 +206,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
 
               // TODO refactor and make it more dynamic
               // Add an array to View classes which includes booleans and strings etc (?) and pass that as an extra object
-              // I.e. context.go(UsageSelectionsView.routePath, extra: UsageSeletionsView.settings)
+              // I.e. context.go(UsageSelectionsView.routePath, extra: UsageSeletionsView.getSettings(context))
 
               if (state.params.isNotEmpty) {
                 if (state.params['url'] == InterruptionsMapView.targetUrl) {
