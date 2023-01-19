@@ -19,15 +19,6 @@ abstract class RestApiBase {
   Future<Map<String, String>> getAuthenticationHeaders(
       {String? username, String? passwd}) async {
     var token = await authentication.getAuthenticationToken();
-
-    if (token == null) {
-      var authenticationApi = AuthenticationApi(authentication, baseUrl);
-      String? token = await authenticationApi.requestToken();
-      if (token != null) {
-        await authentication.setAuthenticationToken(token);
-      }
-    }
-
     var accessStr = username != null && passwd != null
         ? "$username:$passwd"
         : "$token:unused";
@@ -56,7 +47,9 @@ class RestClient {
 
   Future<RestApiResponse> get(Uri uri,
       {Map<String, String>? headers, followRedirects = true}) async {
+    print('starting request');
     RestApiRequest request = await _client.getUrl(uri).toRestRequest();
+    print('got request');
     for (String key in headers?.keys ?? []) {
       request.request?.headers.add(key, headers![key]!);
     }
