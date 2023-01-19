@@ -72,18 +72,41 @@ ThemeData defaultTheme = ThemeData(
     textTheme: textTheme,
     iconTheme: const IconThemeData(color: Colors.white, size: 40),
     colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
+    radioTheme: const RadioThemeData(
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      visualDensity: VisualDensity(
+          horizontal: VisualDensity.minimumDensity,
+          vertical: VisualDensity.minimumDensity),
+    ),
     inputDecorationTheme: InputDecorationTheme(
-        hintStyle: textTheme.bodyText1?.copyWith(color: iconColorBlue),
-        labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        fillColor: Colors.white,
-        filled: true,
-        floatingLabelAlignment: FloatingLabelAlignment.start,
-        focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)),
-        border: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white))),
+      labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.white,
+      filled: true,
+      floatingLabelAlignment: FloatingLabelAlignment.start,
+      hintStyle: textTheme.bodyText1?.copyWith(color: hintTextColor),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(color: Colors.red, width: 1),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(
+          color: borderColor,
+          width: 1,
+        ),
+      ),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(color: borderColor, width: 1),
+      ),
+      contentPadding: const EdgeInsets.only(left: 16.0, top: 16.0),
+    ),
     checkboxTheme: CheckboxThemeData(
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      visualDensity: const VisualDensity(
+          horizontal: VisualDensity.minimumDensity,
+          vertical: VisualDensity.minimumDensity),
       checkColor: MaterialStateProperty.resolveWith<Color>(
         (states) {
           return Colors.white;

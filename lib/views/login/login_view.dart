@@ -6,6 +6,7 @@ import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
+import 'package:oulun_energia_mobile/views/utils/input_box.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
@@ -42,43 +43,47 @@ class LoginView extends ConsumerWidget {
                       style: theme.textTheme.headline2?.copyWith(
                           color: Colors.white,
                           fontSize: 24,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.bold),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
-                          locals.loginViewUsername,
-                          style: defaultTheme.textTheme.bodyText1
-                              ?.copyWith(color: Colors.white),
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                              hintText: locals.loginViewUsernameHint),
-                          maxLines: 1,
-                          autofillHints: const [AutofillHints.username],
-                          controller: usernameController,
-                        ),
-                        const SizedBox(
-                          height: Sizes.marginViewBorderSize,
-                        ),
-                        Text(
-                          locals.loginViewPassword,
-                          style: defaultTheme.textTheme.bodyText1
-                              ?.copyWith(color: Colors.white),
-                        ),
-                        TextField(
-                          decoration: InputDecoration(
-                              hintText: locals.loginViewPasswordHint),
-                          maxLines: 1,
-                          obscureText: true,
-                          enableSuggestions: false,
-                          autofillHints: const [AutofillHints.password],
+                        InputBox(
+                            hintText: locals.loginViewUsernameHint,
+                            title: locals.loginViewUsername,
+                            keyboardType: TextInputType.text,
+                            multiline: false,
+                            controller: usernameController,
+                            textStyle:
+                                defaultTheme.textTheme.bodyText2?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.zero,
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 1,
+                              ),
+                            )),
+                        InputBox(
+                          hintText: locals.loginViewPasswordHint,
+                          title: locals.loginViewPassword,
                           keyboardType: TextInputType.visiblePassword,
+                          multiline: false,
+                          obscureText: true,
                           controller: passwordController,
-                        ),
-                        const SizedBox(
-                          height: Sizes.marginViewBorderSize,
+                          textStyle: defaultTheme.textTheme.bodyText2?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.zero,
+                            borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 1,
+                            ),
+                          ),
                         ),
                         Row(
                           children: [
@@ -87,6 +92,7 @@ class LoginView extends ConsumerWidget {
                               onChanged: (value) =>
                                   loginNotifier.rememberSignIn(value ?? false),
                             ),
+                            const SizedBox(width: 5.0),
                             Text(
                               locals.loginViewRememberSignIn,
                               style: defaultTheme.textTheme.bodyText2
@@ -104,6 +110,7 @@ class LoginView extends ConsumerWidget {
                               onChanged: (value) =>
                                   loginNotifier.acceptTerms(value ?? false),
                             ),
+                            const SizedBox(width: 5.0),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

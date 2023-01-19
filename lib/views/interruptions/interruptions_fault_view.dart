@@ -181,7 +181,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
           ),
           const SizedBox(height: Sizes.inputMargin),
           InputBox(
-              inputType: TextInputType.text,
+              keyboardType: TextInputType.text,
               hintText: locals.messageTitle,
               title: '${locals.title}*',
               showError: _formErrorState['title'],
@@ -192,7 +192,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                 updateState('title', value);
               }),
           InputBox(
-              inputType: TextInputType.multiline,
+              keyboardType: TextInputType.multiline,
               hintText: locals.writeMessage,
               title: '${locals.message}*',
               showError: _formErrorState['message'],
@@ -220,7 +220,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                         updateState('contactMethod', value);
                       }),
                   InputBox(
-                      inputType: TextInputType.name,
+                      keyboardType: TextInputType.name,
                       hintText: locals.firstName,
                       title: locals.firstName,
                       multiline: false,
@@ -228,7 +228,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                         updateState('firstName', value);
                       }),
                   InputBox(
-                      inputType: TextInputType.name,
+                      keyboardType: TextInputType.name,
                       hintText: locals.lastName,
                       title: locals.lastName,
                       multiline: false,
@@ -236,7 +236,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                         updateState('lastName', value);
                       }),
                   InputBox(
-                      inputType: TextInputType.phone,
+                      keyboardType: TextInputType.phone,
                       hintText: '+3584099999999',
                       title: locals.phoneNumber,
                       errorText: locals.phoneNumberError,
@@ -247,7 +247,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                         updateState('phoneNumber', value);
                       }),
                   InputBox(
-                      inputType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.emailAddress,
                       hintText: locals.email,
                       title: locals.email,
                       errorText: locals.emailError,

@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:oulun_energia_mobile/core/authentication/authentication.dart';
-import 'package:oulun_energia_mobile/core/network_api/authentication_api.dart';
 
 @protected
 abstract class RestApiBase {
