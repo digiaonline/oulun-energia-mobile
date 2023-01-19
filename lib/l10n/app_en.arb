@@ -104,5 +104,6 @@
   "interruptionsViewNoticesTitle": "Mainteinance and interruption notices",
   "interruptionsViewNoticesFetchData": "Fetching notices",
   "interruptionsViewNoticesFetchNoData": "No notices found",
-  "interruptionsViewNoticesFetchError": "There is a temporary error in fetching the notices"
+  "interruptionsViewNoticesFetchError": "There is a temporary error in fetching the notices",
+  "navigationDrawerLogin": "Login"
 }

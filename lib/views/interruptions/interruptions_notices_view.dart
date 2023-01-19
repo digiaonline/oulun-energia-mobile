@@ -8,20 +8,13 @@ import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:go_router/go_router.dart';
 
-class InterruptionsNoticesView extends ConsumerStatefulWidget {
+class InterruptionsNoticesView extends ConsumerWidget {
   static const String routePath = '/interruptions/notices';
   static const String routeName = 'interruptions_notices_view';
   const InterruptionsNoticesView({super.key});
 
   @override
-  ConsumerState<InterruptionsNoticesView> createState() =>
-      _InterruptionsNoticesViewState();
-}
-
-class _InterruptionsNoticesViewState
-    extends ConsumerState<InterruptionsNoticesView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<List<InterruptionNotice>> notices =
         ref.watch(interruptionsProvider);
 

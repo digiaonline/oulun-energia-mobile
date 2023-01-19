@@ -36,8 +36,8 @@ class _BottomNavbarState extends State<BottomNavbar> {
       child: Expandable(
         controller: bottomNavigationBarController,
         expanded: BottomNavigationBar(
+          elevation: 0.0,
           type: BottomNavigationBarType.fixed,
-          elevation: 1,
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
