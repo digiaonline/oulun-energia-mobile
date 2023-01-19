@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oulun_energia_mobile/core/authentication/authentication.dart';
 import 'package:oulun_energia_mobile/core/domain/user_auth.dart';
@@ -9,7 +11,8 @@ final loginProvider = StateNotifierProvider<UserAuthNotifier, UserAuthState>(
     (ref) => UserAuthNotifier(UserAuthState(
         loading: false,
         loggedInStatus: LoggedInStatus.notInitialized,
-        termsAccepted: false)));
+        termsAccepted: false,
+        rememberSignIn: false)));
 
 class UserAuthNotifier extends StateNotifier<UserAuthState> {
   late final Authentication auth;
@@ -21,19 +24,26 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     _initialize();
   }
 
-  void login(String user, String password) {
+  void login(String user, String password, bool rememberSignIn) {
     state = state.copyWith(loading: true);
     api.requestToken().then((token) {
       if (token != null) {
         auth
             .setAuthenticationToken(token)
             .then((value) => api.login(username: user, password: password))
-            .then((userAuth) => state = state.copyWith(
-                loading: false,
-                loggedIn: userAuth != null
-                    ? LoggedInStatus.loggedIn
-                    : LoggedInStatus.failed,
-                userAuth: userAuth));
+            .then((userAuth) => _setSignInParams(userAuth, rememberSignIn).then(
+                (value) => state = state.copyWith(
+                    loading: false,
+                    rememberSignIn: rememberSignIn,
+                    loggedIn: userAuth != null
+                        ? LoggedInStatus.loggedIn
+                        : LoggedInStatus.failed,
+                    userAuth: userAuth)))
+            .catchError((_) {
+          state =
+              state.copyWith(loading: false, loggedIn: LoggedInStatus.failed);
+          return Future.value(state);
+        });
       } else {
         state = state.copyWith(
           loading: false,
@@ -43,8 +53,18 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     });
   }
 
+  Future<void> _setSignInParams(UserAuth? userAuth, bool rememberSignIn) {
+    return rememberSignIn
+        ? auth.setUserAuth(jsonEncode(userAuth?.toJsonMap()))
+        : Future.value();
+  }
+
   void acceptTerms(bool accept) {
     state = state.copyWith(termsAccepted: accept);
+  }
+
+  void rememberSignIn(bool remember) {
+    state = state.copyWith(rememberSignIn: remember);
   }
 
   void _initialize() {
@@ -52,14 +72,31 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     auth.getAuthenticationToken().then((token) {
       var tokenNotEmpty = token?.isNotEmpty ?? false;
       tokenNotEmpty
-          ? state =
-              state.copyWith(loading: false, loggedIn: LoggedInStatus.loggedOut)
+          ? auth
+              .getUserAuth()
+              .then((userAuth) => userAuth != null
+                  ? _setLoggedIn(UserAuth.fromJson(jsonDecode(userAuth)))
+                  : _setLoggedOut())
+              .onError((_, stackTrace) => _setLoggedOut())
+              .catchError((_) => _setLoggedOut())
           : state = state.copyWith(
               loading: false,
               loggedIn: token != null
                   ? LoggedInStatus.visitor
                   : LoggedInStatus.notInitialized);
     });
+  }
+
+  void _setLoggedOut() {
+    state = state.copyWith(loading: false, loggedIn: LoggedInStatus.loggedOut);
+  }
+
+  void _setLoggedIn(UserAuth userAuth) {
+    state = state.copyWith(
+        userAuth: userAuth,
+        loading: false,
+        loggedIn: LoggedInStatus.loggedIn,
+        termsAccepted: true);
   }
 }
 
@@ -68,23 +105,27 @@ class UserAuthState {
   final LoggedInStatus loggedInStatus;
   final UserAuth? userAuth;
   final bool termsAccepted;
+  final bool rememberSignIn;
 
   UserAuthState(
       {required this.loading,
       required this.loggedInStatus,
       required this.termsAccepted,
+      required this.rememberSignIn,
       this.userAuth});
 
   UserAuthState copyWith(
       {bool? loading,
       LoggedInStatus? loggedIn,
       UserAuth? userAuth,
-      bool? termsAccepted}) {
+      bool? termsAccepted,
+      bool? rememberSignIn}) {
     return UserAuthState(
         loading: loading ?? this.loading,
         loggedInStatus: loggedIn ?? loggedInStatus,
         userAuth: userAuth ?? this.userAuth,
-        termsAccepted: termsAccepted ?? this.termsAccepted);
+        termsAccepted: termsAccepted ?? this.termsAccepted,
+        rememberSignIn: rememberSignIn ?? this.rememberSignIn);
   }
 
   bool loggedIn() {

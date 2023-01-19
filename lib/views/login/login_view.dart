@@ -83,6 +83,23 @@ class LoginView extends ConsumerWidget {
                         Row(
                           children: [
                             Checkbox(
+                              value: userAuth.rememberSignIn,
+                              onChanged: (value) =>
+                                  loginNotifier.rememberSignIn(value ?? false),
+                            ),
+                            Text(
+                              locals.loginViewRememberSignIn,
+                              style: defaultTheme.textTheme.bodyText2
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: Sizes.marginViewBorderSize,
+                        ),
+                        Row(
+                          children: [
+                            Checkbox(
                               value: userAuth.termsAccepted,
                               onChanged: (value) =>
                                   loginNotifier.acceptTerms(value ?? false),
@@ -130,7 +147,8 @@ class LoginView extends ConsumerWidget {
                                     ? () => _doLogin(
                                         ref,
                                         usernameController.text,
-                                        passwordController.text)
+                                        passwordController.text,
+                                        userAuth.rememberSignIn)
                                     : null,
                                 child: Text(
                                   locals.loginViewLoginButton,
@@ -178,9 +196,10 @@ class LoginView extends ConsumerWidget {
     );
   }
 
-  void _doLogin(WidgetRef ref, String username, String password) {
+  void _doLogin(
+      WidgetRef ref, String username, String password, bool rememberSignIn) {
     var loginProviderNotifier = ref.read(loginProvider.notifier);
-    loginProviderNotifier.login(username, password);
+    loginProviderNotifier.login(username, password, rememberSignIn);
   }
 
   void _openRegistering(BuildContext context) {
