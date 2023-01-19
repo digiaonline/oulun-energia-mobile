@@ -185,6 +185,7 @@ class LoginView extends ConsumerWidget {
                               ),
                             ],
                           ),
+                          textAlign: TextAlign.center,
                         ).toClickable(onTap: () => _openRegistering(context)),
                       ],
                     ),
