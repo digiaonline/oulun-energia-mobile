@@ -47,9 +47,7 @@ class RestClient {
 
   Future<RestApiResponse> get(Uri uri,
       {Map<String, String>? headers, followRedirects = true}) async {
-    print('starting request');
     RestApiRequest request = await _client.getUrl(uri).toRestRequest();
-    print('got request');
     for (String key in headers?.keys ?? []) {
       request.request?.headers.add(key, headers![key]!);
     }
