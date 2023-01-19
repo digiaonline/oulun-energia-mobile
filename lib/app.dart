@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oulun_energia_mobile/core/router/router.dart';
-import 'package:oulun_energia_mobile/providers/settingsProvider.dart';
+import 'package:oulun_energia_mobile/providers/settings_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 
 final messengerKey =

@@ -5,6 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
+import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
@@ -77,9 +79,11 @@ List<Widget> _buildControls(
                 size: 14,
               )
             : null),
-    buildHomeViewButton(locals.homeViewInterruptions, 'assets/icons/news.svg'),
+    buildHomeViewButton(locals.homeViewInterruptions, 'assets/icons/news.svg',
+        onTap: () => context.go(InterruptionsNoticesView.routePath)),
     buildHomeViewButton(
-        locals.homeViewContact, 'assets/icons/support_agent.svg'),
+        locals.homeViewContact, 'assets/icons/support_agent.svg',
+        onTap: () => context.go(ContactUsView.routePath)),
     buildHomeViewButton(locals.homeViewFishHunt, 'assets/icons/set_meal.svg'),
     buildHomeViewButton(
         locals.homeViewErrorReporting, 'assets/icons/calendar.svg'),

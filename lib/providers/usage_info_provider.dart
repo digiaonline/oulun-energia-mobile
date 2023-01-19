@@ -126,8 +126,6 @@ class UsageInfoState {
       case UsageInterval.day:
         DateTime startDate = DateTime(date.year, date.month, 1);
         DateTime endDate = DateTime(date.year, date.month + 1, 1);
-        print(startDate.toString());
-        print(endDate.toString());
         from = '${StringUtils.getDate(startDate)}T00:00:00';
         to = '${StringUtils.getDate(endDate)}T23:00:00';
         break;

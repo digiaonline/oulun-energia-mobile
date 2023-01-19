@@ -21,6 +21,8 @@ TextTheme textTheme = const TextTheme(
       fontSize: 22.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
   headline3: TextStyle(
       fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+  headline4: TextStyle(
+      fontSize: 28.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
 );
 
 IconThemeData appBarIconTheme =
@@ -33,9 +35,12 @@ ThemeData defaultTheme = ThemeData(
         toolbarTextStyle: textTheme.headline2,
         titleTextStyle: textTheme.headline2,
         iconTheme: appBarIconTheme,
+        shape: const Border.fromBorderSide(BorderSide(
+            width: 1.0,
+            strokeAlign: StrokeAlign.outside,
+            color: tabBorderColor)),
         toolbarHeight: 60,
         elevation: 1,
-        shadowColor: iconColorBlue,
         backgroundColor: appBarBackgroundColor,
         foregroundColor: iconColorBlue,
         surfaceTintColor: Colors.white,
@@ -43,7 +48,7 @@ ThemeData defaultTheme = ThemeData(
         systemOverlayStyle:
             const SystemUiOverlayStyle(statusBarColor: iconColorBlue)),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      elevation: 1,
+      elevation: 0.0,
       unselectedLabelStyle: textTheme.labelMedium,
       selectedLabelStyle: textTheme.labelMedium,
       selectedItemColor: iconColorBlue,
@@ -67,18 +72,41 @@ ThemeData defaultTheme = ThemeData(
     textTheme: textTheme,
     iconTheme: const IconThemeData(color: Colors.white, size: 40),
     colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
+    radioTheme: const RadioThemeData(
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      visualDensity: VisualDensity(
+          horizontal: VisualDensity.minimumDensity,
+          vertical: VisualDensity.minimumDensity),
+    ),
     inputDecorationTheme: InputDecorationTheme(
-        hintStyle: textTheme.bodyText1?.copyWith(color: iconColorBlue),
-        labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        fillColor: Colors.white,
-        filled: true,
-        floatingLabelAlignment: FloatingLabelAlignment.start,
-        focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)),
-        border: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white))),
+      labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.white,
+      filled: true,
+      floatingLabelAlignment: FloatingLabelAlignment.start,
+      hintStyle: textTheme.bodyText1?.copyWith(color: hintTextColor),
+      focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(color: Colors.red, width: 1),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(
+          color: borderColor,
+          width: 1,
+        ),
+      ),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(color: borderColor, width: 1),
+      ),
+      contentPadding: const EdgeInsets.only(left: 16.0, top: 16.0),
+    ),
     checkboxTheme: CheckboxThemeData(
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      visualDensity: const VisualDensity(
+          horizontal: VisualDensity.minimumDensity,
+          vertical: VisualDensity.minimumDensity),
       checkColor: MaterialStateProperty.resolveWith<Color>(
         (states) {
           return Colors.white;
@@ -102,6 +130,7 @@ ThemeData defaultTheme = ThemeData(
 const Color secondaryActiveButtonColor = Color(0xFF009EB5);
 const Color dividerColor = Color(0xFFDFE2EB);
 const Color borderColor = Color(0xFF949494);
+const Color hintTextColor = Color(0xFF8D8D8D);
 const Color tabBorderColor = Color(0xFFE0E0E0);
 const Color iconColorBlue = Color(0xFF002B59);
 const Color iconColorBlack = Color(0xFF002B59);

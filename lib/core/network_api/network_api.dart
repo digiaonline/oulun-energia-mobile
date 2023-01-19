@@ -35,6 +35,7 @@ class RestClient {
 
   Future<dynamic> getContent(String uri, Map<String, String> headers) async {
     RestApiResponse response = await get(Uri.parse(uri), headers: headers);
+
     if (response.response?.statusCode == HttpStatus.ok) {
       var content = await response.bodyContent();
       return content;

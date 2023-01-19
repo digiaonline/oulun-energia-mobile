@@ -5,11 +5,13 @@ class SubmitButton extends StatelessWidget {
   final String text;
   final Function() onPressed;
   final bool invertColors;
+  final bool disabled;
 
   const SubmitButton(
       {Key? key,
       required this.text,
       required this.onPressed,
+      this.disabled = false,
       this.invertColors = false})
       : super(key: key);
 
@@ -19,14 +21,20 @@ class SubmitButton extends StatelessWidget {
       width: 100.0,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-            foregroundColor:
-                invertColors ? Colors.white : secondaryActiveButtonColor,
-            backgroundColor:
-                invertColors ? secondaryActiveButtonColor : Colors.white,
+            foregroundColor: disabled
+                ? Colors.white
+                : invertColors
+                    ? Colors.white
+                    : secondaryActiveButtonColor,
+            backgroundColor: disabled
+                ? borderColor
+                : invertColors
+                    ? secondaryActiveButtonColor
+                    : Colors.white,
             shape:
                 const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-            side: const BorderSide(
-              color: secondaryActiveButtonColor,
+            side: BorderSide(
+              color: disabled ? Colors.white : secondaryActiveButtonColor,
             )),
         onPressed: onPressed,
         child: Text(

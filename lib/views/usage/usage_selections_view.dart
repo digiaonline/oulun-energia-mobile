@@ -44,11 +44,11 @@ class UsageSelectionsView extends StatelessWidget {
       )
     ];
 
-    return SingleChildScrollView(
-      child: Content(
-          title: locals.usageViewMyConsumption,
-          text: bodyText,
-          children: selections),
-    ).withBackgroundColor(Colors.white);
+    return Content(
+            image: const SizedBox.shrink(),
+            title: locals.usageViewMyConsumption,
+            text: bodyText,
+            children: selections)
+        .withBackgroundColor(Colors.white);
   }
 }
