@@ -3,11 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
+import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/input_box.dart';
-import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class LoginView extends ConsumerWidget {
@@ -130,7 +130,8 @@ class LoginView extends ConsumerWidget {
                                       ),
                                     ],
                                   ),
-                                ).toClickable(onTap: () => _openTermsLink()),
+                                ).toClickable(
+                                    onTap: () => _openTermsLink(context)),
                                 Text(
                                   locals.loginViewPrivacyStatementLink,
                                   style: defaultTheme.textTheme.bodyText2
@@ -177,7 +178,11 @@ class LoginView extends ConsumerWidget {
                           ),
                         ).toClickable(
                             onTap: () => _openForgotPassword(context)),
+                        const SizedBox(
+                          height: Sizes.marginViewBorderSize,
+                        ),
                         Text.rich(
+                          textAlign: TextAlign.center,
                           TextSpan(
                             text: locals.loginViewRegisterLinkPrefix,
                             style: defaultTheme.textTheme.bodyText2
@@ -192,7 +197,6 @@ class LoginView extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          textAlign: TextAlign.center,
                         ).toClickable(onTap: () => _openRegistering(context)),
                       ],
                     ),
@@ -232,7 +236,7 @@ class LoginView extends ConsumerWidget {
     });
   }
 
-  void _openTermsLink() {
-    showSnackbar("TODO open page to Terms of service");
+  void _openTermsLink(BuildContext context) {
+    context.goNamed(ServiceTermsView.routeName);
   }
 }

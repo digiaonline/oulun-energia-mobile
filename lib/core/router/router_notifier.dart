@@ -14,6 +14,7 @@ import 'package:oulun_energia_mobile/views/interruptions/interruptions_selection
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/main/home_view.dart';
 import 'package:oulun_energia_mobile/views/splash_screen.dart';
+import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
@@ -179,6 +180,13 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                     ),
                   ]),
               GoRoute(
+                path: ServiceTermsView.routePath,
+                name: ServiceTermsView.routeName,
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ServiceTermsView();
+                },
+              ),
+              GoRoute(
                   path: InterruptionsFaultView.routePath,
                   name: InterruptionsFaultView.routeName,
                   builder: (BuildContext context, GoRouterState state) {
@@ -253,6 +261,11 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   currentIndex = 2;
                   break;
                 case InterruptionNoticePopupView.routePath:
+                  hideAppBar = true;
+                  initialExpanded = false;
+                  currentIndex = 2;
+                  break;
+                case ServiceTermsView.routePath:
                   hideAppBar = true;
                   initialExpanded = false;
                   currentIndex = 2;
