@@ -204,6 +204,8 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
               bool hideAppBar = false;
               int currentIndex = 0;
 
+              // TODO refactor and make it more dynamic
+
               if (state.params.isNotEmpty) {
                 if (state.params['url'] == InterruptionsMapView.targetUrl) {
                   location = InterruptionsMapView.routePath;
