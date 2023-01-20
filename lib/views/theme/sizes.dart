@@ -13,6 +13,7 @@ class Sizes {
   static const double multilineInputboxHeightError = 168;
   static const double singelineInputboxHeight = 48;
   static const double singelineInputboxHeightError = 72;
+  static const double itemDefaultSpacing = 16.0;
 
   static EdgeInsets marginViewBorder =
       const EdgeInsets.all(marginViewBorderSize);
