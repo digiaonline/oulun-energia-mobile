@@ -7,6 +7,7 @@ import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
+import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/bottom_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/navigation_drawer.dart';
@@ -73,9 +74,8 @@ class ScaffoldNavbar extends ConsumerWidget {
                         child: PopupMenuButton(
                           itemBuilder: (context) {
                             return [
-                              _createMenuItem(locals.popupMenuItemUserInfo, () {
-                                showSnackbar("TODO");
-                              },
+                              _createMenuItem(locals.popupMenuItemUserInfo,
+                                  () => context.go(UserDetailsView.routePath),
                                   icon: Icons.face_outlined,
                                   enabled: userAuth.loggedIn()),
                               if (userAuth.loggedIn())
