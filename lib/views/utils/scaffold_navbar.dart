@@ -75,7 +75,9 @@ class ScaffoldNavbar extends ConsumerWidget {
                             return [
                               _createMenuItem(locals.popupMenuItemUserInfo, () {
                                 showSnackbar("TODO");
-                              }, icon: Icons.face_outlined),
+                              },
+                                  icon: Icons.face_outlined,
+                                  enabled: userAuth.loggedIn()),
                               if (userAuth.loggedIn())
                                 _createMenuItem(locals.popupMenuItemLogout, () {
                                   showSnackbar("TODO but still logged out");
@@ -90,7 +92,9 @@ class ScaffoldNavbar extends ConsumerWidget {
                           icon: Icon(
                             Icons.face,
                             size: Sizes.appBarIconSize,
-                            color: theme.appBarTheme.iconTheme?.color,
+                            color: secondaryAppBarStyle ?? secondaryAppBar
+                                ? iconColorBlue
+                                : theme.appBarTheme.iconTheme?.color,
                           ),
                         ),
                       )
@@ -147,9 +151,9 @@ class ScaffoldNavbar extends ConsumerWidget {
   }
 
   PopupMenuItem _createMenuItem(String text, Function() onTap,
-      {String? iconSvg, IconData? icon}) {
+      {String? iconSvg, IconData? icon, bool enabled = true}) {
     return PopupMenuItem(
-      onTap: onTap,
+      onTap: enabled ? onTap : null,
       value: 1,
       child: Row(children: [
         if (icon != null)
@@ -165,7 +169,7 @@ class ScaffoldNavbar extends ConsumerWidget {
         Text(
           text,
         ),
-      ]),
+      ]).toDisabledOpacity(disabled: !enabled),
     );
   }
 }
