@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
@@ -160,6 +161,7 @@ class ScaffoldNavbar extends ConsumerWidget {
           const SizedBox(
             width: Sizes.itemDefaultSpacing,
           ),
+        if (iconSvg != null) SvgPicture.asset(iconSvg),
         Text(
           text,
         ),

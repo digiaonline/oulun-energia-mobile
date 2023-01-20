@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oulun_energia_mobile/views/base/base_fullscreen_widget.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
