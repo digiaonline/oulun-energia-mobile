@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oulun_energia_mobile/core/domain/interruption_notice.dart';
 import 'package:oulun_energia_mobile/providers/interruptions_provider.dart';
@@ -17,8 +18,9 @@ class InterruptionNoticePopupView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     List<InterruptionNotice> notices = ref.read(interruptionsProvider).value!;
     InterruptionNotice notice = notices[index];
+    var locals = AppLocalizations.of(context)!;
     return BaseFullScreenWidget(InterruptionsNoticesView.routePath,
-        appBarTitle: "Tiedote",
+        appBarTitle: locals.interruptionsViewNotice,
         title: notice.date,
         additionalTitle: notice.title,
         description: notice.description);
