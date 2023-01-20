@@ -53,6 +53,18 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     });
   }
 
+  void logout() async {
+    state = state.copyWith(loading: true);
+    // todo clear all user sensitive data here
+    await auth.setAuthenticationToken("");
+    await auth.setUserAuth("");
+    state = UserAuthState(
+        loading: false,
+        loggedInStatus: LoggedInStatus.loggedOut,
+        termsAccepted: false,
+        rememberSignIn: false);
+  }
+
   Future<void> _setSignInParams(UserAuth? userAuth, bool rememberSignIn) {
     return rememberSignIn
         ? auth.setUserAuth(jsonEncode(userAuth?.toJsonMap()))

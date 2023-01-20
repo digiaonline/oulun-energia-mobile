@@ -106,5 +106,8 @@
   "interruptionsViewNoticesFetchNoData": "No notices found",
   "interruptionsViewNoticesFetchError": "There is a temporary error in fetching the notices",
   "navigationDrawerLogin": "Login",
-  "loginViewRememberSignIn": "Remember me"
+  "loginViewRememberSignIn": "Remember me",
+  "popupMenuItemUserInfo": "Own info",
+  "popupMenuItemLogout": "Logout",
+  "popupMenuItemLogin": "Login"
 }

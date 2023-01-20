@@ -106,5 +106,8 @@
   "interruptionsViewNoticesFetchNoData": "Tiedotteita ei löytynyt",
   "interruptionsViewNoticesFetchError": "Tiedotteiden hakemisessa on tilapäinen häiriö",
   "navigationDrawerLogin": "Kirjaudu",
-  "loginViewRememberSignIn": "Muista minut"
+  "loginViewRememberSignIn": "Muista minut",
+  "popupMenuItemUserInfo": "Omat tiedot",
+  "popupMenuItemLogout": "Kirjaudu ulos",
+  "popupMenuItemLogin": "Kirjaudu sisään"
 }

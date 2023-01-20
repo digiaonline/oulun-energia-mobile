@@ -10,6 +10,12 @@ TextStyle kFontSize12W400 = const TextStyle(
     fontFamily: "Eina",
     color: Colors.black);
 
+TextStyle popupMenuStyle = const TextStyle(
+    fontSize: 16.0,
+    fontWeight: FontWeight.w400,
+    fontFamily: "Eina",
+    color: popupMenuItemColor);
+
 TextTheme textTheme = const TextTheme(
   bodyText2: TextStyle(
       fontSize: 14.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
@@ -125,7 +131,12 @@ ThemeData defaultTheme = ThemeData(
       ),
     ),
     dividerColor: const Color(0xFF949494),
-    listTileTheme: const ListTileThemeData(horizontalTitleGap: 0));
+    listTileTheme: const ListTileThemeData(horizontalTitleGap: 0),
+    popupMenuTheme: PopupMenuThemeData(
+        textStyle: textTheme.bodyText1?.copyWith(color: popupMenuItemColor),
+        elevation: 1,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)))));
 
 const Color secondaryActiveButtonColor = Color(0xFF009EB5);
 const Color dividerColor = Color(0xFFDFE2EB);
@@ -142,3 +153,4 @@ const Color buttonPrimaryBackground = Color(0xFF009EB5);
 const Color ftuNavigationSelected = Color(0xFFFFFFFF);
 const Color ftuNavigationUnSelected = Color(0xFF1A4590);
 const Color containerTitleColor = Colors.black;
+const Color popupMenuItemColor = Color(0xFF1C1B1F);

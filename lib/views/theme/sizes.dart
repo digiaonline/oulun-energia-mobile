@@ -14,6 +14,7 @@ class Sizes {
   static const double singelineInputboxHeight = 48;
   static const double singelineInputboxHeightError = 72;
   static const double itemDefaultSpacing = 16.0;
+  static const double appBarIconSize = 28.5;
 
   static EdgeInsets marginViewBorder =
       const EdgeInsets.all(marginViewBorderSize);
