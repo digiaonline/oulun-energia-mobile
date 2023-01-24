@@ -8,9 +8,18 @@ import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_v
 
 class InterruptionNoticePopupView extends ConsumerWidget {
   static const String routePath = 'notice/:index';
-  static const String routeName = 'interruptions_notice';
+  static const String routeName = 'notice';
 
   final int index;
+
+  static Map<String, dynamic> getSettings(BuildContext context) {
+    return {
+      'title': '',
+      'secondaryAppBar': false,
+      'initialExpanded': false,
+      'hideAppBar': true,
+    };
+  }
 
   const InterruptionNoticePopupView({super.key, required this.index});
 

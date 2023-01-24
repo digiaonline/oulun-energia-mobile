@@ -8,10 +8,20 @@ import 'package:url_launcher/url_launcher.dart';
 import '../theme/default_theme.dart';
 
 class ServiceTermsView extends StatelessWidget {
-  static const String routePath = "/service_terms";
+  static const String routePath = "service_terms";
   static const String routeName = "service_terms";
 
   const ServiceTermsView({super.key}) : super();
+
+  static Map<String, dynamic> getSettings() {
+    return {
+      'title': '',
+      'secondaryAppBar': false,
+      'secondaryAppBarStyle': false,
+      'initialExpanded': false,
+      'hideAppBar': true,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {

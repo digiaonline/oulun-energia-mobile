@@ -17,12 +17,12 @@ class ScaffoldNavbar extends ConsumerWidget {
   const ScaffoldNavbar(
       {Key? key,
       this.title,
-      this.backRoutePath,
       required this.initialExpanded,
       required this.secondaryAppBar,
+      this.backRoutePath,
+      this.hasScrollBody,
       this.hideAppBar = false,
       this.secondaryAppBarStyle,
-      required this.bottomBarIndex,
       required this.child})
       : super(key: key);
 
@@ -30,10 +30,10 @@ class ScaffoldNavbar extends ConsumerWidget {
   final bool initialExpanded;
   final bool secondaryAppBar;
   final bool? secondaryAppBarStyle;
+  final bool? hasScrollBody;
   final bool hideAppBar;
-  final String? backRoutePath;
   final String? title;
-  final int bottomBarIndex;
+  final String? backRoutePath;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -117,8 +117,8 @@ class ScaffoldNavbar extends ConsumerWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    if (backRoutePath != null) {
-                                      context.go(backRoutePath!);
+                                    if (context.canPop()) {
+                                      context.pop();
                                     }
                                   },
                                   child: const Icon(Icons.arrow_back),
@@ -138,11 +138,13 @@ class ScaffoldNavbar extends ConsumerWidget {
                     )
                   : null,
             ),
-          SliverFillRemaining(child: child),
+          SliverFillRemaining(
+            hasScrollBody: hasScrollBody == null ? true : false,
+            child: child,
+          ),
         ],
       ).withBackground(),
-      bottomNavigationBar: BottomNavbar(
-          initialExpanded: initialExpanded, currentIndex: bottomBarIndex),
+      bottomNavigationBar: BottomNavbar(initialExpanded: initialExpanded),
     );
   }
 

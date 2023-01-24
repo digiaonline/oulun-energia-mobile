@@ -9,9 +9,18 @@ import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:go_router/go_router.dart';
 
 class InterruptionsNoticesView extends ConsumerWidget {
-  static const String routePath = '/interruptions/notices';
-  static const String routeName = 'interruptions_notices_view';
+  static const String routePath = 'notices';
+  static const String routeName = 'notices';
   const InterruptionsNoticesView({super.key});
+
+  static Map<String, dynamic> getSettings(BuildContext context) {
+    return {
+      'title': AppLocalizations.of(context)!.interruptionsViewNotices,
+      'secondaryAppBar': true,
+      'initialExpanded': true,
+      'hideAppBar': false,
+    };
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

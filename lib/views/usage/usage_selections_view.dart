@@ -10,10 +10,19 @@ import 'package:oulun_energia_mobile/views/utils/content.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageSelectionsView extends StatelessWidget {
-  static const String routePath = '/usage';
-  static const String routeName = 'usage_selections_view';
+  static const String routePath = 'usage';
+  static const String routeName = 'usage';
 
   const UsageSelectionsView({Key? key}) : super(key: key);
+
+  static Map<String, dynamic> getSettings() {
+    return {
+      'title': '',
+      'secondaryAppBar': false,
+      'initialExpanded': true,
+      'hideAppBar': false,
+    };
+  }
 
   void onChangePage(BuildContext context, String routeName) =>
       Navigator.of(context).pushNamed(routeName);

@@ -11,8 +11,18 @@ import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InterruptionsSelectionsView extends StatelessWidget {
-  static const String routePath = '/interruptions';
-  static const String routeName = 'interruptions_selections_view';
+  static const String routePath = 'interruptions';
+  static const String routeName = 'interruptions';
+
+  static Map<String, dynamic> getSettings() {
+    return {
+      'title': '',
+      'secondaryAppBar': false,
+      'secondaryAppBarStyle': true,
+      'initialExpanded': true,
+      'hideAppBar': false,
+    };
+  }
 
   const InterruptionsSelectionsView({Key? key}) : super(key: key);
 
@@ -30,7 +40,9 @@ class InterruptionsSelectionsView extends StatelessWidget {
             height: Sizes.selectionButtonIconSize),
       ),
       SelectionButton(
-        onChangePage: () => context.go(InterruptionsNoticesView.routePath),
+        onChangePage: () => context.goNamed(
+          InterruptionsNoticesView.routeName,
+        ),
         text: locals.interruptionsViewNotices,
         widget: const Icon(
           Icons.description_outlined,
@@ -39,7 +51,9 @@ class InterruptionsSelectionsView extends StatelessWidget {
         ),
       ),
       SelectionButton(
-        onChangePage: () => context.go(InterruptionsFaultView.routePath),
+        onChangePage: () => context.goNamed(
+          InterruptionsFaultView.routeName,
+        ),
         text: locals.interruptionsViewFault,
         widget: SvgPicture.asset(
           'assets/icons/local_convenience_store.svg',

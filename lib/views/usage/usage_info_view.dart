@@ -9,10 +9,21 @@ import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageInfoView extends ConsumerStatefulWidget {
-  static const String routePath = '/usage/info';
-  static const String routeName = 'usage_info_view';
+  static const String routePath = 'info';
+  static const String routeName = 'info';
 
   const UsageInfoView({Key? key}) : super(key: key);
+
+  static Map<String, dynamic> getSettings(BuildContext context) {
+    var isLandscapeMode =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    return {
+      'title': AppLocalizations.of(context)!.usageViewUsageInfo,
+      'secondaryAppBar': !isLandscapeMode,
+      'initialExpanded': !isLandscapeMode,
+      'hideAppBar': isLandscapeMode,
+    };
+  }
 
   @override
   UsageInfoViewState createState() => UsageInfoViewState();

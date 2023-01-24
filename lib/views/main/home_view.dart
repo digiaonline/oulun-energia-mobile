@@ -12,8 +12,17 @@ import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 
 class HomeView extends ConsumerWidget {
-  static const String routePath = "/";
-  static const String routeName = "home_route";
+  static const String routePath = "/home";
+  static const String routeName = "home";
+
+  static Map<String, dynamic> getSettings(BuildContext context) {
+    return {
+      'title': '',
+      'secondaryAppBar': false,
+      'initialExpanded': false,
+      'hideAppBar': false,
+    };
+  }
 
   const HomeView({super.key});
 
@@ -71,8 +80,11 @@ List<Widget> _buildControls(
     BuildContext context, bool isLoggedIn, AppLocalizations locals) {
   return [
     buildHomeViewButton(locals.homeViewUsageInfo, 'assets/icons/monitoring.svg',
-        onTap:
-            isLoggedIn ? () => context.go(UsageSelectionsView.routePath) : null,
+        onTap: isLoggedIn
+            ? () => context.goNamed(
+                  UsageSelectionsView.routeName,
+                )
+            : null,
         marker: !isLoggedIn
             ? const Icon(
                 Icons.lock_outline,
@@ -80,10 +92,14 @@ List<Widget> _buildControls(
               )
             : null),
     buildHomeViewButton(locals.homeViewInterruptions, 'assets/icons/news.svg',
-        onTap: () => context.go(InterruptionsNoticesView.routePath)),
+        onTap: () => context.goNamed(
+              InterruptionsNoticesView.routeName,
+            )),
     buildHomeViewButton(
         locals.homeViewContact, 'assets/icons/support_agent.svg',
-        onTap: () => context.go(ContactUsView.routePath)),
+        onTap: () => context.goNamed(
+              ContactUsView.routeName,
+            )),
     buildHomeViewButton(locals.homeViewFishHunt, 'assets/icons/set_meal.svg'),
     buildHomeViewButton(
         locals.homeViewErrorReporting, 'assets/icons/calendar.svg'),
