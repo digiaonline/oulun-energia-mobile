@@ -18,6 +18,7 @@ import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
+import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'package:oulun_energia_mobile/views/utils/scaffold_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
 
@@ -94,6 +95,12 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
             return const LoginView();
           },
         ),
+        GoRoute(
+            path: UserDetailsView.routePath,
+            name: UserDetailsView.routeName,
+            builder: (BuildContext context, GoRouterState state) {
+              return const UserDetailsView();
+            }),
         ShellRoute(
             routes: <RouteBase>[
               GoRoute(

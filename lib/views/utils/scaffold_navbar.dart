@@ -7,6 +7,7 @@ import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
+import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/bottom_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/navigation_drawer.dart';
@@ -73,9 +74,10 @@ class ScaffoldNavbar extends ConsumerWidget {
                         child: PopupMenuButton(
                           itemBuilder: (context) {
                             return [
-                              _createMenuItem(locals.popupMenuItemUserInfo, () {
-                                showSnackbar("TODO");
-                              }, icon: Icons.face_outlined),
+                              _createMenuItem(locals.popupMenuItemUserInfo,
+                                  () => context.go(UserDetailsView.routePath),
+                                  icon: Icons.face_outlined,
+                                  enabled: userAuth.loggedIn()),
                               if (userAuth.loggedIn())
                                 _createMenuItem(locals.popupMenuItemLogout, () {
                                   showSnackbar("TODO but still logged out");
@@ -90,7 +92,9 @@ class ScaffoldNavbar extends ConsumerWidget {
                           icon: Icon(
                             Icons.face,
                             size: Sizes.appBarIconSize,
-                            color: theme.appBarTheme.iconTheme?.color,
+                            color: secondaryAppBarStyle ?? secondaryAppBar
+                                ? iconColorBlue
+                                : theme.appBarTheme.iconTheme?.color,
                           ),
                         ),
                       )
@@ -147,9 +151,9 @@ class ScaffoldNavbar extends ConsumerWidget {
   }
 
   PopupMenuItem _createMenuItem(String text, Function() onTap,
-      {String? iconSvg, IconData? icon}) {
+      {String? iconSvg, IconData? icon, bool enabled = true}) {
     return PopupMenuItem(
-      onTap: onTap,
+      onTap: enabled ? onTap : null,
       value: 1,
       child: Row(children: [
         if (icon != null)
@@ -165,7 +169,7 @@ class ScaffoldNavbar extends ConsumerWidget {
         Text(
           text,
         ),
-      ]),
+      ]).toDisabledOpacity(disabled: !enabled),
     );
   }
 }
