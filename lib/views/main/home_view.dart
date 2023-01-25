@@ -9,7 +9,7 @@ import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
-import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
+import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 
 class HomeView extends ConsumerWidget {
   static const String routePath = "/home";
@@ -82,7 +82,8 @@ List<Widget> _buildControls(
     buildHomeViewButton(locals.homeViewUsageInfo, 'assets/icons/monitoring.svg',
         onTap: isLoggedIn
             ? () => context.goNamed(
-                  UsageSelectionsView.routeName,
+                  UsageInfoView.routeName,
+                  extra: GoRouter.of(context).location,
                 )
             : null,
         marker: !isLoggedIn
@@ -94,11 +95,13 @@ List<Widget> _buildControls(
     buildHomeViewButton(locals.homeViewInterruptions, 'assets/icons/news.svg',
         onTap: () => context.goNamed(
               InterruptionsNoticesView.routeName,
+              extra: GoRouter.of(context).location,
             )),
     buildHomeViewButton(
         locals.homeViewContact, 'assets/icons/support_agent.svg',
         onTap: () => context.goNamed(
               ContactUsView.routeName,
+              extra: GoRouter.of(context).location,
             )),
     buildHomeViewButton(locals.homeViewFishHunt, 'assets/icons/set_meal.svg'),
     buildHomeViewButton(

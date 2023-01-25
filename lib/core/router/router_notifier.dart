@@ -20,6 +20,7 @@ import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
+import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'package:oulun_energia_mobile/views/utils/config.dart';
 import 'package:oulun_energia_mobile/views/utils/scaffold_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
@@ -57,23 +58,19 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     if (this.state.isLoading || this.state.hasError) return null;
 
     LoggedInStatus loggedInStatus = userAuthState.loggedInStatus;
-    if (state.location == '/') {
-      return HomeView.routeName;
-    }
-
     if (state.location == '/splash') {
       if (!userAuthState.loading &&
           userAuthState.loggedInStatus != LoggedInStatus.loggedIn) {
         return FirstTimeView.routePath;
       } else if (userAuthState.loggedInStatus == LoggedInStatus.loggedIn) {
-        return HomeView.routeName;
+        return HomeView.routePath;
       }
     }
 
-    if (state.location == '/login') {
+    if (state.location == '/home/login') {
       if (!userAuthState.loading && loggedInStatus == LoggedInStatus.loggedIn) {
         showSnackbar('Jee! Kirjauduit sisään!');
-        return HomeView.routeName;
+        return HomeView.routePath;
       }
 
       if (!userAuthState.loading && loggedInStatus == LoggedInStatus.failed) {
@@ -98,7 +95,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
               return const FirstTimeView();
             }),
         ShellRoute(
-            navigatorKey: navigatorKey,
             routes: <RouteBase>[
               GoRoute(
                 name: HomeView.routeName,
@@ -107,6 +103,12 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   return const HomeView();
                 },
                 routes: [
+                  GoRoute(
+                      path: UserDetailsView.routePath,
+                      name: UserDetailsView.routeName,
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const UserDetailsView();
+                      }),
                   GoRoute(
                       path: LoginView.routePath,
                       name: LoginView.routeName,
@@ -226,6 +228,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   secondaryAppBarStyle: config['secondaryAppBarStyle'],
                   initialExpanded: config['initialExpanded'],
                   hasScrollBody: config['hasScrollBody'],
+                  hideButtons: config['hideButtons'] ?? false,
                   child: child);
             }),
       ];

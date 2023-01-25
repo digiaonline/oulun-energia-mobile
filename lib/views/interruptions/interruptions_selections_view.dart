@@ -32,8 +32,10 @@ class InterruptionsSelectionsView extends StatelessWidget {
 
     List<SelectionButton> selections = [
       SelectionButton(
-        onChangePage: () => context.goNamed(InterruptionsMapView.routeName,
-            params: {"url": InterruptionsMapView.targetUrl}),
+        onChangePage: () => context.goNamed(
+          InterruptionsMapView.routeName,
+          params: {"url": InterruptionsMapView.targetUrl},
+        ),
         text: locals.interruptionsViewMap,
         widget: SvgPicture.asset('assets/icons/fmd_bad.svg',
             width: Sizes.selectionButtonIconSize,

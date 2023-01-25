@@ -9,7 +9,7 @@ class InterruptionsMapView {
 
   static Map<String, dynamic> getSettings(BuildContext context) {
     return {
-      'title': AppLocalizations.of(context)?.interruptionsViewMap ?? 'No title',
+      'title': AppLocalizations.of(context)!.interruptionsViewMap,
       'secondaryAppBar': true,
       'initialExpanded': true,
       'hideAppBar': false,

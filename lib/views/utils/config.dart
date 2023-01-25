@@ -21,6 +21,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
+import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'widget_ext.dart';
 
 class Config {
@@ -29,7 +30,7 @@ class Config {
     return loggedInStatus == LoggedInStatus.loggedIn;
   }
 
-  static List<BottomNavigationBarItem> getUserItems(
+  static List<BottomNavigationBarItem> getUserNavBarItems(
       BuildContext context, WidgetRef ref, int currentIndex) {
     var locals = AppLocalizations.of(context)!;
     List<BottomNavigationBarItem Function(int, int)> items = [
@@ -101,13 +102,42 @@ class Config {
       PrivacyView.routeName: PrivacyView.getSettings(context),
       RegisterView.routeName: RegisterView.getSettings(context),
       ContactUsView.routeName: ContactUsView.getSettings(),
-      ServiceTermsView.routeName: ServiceTermsView.getSettings()
+      ServiceTermsView.routeName: ServiceTermsView.getSettings(),
+      UserDetailsView.routeName: UserDetailsView.getSettings(context)
     };
 
     return settings;
   }
 
-  static List<String> getUserRouteNames(BuildContext context, WidgetRef ref) {
+  static Map<String, Map<String, dynamic>> getUserRouteSettings2(
+      BuildContext context) {
+    Map<String, Map<String, dynamic>> settings = {
+      ForgotPasswordView.routeName: ForgotPasswordView.getSettings(context),
+      HomeView.routeName: HomeView.getSettings(context),
+      UsageInfoView.routeName: UsageInfoView.getSettings(context),
+      UsageSettingsView.routeName: UsageSettingsView.getSettings(context),
+      UsageSelectionsView.routeName: UsageSelectionsView.getSettings(),
+      LoginView.routeName: LoginView.getSettings(),
+      InterruptionsSelectionsView.routeName:
+          InterruptionsSelectionsView.getSettings(),
+      InterruptionsFaultView.routeName:
+          InterruptionsFaultView.getSettings(context),
+      InterruptionsNoticesView.routeName:
+          InterruptionsNoticesView.getSettings(context),
+      InterruptionNoticePopupView.routeName:
+          InterruptionNoticePopupView.getSettings(context),
+      InterruptionsMapView.routeName: InterruptionsMapView.getSettings(context),
+      PrivacyView.routeName: PrivacyView.getSettings(context),
+      RegisterView.routeName: RegisterView.getSettings(context),
+      ContactUsView.routeName: ContactUsView.getSettings(),
+      ServiceTermsView.routeName: ServiceTermsView.getSettings(),
+      UserDetailsView.routeName: UserDetailsView.getSettings(context)
+    };
+
+    return settings;
+  }
+
+  static List<String> getUserNavBarRoutes(BuildContext context, WidgetRef ref) {
     var routes = [
       HomeView.routeName,
       UsageSelectionsView.routeName,

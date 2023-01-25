@@ -18,11 +18,9 @@ class _BottomNavbarState extends ConsumerState<BottomNavbar> {
   late ExpandableController bottomNavigationBarController =
       ExpandableController(initialExpanded: widget.initialExpanded);
 
-  int currentIndex = 0;
-
   List<BottomNavigationBarItem> get _items =>
-      Config.getUserItems(context, ref, _currentIndex);
-  List<String> get _locationNames => Config.getUserRouteNames(context, ref);
+      Config.getUserNavBarItems(context, ref, _currentIndex);
+  List<String> get _locationNames => Config.getUserNavBarRoutes(context, ref);
 
   int get _currentIndex =>
       _locationToIndex(_locationNames, GoRouter.of(context).location);
@@ -48,9 +46,6 @@ class _BottomNavbarState extends ConsumerState<BottomNavbar> {
           items: _items,
           currentIndex: _currentIndex,
           onTap: (int index) {
-            setState(() {
-              currentIndex = index;
-            });
             var location = _locationNames[index];
             context.goNamed(location);
           },

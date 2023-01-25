@@ -61,7 +61,8 @@ class NavigationDrawer extends ConsumerWidget {
                     ],
                   ).toClickable(onTap: () {
                     Scaffold.of(context).closeDrawer();
-                    context.goNamed(LoginView.routeName);
+                    context.goNamed(LoginView.routeName,
+                        extra: GoRouter.of(context).location);
                   }),
               ]),
               ListTile(
@@ -79,7 +80,8 @@ class NavigationDrawer extends ConsumerWidget {
                 onTap: userAuth.loggedIn()
                     ? () {
                         Scaffold.of(context).closeDrawer();
-                        context.goNamed(UsageInfoView.routeName);
+                        context.goNamed(UsageInfoView.routeName,
+                            extra: GoRouter.of(context).location);
                       }
                     : null,
               ).toDisabledOpacity(disabled: !userAuth.loggedIn()),
@@ -92,7 +94,8 @@ class NavigationDrawer extends ConsumerWidget {
                 onTap: userAuth.loggedIn()
                     ? () {
                         Scaffold.of(context).closeDrawer();
-                        context.goNamed(UsageSettingsView.routeName);
+                        context.goNamed(UsageSettingsView.routeName,
+                            extra: GoRouter.of(context).location);
                       }
                     : null,
                 title: Text(
@@ -111,7 +114,8 @@ class NavigationDrawer extends ConsumerWidget {
                 onTap: () {
                   Scaffold.of(context).closeDrawer();
                   context.goNamed(InterruptionsMapView.routeName,
-                      params: {"url": InterruptionsMapView.targetUrl});
+                      params: {"url": InterruptionsMapView.targetUrl},
+                      extra: GoRouter.of(context).location);
                 },
                 leading: SvgPicture.asset(
                   "assets/icons/monitoring.svg",
@@ -128,7 +132,8 @@ class NavigationDrawer extends ConsumerWidget {
               ListTile(
                 onTap: () {
                   Scaffold.of(context).closeDrawer();
-                  context.goNamed(InterruptionsNoticesView.routeName);
+                  context.goNamed(InterruptionsNoticesView.routeName,
+                      extra: GoRouter.of(context).location);
                 },
                 leading: SvgPicture.asset(
                   "assets/icons/news.svg",
@@ -145,7 +150,8 @@ class NavigationDrawer extends ConsumerWidget {
               ListTile(
                 onTap: () {
                   Scaffold.of(context).closeDrawer();
-                  context.goNamed(InterruptionsFaultView.routeName);
+                  context.goNamed(InterruptionsFaultView.routeName,
+                      extra: GoRouter.of(context).location);
                 },
                 leading: SvgPicture.asset(
                   "assets/icons/calendar.svg",

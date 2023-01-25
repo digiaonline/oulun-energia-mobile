@@ -22,6 +22,7 @@ class UsageSettingsView extends ConsumerStatefulWidget {
     return {
       'title': AppLocalizations.of(context)!.usageViewSettings,
       'secondaryAppBar': true,
+      'secondaryAppBarStyle': true,
       'initialExpanded': true,
       'hideAppBar': false,
     };

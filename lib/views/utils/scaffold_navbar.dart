@@ -20,8 +20,8 @@ class ScaffoldNavbar extends ConsumerWidget {
       this.title,
       required this.initialExpanded,
       required this.secondaryAppBar,
-      this.backRoutePath,
       this.hasScrollBody,
+      this.hideButtons = false,
       this.hideAppBar = false,
       this.secondaryAppBarStyle,
       required this.child})
@@ -33,8 +33,8 @@ class ScaffoldNavbar extends ConsumerWidget {
   final bool? secondaryAppBarStyle;
   final bool? hasScrollBody;
   final bool hideAppBar;
+  final bool hideButtons;
   final String? title;
-  final String? backRoutePath;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,7 +64,7 @@ class ScaffoldNavbar extends ConsumerWidget {
                   secondaryAppBarStyle ?? secondaryAppBar ? true : null,
               toolbarHeight:
                   !secondaryAppBar ? theme.appBarTheme.toolbarHeight : 100,
-              actions: secondaryAppBar
+              actions: secondaryAppBar || hideButtons
                   ? null
                   : [
                       Padding(
@@ -74,8 +74,11 @@ class ScaffoldNavbar extends ConsumerWidget {
                         child: PopupMenuButton(
                           itemBuilder: (context) {
                             return [
-                              _createMenuItem(locals.popupMenuItemUserInfo,
-                                  () => context.go(UserDetailsView.routePath),
+                              _createMenuItem(
+                                  locals.popupMenuItemUserInfo,
+                                  () => context.goNamed(
+                                      UserDetailsView.routeName,
+                                      extra: GoRouter.of(context).location),
                                   icon: Icons.face_outlined,
                                   enabled: userAuth.loggedIn()),
                               if (userAuth.loggedIn())
@@ -84,8 +87,10 @@ class ScaffoldNavbar extends ConsumerWidget {
                                   loginNotifier.logout();
                                 }, icon: Icons.logout),
                               if (!userAuth.loggedIn())
-                                _createMenuItem(locals.popupMenuItemLogin,
-                                    () => context.goNamed(LoginView.routeName),
+                                _createMenuItem(
+                                    locals.popupMenuItemLogin,
+                                    () => context.goNamed(LoginView.routeName,
+                                        extra: GoRouter.of(context).location),
                                     icon: Icons.login)
                             ];
                           },
@@ -99,14 +104,16 @@ class ScaffoldNavbar extends ConsumerWidget {
                         ),
                       )
                     ],
-              leading: !secondaryAppBar
-                  ? Builder(
-                      builder: (context) => InkWell(
-                        onTap: () => Scaffold.of(context).openDrawer(),
-                        child: const Icon(Icons.menu),
-                      ),
-                    )
-                  : null,
+              leading: hideButtons
+                  ? null
+                  : !secondaryAppBar
+                      ? Builder(
+                          builder: (context) => InkWell(
+                            onTap: () => Scaffold.of(context).openDrawer(),
+                            child: const Icon(Icons.menu),
+                          ),
+                        )
+                      : null,
               titleWidget: secondaryAppBar
                   ? Container(
                       margin: const EdgeInsets.symmetric(
@@ -121,7 +128,12 @@ class ScaffoldNavbar extends ConsumerWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    if (context.canPop()) {
+                                    String? backRoutePath =
+                                        GoRouterState.of(context).extra
+                                            as String?;
+                                    if (backRoutePath != null) {
+                                      context.go(backRoutePath);
+                                    } else if (context.canPop()) {
                                       context.pop();
                                     }
                                   },
