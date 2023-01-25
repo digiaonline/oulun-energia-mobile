@@ -156,7 +156,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             height: Sizes.marginViewBorderSizeLarge,
           ),
           TextButton(
-            onPressed: () => context.go(HomeView.routePath),
+            onPressed: () => context.goNamed(HomeView.routeName),
             child: Text(
               "Jatka ilman kirjautumista",
               style: defaultTheme.textTheme.bodyText1
@@ -167,7 +167,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             height: Sizes.marginViewBorderSize,
           ),
           TextButton(
-            onPressed: () => context.go(LoginView.routePath),
+            onPressed: () => context.goNamed(LoginView.routeName),
             child: Container(
               decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,
