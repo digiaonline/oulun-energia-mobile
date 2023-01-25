@@ -92,14 +92,14 @@ class Config {
           .map((entries) => entries.value(index, entries.key))
           .toList();
 
-  static List<String> userLoggedInRoutes = [
+  static List<String> userLoggedInNavbarRoutes = [
     HomeView.routeName,
     UsageSelectionsView.routeName,
     InterruptionsSelectionsView.routeName,
     ContactUsView.routeName
   ];
 
-  static List<String> userNotLoggedInRoutes = [
+  static List<String> userNotLoggedInNavbarRoutes = [
     HomeView.routeName,
     InterruptionsSelectionsView.routeName,
     ContactUsView.routeName
@@ -149,6 +149,8 @@ class Config {
 
   static List<String> getUserNavBarRoutes(BuildContext context, WidgetRef ref) {
     bool userIsLoggedIn = isLoggedIn(ref);
-    return userIsLoggedIn ? userLoggedInRoutes : userNotLoggedInRoutes;
+    return userIsLoggedIn
+        ? userLoggedInNavbarRoutes
+        : userNotLoggedInNavbarRoutes;
   }
 }
