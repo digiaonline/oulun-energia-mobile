@@ -25,15 +25,7 @@ import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'widget_ext.dart';
 
 class Config {
-  static bool isLoggedIn(WidgetRef ref) {
-    LoggedInStatus loggedInStatus = ref.read(loginProvider).loggedInStatus;
-    return loggedInStatus == LoggedInStatus.loggedIn;
-  }
-
-  static List<BottomNavigationBarItem> getUserNavBarItems(
-      BuildContext context, WidgetRef ref, int currentIndex) {
-    var locals = AppLocalizations.of(context)!;
-    List<BottomNavigationBarItem Function(int, int)> items = [
+  static BottomNavigationBarItem Function(int, int) getHomeItem(locals) =>
       (currentIndex, index) => BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/home.svg',
@@ -44,7 +36,9 @@ class Config {
                   : defaultTheme.bottomNavigationBarTheme.unselectedItemColor,
             ).toBottomBarIcon(selected: currentIndex == index),
             label: locals.usageViewHome,
-          ),
+          );
+
+  static BottomNavigationBarItem Function(int, int) getMyUsageItem(locals) =>
       (currentIndex, index) => BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/monitoring.svg',
@@ -55,31 +49,61 @@ class Config {
                   : defaultTheme.bottomNavigationBarTheme.unselectedItemColor,
             ).toBottomBarIcon(selected: currentIndex == index),
             label: locals.usageViewMyUsage,
-          ),
+          );
+
+  static BottomNavigationBarItem Function(int, int) getInterruptionsItem(
+          locals) =>
       (currentIndex, index) => BottomNavigationBarItem(
             icon: const Icon(
               Icons.fmd_bad_outlined,
               size: Sizes.mainViewIconSize,
             ).toBottomBarIcon(selected: currentIndex == index),
             label: locals.interruptionsViewTitle,
-          ),
+          );
+
+  static BottomNavigationBarItem Function(int, int) getContactUsItem(locals) =>
       (currentIndex, index) => BottomNavigationBarItem(
             icon: const Icon(
               Icons.support_agent_outlined,
               size: Sizes.mainViewIconSize,
             ).toBottomBarIcon(selected: currentIndex == index),
             label: locals.usageViewContact,
-          ),
-    ];
-    if (!isLoggedIn(ref)) {
-      items.removeAt(1);
-    }
-    return items
-        .asMap()
-        .entries
-        .map((entries) => entries.value(currentIndex, entries.key))
-        .toList();
-  }
+          );
+
+  static List<BottomNavigationBarItem> getUserLoggedInItems(index, locals) => [
+        getHomeItem(locals),
+        getMyUsageItem(locals),
+        getInterruptionsItem(locals),
+        getContactUsItem(locals)
+      ]
+          .asMap()
+          .entries
+          .map((entries) => entries.value(index, entries.key))
+          .toList();
+
+  static List<BottomNavigationBarItem> getUserNotLoggedInItems(index, locals) =>
+      [
+        getHomeItem(locals),
+        getInterruptionsItem(locals),
+        getContactUsItem(locals)
+      ]
+          .asMap()
+          .entries
+          .map((entries) => entries.value(index, entries.key))
+          .toList();
+
+  static List<String> userLoggedInRoutes = [
+    HomeView.routeName,
+    UsageSelectionsView.routeName,
+    InterruptionsSelectionsView.routeName,
+    ContactUsView.routeName
+  ];
+
+  static List<String> userNotLoggedInRoutes = [
+    HomeView.routeName,
+    InterruptionsSelectionsView.routeName,
+    ContactUsView.routeName
+  ];
 
   static Map<String, Map<String, dynamic>> getUserRouteSettings(
       BuildContext context) {
@@ -109,44 +133,22 @@ class Config {
     return settings;
   }
 
-  static Map<String, Map<String, dynamic>> getUserRouteSettings2(
-      BuildContext context) {
-    Map<String, Map<String, dynamic>> settings = {
-      ForgotPasswordView.routeName: ForgotPasswordView.getSettings(context),
-      HomeView.routeName: HomeView.getSettings(context),
-      UsageInfoView.routeName: UsageInfoView.getSettings(context),
-      UsageSettingsView.routeName: UsageSettingsView.getSettings(context),
-      UsageSelectionsView.routeName: UsageSelectionsView.getSettings(),
-      LoginView.routeName: LoginView.getSettings(),
-      InterruptionsSelectionsView.routeName:
-          InterruptionsSelectionsView.getSettings(),
-      InterruptionsFaultView.routeName:
-          InterruptionsFaultView.getSettings(context),
-      InterruptionsNoticesView.routeName:
-          InterruptionsNoticesView.getSettings(context),
-      InterruptionNoticePopupView.routeName:
-          InterruptionNoticePopupView.getSettings(context),
-      InterruptionsMapView.routeName: InterruptionsMapView.getSettings(context),
-      PrivacyView.routeName: PrivacyView.getSettings(context),
-      RegisterView.routeName: RegisterView.getSettings(context),
-      ContactUsView.routeName: ContactUsView.getSettings(),
-      ServiceTermsView.routeName: ServiceTermsView.getSettings(),
-      UserDetailsView.routeName: UserDetailsView.getSettings(context)
-    };
+  static bool isLoggedIn(WidgetRef ref) {
+    LoggedInStatus loggedInStatus = ref.read(loginProvider).loggedInStatus;
+    return loggedInStatus == LoggedInStatus.loggedIn;
+  }
 
-    return settings;
+  static List<BottomNavigationBarItem> getUserNavBarItems(
+      BuildContext context, WidgetRef ref, int index) {
+    var locals = AppLocalizations.of(context)!;
+    var userIsLoggedIn = isLoggedIn(ref);
+    return userIsLoggedIn
+        ? getUserLoggedInItems(index, locals)
+        : getUserNotLoggedInItems(index, locals);
   }
 
   static List<String> getUserNavBarRoutes(BuildContext context, WidgetRef ref) {
-    var routes = [
-      HomeView.routeName,
-      UsageSelectionsView.routeName,
-      InterruptionsSelectionsView.routeName,
-      ContactUsView.routeName
-    ];
-    if (!isLoggedIn(ref)) {
-      routes.removeAt(1);
-    }
-    return routes;
+    bool userIsLoggedIn = isLoggedIn(ref);
+    return userIsLoggedIn ? userLoggedInRoutes : userNotLoggedInRoutes;
   }
 }

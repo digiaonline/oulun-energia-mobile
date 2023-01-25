@@ -21,7 +21,6 @@ class ScaffoldNavbar extends ConsumerWidget {
       required this.initialExpanded,
       required this.secondaryAppBar,
       this.hasScrollBody,
-      this.hideButtons = false,
       this.hideAppBar = false,
       this.secondaryAppBarStyle,
       required this.child})
@@ -33,7 +32,6 @@ class ScaffoldNavbar extends ConsumerWidget {
   final bool? secondaryAppBarStyle;
   final bool? hasScrollBody;
   final bool hideAppBar;
-  final bool hideButtons;
   final String? title;
 
   @override
@@ -64,7 +62,7 @@ class ScaffoldNavbar extends ConsumerWidget {
                   secondaryAppBarStyle ?? secondaryAppBar ? true : null,
               toolbarHeight:
                   !secondaryAppBar ? theme.appBarTheme.toolbarHeight : 100,
-              actions: secondaryAppBar || hideButtons
+              actions: secondaryAppBar
                   ? null
                   : [
                       Padding(
@@ -104,16 +102,14 @@ class ScaffoldNavbar extends ConsumerWidget {
                         ),
                       )
                     ],
-              leading: hideButtons
-                  ? null
-                  : !secondaryAppBar
-                      ? Builder(
-                          builder: (context) => InkWell(
-                            onTap: () => Scaffold.of(context).openDrawer(),
-                            child: const Icon(Icons.menu),
-                          ),
-                        )
-                      : null,
+              leading: !secondaryAppBar
+                  ? Builder(
+                      builder: (context) => InkWell(
+                        onTap: () => Scaffold.of(context).openDrawer(),
+                        child: const Icon(Icons.menu),
+                      ),
+                    )
+                  : null,
               titleWidget: secondaryAppBar
                   ? Container(
                       margin: const EdgeInsets.symmetric(

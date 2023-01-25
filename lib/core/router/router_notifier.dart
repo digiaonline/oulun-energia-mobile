@@ -24,8 +24,7 @@ import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'package:oulun_energia_mobile/views/utils/config.dart';
 import 'package:oulun_energia_mobile/views/utils/scaffold_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
-
-import '../../views/webview/OEWebView.dart';
+import 'package:oulun_energia_mobile/views/webview/OEWebView.dart';
 
 /*
     Used Riverpod official example Riverpod + Go Router
@@ -78,6 +77,12 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
       }
     }
 
+    if (state.location == '/home/usage') {
+      if (loggedInStatus == LoggedInStatus.loggedOut) {
+        return HomeView.routePath;
+      }
+    }
+
     return null;
   }
 
@@ -112,8 +117,17 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   GoRoute(
                       path: LoginView.routePath,
                       name: LoginView.routeName,
-                      builder: (BuildContext context, GoRouterState state) {
-                        return const LoginView();
+                      pageBuilder: (BuildContext context, GoRouterState state) {
+                        return CustomTransitionPage(
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          child: const LoginView(),
+                        );
                       },
                       routes: [
                         GoRoute(
@@ -204,8 +218,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                             name: InterruptionNoticePopupView.routeName,
                             builder:
                                 (BuildContext context, GoRouterState state) {
-                              int index = int.parse(state.params['index']!);
-                              return InterruptionNoticePopupView(index: index);
+                              return const InterruptionNoticePopupView();
                             },
                           ),
                         ],
@@ -228,7 +241,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   secondaryAppBarStyle: config['secondaryAppBarStyle'],
                   initialExpanded: config['initialExpanded'],
                   hasScrollBody: config['hasScrollBody'],
-                  hideButtons: config['hideButtons'] ?? false,
                   child: child);
             }),
       ];
