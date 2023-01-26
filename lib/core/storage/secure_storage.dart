@@ -8,22 +8,25 @@ class SecureStorage {
   IOSOptions _getIosOptions() =>
       const IOSOptions(accountName: /* TODO */ "OmaMobiAccountName");
 
-  AndroidOptions _getAndroidOptions() => AndroidOptions();
+  AndroidOptions _getAndroidOptions() =>
+      const AndroidOptions(encryptedSharedPreferences: true);
 
   Future<void> write(String key, String value) async {
     final result = await _storage.write(
-        key: key,
-        value: value,
-        iOptions: _getIosOptions(),
-        aOptions: _getAndroidOptions() /* TODO webOptions: _getWebOptions() */);
+      key: key,
+      value: value,
+      iOptions: _getIosOptions(),
+      aOptions: _getAndroidOptions(),
+    );
     return result;
   }
 
   Future<String?> read(String key) async {
     final value = await _storage.read(
-        key: key,
-        iOptions: _getIosOptions(),
-        aOptions: _getAndroidOptions() /* TODO webOptions: _getWebOptions() */);
+      key: key,
+      iOptions: _getIosOptions(),
+      aOptions: _getAndroidOptions(),
+    );
     return value;
   }
 }

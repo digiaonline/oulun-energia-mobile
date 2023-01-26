@@ -35,7 +35,11 @@ class BaseFullScreenWidget extends ConsumerWidget {
             : null,
         iconTheme: appBarIconThemeSecondary,
         leading: InkWell(
-          onTap: () => context.go(prevRoutePath),
+          onTap: () {
+            if (context.canPop()) {
+              context.pop();
+            }
+          },
           child: const Icon(Icons.close),
         ),
       ),

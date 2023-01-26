@@ -14,9 +14,19 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InterruptionsFaultView extends StatefulWidget {
-  static const String routePath = '/interruptions/fault';
-  static const String routeName = 'interruptions_fault_view';
+  static const String routePath = 'fault';
+  static const String routeName = 'fault';
   const InterruptionsFaultView({super.key});
+
+  static Map<String, dynamic> getSettings(BuildContext context) {
+    return {
+      'title':
+          AppLocalizations.of(context)?.interruptionsViewFault ?? 'No title',
+      'secondaryAppBar': true,
+      'initialExpanded': true,
+      'hideAppBar': false,
+    };
+  }
 
   @override
   State<InterruptionsFaultView> createState() => _InterruptionsFaultViewState();

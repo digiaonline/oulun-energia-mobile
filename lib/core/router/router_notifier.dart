@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
@@ -11,7 +10,10 @@ import 'package:oulun_energia_mobile/views/interruptions/interruptions_map_view.
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notice_popup_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_selections_view.dart';
+import 'package:oulun_energia_mobile/views/login/forgot_password_view.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
+import 'package:oulun_energia_mobile/views/login/privacy_view.dart';
+import 'package:oulun_energia_mobile/views/login/register_view.dart';
 import 'package:oulun_energia_mobile/views/main/home_view.dart';
 import 'package:oulun_energia_mobile/views/splash_screen.dart';
 import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
@@ -19,15 +21,19 @@ import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/user/user_details.dart';
+import 'package:oulun_energia_mobile/views/utils/config.dart';
 import 'package:oulun_energia_mobile/views/utils/scaffold_navbar.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
-
-import '../../views/webview/OEWebView.dart';
+import 'package:oulun_energia_mobile/views/webview/OEWebView.dart';
 
 /*
     Used Riverpod official example Riverpod + Go Router
     https://github.com/lucavenir/go_router_riverpod/blob/master/complete_example/lib/router/router_notifier.dart
  */
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> interruptionKey = GlobalKey<NavigatorState>();
+
 class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     implements Listenable {
   VoidCallback? routerListener;
@@ -51,7 +57,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     if (this.state.isLoading || this.state.hasError) return null;
 
     LoggedInStatus loggedInStatus = userAuthState.loggedInStatus;
-
     if (state.location == '/splash') {
       if (!userAuthState.loading &&
           userAuthState.loggedInStatus != LoggedInStatus.loggedIn) {
@@ -61,7 +66,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
       }
     }
 
-    if (state.location == '/login') {
+    if (state.location == '/home/login') {
       if (!userAuthState.loading && loggedInStatus == LoggedInStatus.loggedIn) {
         showSnackbar('Jee! Kirjauduit sisään!');
         return HomeView.routePath;
@@ -69,6 +74,12 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
 
       if (!userAuthState.loading && loggedInStatus == LoggedInStatus.failed) {
         showSnackbar('Kirjautuminen epäonnistui!');
+      }
+    }
+
+    if (state.location == '/home/usage') {
+      if (loggedInStatus == LoggedInStatus.loggedOut) {
+        return HomeView.routePath;
       }
     }
 
@@ -88,38 +99,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
             builder: (BuildContext context, GoRouterState state) {
               return const FirstTimeView();
             }),
-        GoRoute(
-          path: LoginView.routePath,
-          name: LoginView.routeName,
-          builder: (BuildContext context, GoRouterState state) {
-            return const LoginView();
-          },
-        ),
-        GoRoute(
-            path: UserDetailsView.routePath,
-            name: UserDetailsView.routeName,
-            builder: (BuildContext context, GoRouterState state) {
-              return const UserDetailsView();
-            }),
-        ShellRoute(
-            routes: <RouteBase>[
-              GoRoute(
-                path: "/register/:url/:title",
-                name: "register",
-                builder: (BuildContext context, GoRouterState state) {
-                  return OEWebView();
-                },
-              ),
-            ],
-            builder: (BuildContext context, GoRouterState state, Widget child) {
-              return ScaffoldNavbar(
-                  title: state.params['title'],
-                  backRoutePath: LoginView.routePath,
-                  initialExpanded: false,
-                  secondaryAppBar: true,
-                  bottomBarIndex: 1,
-                  child: child);
-            }),
         ShellRoute(
             routes: <RouteBase>[
               GoRoute(
@@ -128,177 +107,140 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                 builder: (BuildContext context, GoRouterState state) {
                   return const HomeView();
                 },
-              ),
-            ],
-            builder: (BuildContext context, GoRouterState state, Widget child) {
-              return ScaffoldNavbar(
-                  title: '',
-                  initialExpanded: false,
-                  secondaryAppBar: false,
-                  bottomBarIndex: 0,
-                  child: child);
-            }),
-        ShellRoute(
-            routes: <RouteBase>[
-              GoRoute(
-                  path: UsageSelectionsView.routePath,
-                  name: UsageSelectionsView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return const UsageSelectionsView();
-                  }),
-              GoRoute(
-                  path: UsageInfoView.routePath,
-                  name: UsageInfoView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return const UsageInfoView();
-                  }),
-              GoRoute(
-                  path: UsageSettingsView.routePath,
-                  name: UsageSettingsView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return const UsageSettingsView();
-                  }),
-              GoRoute(
-                  path: InterruptionsSelectionsView.routePath,
-                  name: InterruptionsSelectionsView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return const InterruptionsSelectionsView();
-                  }),
-              GoRoute(
-                  path: InterruptionsMapView.routePath,
-                  name: InterruptionsMapView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return OEWebView();
-                  }),
-              GoRoute(
-                  path: InterruptionsNoticesView.routePath,
-                  name: InterruptionsNoticesView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return const InterruptionsNoticesView();
-                  },
-                  routes: [
-                    GoRoute(
-                      path: InterruptionNoticePopupView.routePath,
-                      name: InterruptionNoticePopupView.routeName,
+                routes: [
+                  GoRoute(
+                      path: UserDetailsView.routePath,
+                      name: UserDetailsView.routeName,
                       builder: (BuildContext context, GoRouterState state) {
-                        int index = int.parse(state.params['index']!);
-                        return InterruptionNoticePopupView(index: index);
+                        return const UserDetailsView();
+                      }),
+                  GoRoute(
+                      path: LoginView.routePath,
+                      name: LoginView.routeName,
+                      pageBuilder: (BuildContext context, GoRouterState state) {
+                        return CustomTransitionPage(
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            );
+                          },
+                          child: const LoginView(),
+                        );
                       },
-                    ),
-                  ]),
-              GoRoute(
-                path: ServiceTermsView.routePath,
-                name: ServiceTermsView.routeName,
-                builder: (BuildContext context, GoRouterState state) {
-                  return const ServiceTermsView();
-                },
+                      routes: [
+                        GoRoute(
+                          path: PrivacyView.routePath,
+                          name: PrivacyView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return OEWebView();
+                          },
+                        ),
+                        GoRoute(
+                          path: RegisterView.routePath,
+                          name: RegisterView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return OEWebView();
+                          },
+                        ),
+                        GoRoute(
+                          path: ForgotPasswordView.routePath,
+                          name: ForgotPasswordView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return OEWebView();
+                          },
+                        ),
+                        GoRoute(
+                          path: ServiceTermsView.routePath,
+                          name: ServiceTermsView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return const ServiceTermsView();
+                          },
+                        )
+                      ]),
+                  GoRoute(
+                      path: ContactUsView.routePath,
+                      name: ContactUsView.routeName,
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const ContactUsView();
+                      }),
+                  GoRoute(
+                      path: UsageSelectionsView.routePath,
+                      name: UsageSelectionsView.routeName,
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const UsageSelectionsView();
+                      },
+                      routes: [
+                        GoRoute(
+                          path: UsageSettingsView.routePath,
+                          name: UsageSettingsView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return const UsageSettingsView();
+                          },
+                        ),
+                        GoRoute(
+                            path: UsageInfoView.routePath,
+                            name: UsageInfoView.routeName,
+                            builder:
+                                (BuildContext context, GoRouterState state) {
+                              return const UsageInfoView();
+                            }),
+                      ]),
+                  GoRoute(
+                    path: InterruptionsSelectionsView.routePath,
+                    name: InterruptionsSelectionsView.routeName,
+                    builder: (BuildContext context, GoRouterState state) {
+                      return const InterruptionsSelectionsView();
+                    },
+                    routes: [
+                      GoRoute(
+                          path: InterruptionsMapView.routePath,
+                          name: InterruptionsMapView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return OEWebView();
+                          }),
+                      GoRoute(
+                          path: InterruptionsFaultView.routePath,
+                          name: InterruptionsFaultView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return const InterruptionsFaultView();
+                          }),
+                      GoRoute(
+                        path: InterruptionsNoticesView.routePath,
+                        name: InterruptionsNoticesView.routeName,
+                        builder: (BuildContext context, GoRouterState state) {
+                          return const InterruptionsNoticesView();
+                        },
+                        routes: [
+                          GoRoute(
+                            path: InterruptionNoticePopupView.routePath,
+                            name: InterruptionNoticePopupView.routeName,
+                            builder:
+                                (BuildContext context, GoRouterState state) {
+                              return const InterruptionNoticePopupView();
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              GoRoute(
-                  path: InterruptionsFaultView.routePath,
-                  name: InterruptionsFaultView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return const InterruptionsFaultView();
-                  }),
-              GoRoute(
-                  path: ContactUsView.routePath,
-                  name: ContactUsView.routeName,
-                  builder: (BuildContext context, GoRouterState state) {
-                    return const ContactUsView();
-                  }),
             ],
             builder: (BuildContext context, GoRouterState state, Widget child) {
-              var isLandscapeMode =
-                  MediaQuery.of(context).orientation == Orientation.landscape;
+              var location = getLocation(state);
 
-              var locals = AppLocalizations.of(context)!;
-              String location = state.location;
-              String title = '';
-              String backRoutePath = '';
-              bool secondaryAppBar = true;
-              bool initialExpanded = true;
-              bool hideAppBar = false;
-              int currentIndex = 0;
+              Map<String, dynamic> config =
+                  Config.getUserRouteSettings(context)[location]!;
 
-              // TODO refactor and make it more dynamic
-              // Add an array to View classes which includes booleans and strings etc (?) and pass that as an extra object
-              // I.e. context.go(UsageSelectionsView.routePath, extra: UsageSeletionsView.getSettings(context))
-
-              if (state.params.isNotEmpty) {
-                if (state.params['url'] == InterruptionsMapView.targetUrl) {
-                  location = InterruptionsMapView.routePath;
-                }
-
-                if (state.params['index'] != null) {
-                  location = InterruptionNoticePopupView.routePath;
-                }
-              }
-
-              switch (location) {
-                case UsageSelectionsView.routePath:
-                  currentIndex = 1;
-                  secondaryAppBar = false;
-                  break;
-                case UsageSettingsView.routePath:
-                  backRoutePath = UsageSelectionsView.routePath;
-                  title = locals.usageViewSettings;
-                  currentIndex = 1;
-                  break;
-                case UsageInfoView.routePath:
-                  backRoutePath = UsageSelectionsView.routePath;
-                  if (isLandscapeMode) {
-                    secondaryAppBar = false;
-                    initialExpanded = false;
-                    hideAppBar = true;
-                  }
-                  title = locals.usageViewUsageInfo;
-                  currentIndex = 1;
-                  break;
-                case InterruptionsSelectionsView.routePath:
-                  currentIndex = 2;
-                  secondaryAppBar = false;
-                  break;
-                case InterruptionsMapView.routePath:
-                  backRoutePath = InterruptionsSelectionsView.routePath;
-                  title = locals.interruptionsViewMap;
-                  currentIndex = 2;
-                  break;
-                case InterruptionsNoticesView.routePath:
-                  backRoutePath = InterruptionsSelectionsView.routePath;
-                  title = locals.interruptionsViewNotices;
-                  currentIndex = 2;
-                  break;
-                case InterruptionNoticePopupView.routePath:
-                  hideAppBar = true;
-                  initialExpanded = false;
-                  currentIndex = 2;
-                  break;
-                case ServiceTermsView.routePath:
-                  hideAppBar = true;
-                  initialExpanded = false;
-                  currentIndex = 2;
-                  break;
-                case InterruptionsFaultView.routePath:
-                  backRoutePath = InterruptionsSelectionsView.routePath;
-                  currentIndex = 2;
-                  title = locals.interruptionsViewFault;
-                  break;
-                case ContactUsView.routePath:
-                  currentIndex = 3;
-                  secondaryAppBar = false;
-                  break;
-                default:
-                  initialExpanded = false;
-                  secondaryAppBar = false;
-                  break;
-              }
               return ScaffoldNavbar(
-                  title: title,
-                  hideAppBar: hideAppBar,
-                  backRoutePath: backRoutePath,
-                  bottomBarIndex: currentIndex,
-                  secondaryAppBar: secondaryAppBar,
-                  secondaryAppBarStyle: true,
-                  initialExpanded: initialExpanded,
+                  title: config['title'],
+                  hideAppBar: config['hideAppBar'],
+                  secondaryAppBar: config['secondaryAppBar'],
+                  secondaryAppBarStyle: config['secondaryAppBarStyle'],
+                  initialExpanded: config['initialExpanded'],
+                  hasScrollBody: config['hasScrollBody'],
                   child: child);
             }),
       ];
@@ -312,6 +254,21 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
   void removeListener(VoidCallback listener) {
     routerListener = null;
   }
+}
+
+String getLocation(GoRouterState state) {
+  var locations = state.location
+      .split('/')
+      .where((element) =>
+          !element.contains('http') &&
+          element.isNotEmpty &&
+          double.tryParse(element) == null)
+      .toList();
+
+  if (locations.isEmpty) {
+    return HomeView.routeName;
+  }
+  return locations[locations.length - 1];
 }
 
 final routerNotifierProvider =

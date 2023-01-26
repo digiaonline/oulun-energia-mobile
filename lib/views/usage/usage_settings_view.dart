@@ -13,10 +13,20 @@ import 'package:oulun_energia_mobile/views/utils/dropdown.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageSettingsView extends ConsumerStatefulWidget {
-  static const String routePath = '/usage/settings';
-  static const String routeName = 'usage_settings_view';
+  static const String routePath = 'settings';
+  static const String routeName = 'settings';
 
   const UsageSettingsView({Key? key}) : super(key: key);
+
+  static Map<String, dynamic> getSettings(BuildContext context) {
+    return {
+      'title': AppLocalizations.of(context)!.usageViewSettings,
+      'secondaryAppBar': true,
+      'secondaryAppBarStyle': true,
+      'initialExpanded': true,
+      'hideAppBar': false,
+    };
+  }
 
   @override
   ConsumerState<UsageSettingsView> createState() => _UsageSettingsViewState();

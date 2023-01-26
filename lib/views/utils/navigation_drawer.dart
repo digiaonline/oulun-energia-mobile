@@ -6,6 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/flavors.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/providers/settings_provider.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_fault_view.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_map_view.dart';
+import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
@@ -56,7 +59,11 @@ class NavigationDrawer extends ConsumerWidget {
                             ?.copyWith(fontWeight: FontWeight.w600),
                       )
                     ],
-                  ).toClickable(onTap: () => context.go(LoginView.routePath)),
+                  ).toClickable(onTap: () {
+                    Scaffold.of(context).closeDrawer();
+                    context.goNamed(LoginView.routeName,
+                        extra: GoRouter.of(context).location);
+                  }),
               ]),
               ListTile(
                 leading: SvgPicture.asset(
@@ -71,7 +78,11 @@ class NavigationDrawer extends ConsumerWidget {
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 onTap: userAuth.loggedIn()
-                    ? () => context.go(UsageInfoView.routePath)
+                    ? () {
+                        Scaffold.of(context).closeDrawer();
+                        context.goNamed(UsageInfoView.routeName,
+                            extra: GoRouter.of(context).location);
+                      }
                     : null,
               ).toDisabledOpacity(disabled: !userAuth.loggedIn()),
               ListTile(
@@ -81,7 +92,11 @@ class NavigationDrawer extends ConsumerWidget {
                   size: Sizes.navigationDrawerIconSize,
                 ),
                 onTap: userAuth.loggedIn()
-                    ? () => context.go(UsageSettingsView.routePath)
+                    ? () {
+                        Scaffold.of(context).closeDrawer();
+                        context.goNamed(UsageSettingsView.routeName,
+                            extra: GoRouter.of(context).location);
+                      }
                     : null,
                 title: Text(
                   locals.usageViewSettings,
@@ -96,6 +111,12 @@ class NavigationDrawer extends ConsumerWidget {
                     ?.copyWith(fontWeight: FontWeight.w700),
               ),
               ListTile(
+                onTap: () {
+                  Scaffold.of(context).closeDrawer();
+                  context.goNamed(InterruptionsMapView.routeName,
+                      params: {"url": InterruptionsMapView.targetUrl},
+                      extra: GoRouter.of(context).location);
+                },
                 leading: SvgPicture.asset(
                   "assets/icons/monitoring.svg",
                   height: Sizes.navigationDrawerIconSize,
@@ -109,6 +130,11 @@ class NavigationDrawer extends ConsumerWidget {
                 ),
               ),
               ListTile(
+                onTap: () {
+                  Scaffold.of(context).closeDrawer();
+                  context.goNamed(InterruptionsNoticesView.routeName,
+                      extra: GoRouter.of(context).location);
+                },
                 leading: SvgPicture.asset(
                   "assets/icons/news.svg",
                   height: Sizes.navigationDrawerIconSize,
@@ -122,6 +148,11 @@ class NavigationDrawer extends ConsumerWidget {
                 ),
               ),
               ListTile(
+                onTap: () {
+                  Scaffold.of(context).closeDrawer();
+                  context.goNamed(InterruptionsFaultView.routeName,
+                      extra: GoRouter.of(context).location);
+                },
                 leading: SvgPicture.asset(
                   "assets/icons/calendar.svg",
                   height: Sizes.navigationDrawerIconSize,

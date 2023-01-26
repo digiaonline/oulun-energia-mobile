@@ -7,12 +7,24 @@ import 'package:oulun_energia_mobile/providers/usage_info_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
+import 'package:go_router/go_router.dart';
 
 class UsageInfoView extends ConsumerStatefulWidget {
-  static const String routePath = '/usage/info';
-  static const String routeName = 'usage_info_view';
+  static const String routePath = 'info';
+  static const String routeName = 'info';
 
   const UsageInfoView({Key? key}) : super(key: key);
+
+  static Map<String, dynamic> getSettings(BuildContext context) {
+    var isLandscapeMode =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    return {
+      'title': AppLocalizations.of(context)!.usageViewUsageInfo,
+      'secondaryAppBar': !isLandscapeMode,
+      'initialExpanded': !isLandscapeMode,
+      'hideAppBar': isLandscapeMode,
+    };
+  }
 
   @override
   UsageInfoViewState createState() => UsageInfoViewState();
@@ -49,133 +61,144 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
 
     final AsyncValue<List<Usage>> fetchUsage =
         ref.watch(usageProvider(context));
-    return fetchUsage.when(
-      data: (usages) => DefaultTabController(
-        initialIndex: 0,
-        length: 4,
-        child: Column(
-          children: [
-            const SizedBox(height: 20.0),
-            Center(
-              child: Text(ref.watch(usageInfoProvider).getTotalUsage(),
-                  style: textTheme.bodyText1),
-            ),
-            ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 30.0),
-              iconColor: Colors.black,
-              leading: GestureDetector(
-                child: const Icon(Icons.arrow_back_ios),
-                onTap: () => onChangeDate(direction: -1),
+    return WillPopScope(
+      onWillPop: () async {
+        String? backRoutePath = GoRouterState.of(context).extra as String?;
+        if (backRoutePath != null) {
+          context.go(backRoutePath);
+          return false;
+        }
+        return true;
+      },
+      child: fetchUsage.when(
+        data: (usages) => DefaultTabController(
+          initialIndex: 0,
+          length: 4,
+          child: Column(
+            children: [
+              const SizedBox(height: 20.0),
+              Center(
+                child: Text(ref.watch(usageInfoProvider).getTotalUsage(),
+                    style: textTheme.bodyText1),
               ),
-              trailing: GestureDetector(
-                child: const Icon(Icons.arrow_forward_ios),
-                onTap: () => onChangeDate(direction: 1),
-              ),
-              title: Center(
-                child: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Text(
-                    ref.watch(usageInfoProvider).getDateString(context),
-                    style: textTheme.headline1,
+              ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+                iconColor: Colors.black,
+                leading: GestureDetector(
+                  child: const Icon(Icons.arrow_back_ios),
+                  onTap: () => onChangeDate(direction: -1),
+                ),
+                trailing: GestureDetector(
+                  child: const Icon(Icons.arrow_forward_ios),
+                  onTap: () => onChangeDate(direction: 1),
+                ),
+                title: Center(
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      ref.watch(usageInfoProvider).getDateString(context),
+                      style: textTheme.headline1,
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: isLandscape ? 20.0 : 50.0,
-            ),
-            Expanded(
-              child: usages.isNotEmpty
-                  ? UsageBarChart(
-                      usages: usages,
-                      usageInterval: ref.watch(usageInfoProvider).usageInterval,
-                    )
-                  : Center(
-                      child: Text(
-                        AppLocalizations.of(context)!.usageViewUsageNoInfo,
-                        style: textTheme.headline2,
-                      ),
-                    ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 15.0),
-              child: Stack(
-                fit: StackFit.passthrough,
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  Container(
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(color: tabBorderColor, width: 5.0),
-                    )),
-                  ),
-                  TabBar(
-                    controller: _tabController,
-                    labelStyle: kFontSize12W400,
-                    indicator: const UnderlineTabIndicator(
-                      borderSide: BorderSide(
-                        width: 5.0,
-                        color: secondaryActiveButtonColor,
-                      ),
-                    ),
-                    unselectedLabelColor: Colors.black,
-                    labelColor: secondaryActiveButtonColor,
-                    tabs: <Widget>[
-                      FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Tab(
-                          text: AppLocalizations.of(context)!.usageViewHour,
-                        ),
-                      ),
-                      FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Tab(
-                          text: AppLocalizations.of(context)!.usageViewDay,
-                        ),
-                      ),
-                      FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Tab(
-                          text: AppLocalizations.of(context)!.usageViewMonth,
-                        ),
-                      ),
-                      FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Tab(
-                          text: AppLocalizations.of(context)!.usageViewYear,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+              SizedBox(
+                height: isLandscape ? 20.0 : 50.0,
               ),
-            ),
-          ],
-        ),
-      ).withBackgroundColor(Colors.white),
-      error: (error, stack) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(AppLocalizations.of(context)!.usageViewUsageErrorInfo,
-                style: textTheme.headline2),
+              Expanded(
+                child: usages.isNotEmpty
+                    ? UsageBarChart(
+                        usages: usages,
+                        usageInterval:
+                            ref.watch(usageInfoProvider).usageInterval,
+                      )
+                    : Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.usageViewUsageNoInfo,
+                          style: textTheme.headline2,
+                        ),
+                      ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 15.0),
+                child: Stack(
+                  fit: StackFit.passthrough,
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    Container(
+                      decoration: const BoxDecoration(
+                          border: Border(
+                        bottom: BorderSide(color: tabBorderColor, width: 5.0),
+                      )),
+                    ),
+                    TabBar(
+                      controller: _tabController,
+                      labelStyle: kFontSize12W400,
+                      indicator: const UnderlineTabIndicator(
+                        borderSide: BorderSide(
+                          width: 5.0,
+                          color: secondaryActiveButtonColor,
+                        ),
+                      ),
+                      unselectedLabelColor: Colors.black,
+                      labelColor: secondaryActiveButtonColor,
+                      tabs: <Widget>[
+                        FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Tab(
+                            text: AppLocalizations.of(context)!.usageViewHour,
+                          ),
+                        ),
+                        FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Tab(
+                            text: AppLocalizations.of(context)!.usageViewDay,
+                          ),
+                        ),
+                        FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Tab(
+                            text: AppLocalizations.of(context)!.usageViewMonth,
+                          ),
+                        ),
+                        FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Tab(
+                            text: AppLocalizations.of(context)!.usageViewYear,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ).withBackgroundColor(Colors.white),
-      loading: () => Center(
-        child: Column(
+        ).withBackgroundColor(Colors.white),
+        error: (error, stack) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppLocalizations.of(context)!.usageViewFetchingData),
-            const SizedBox(
-              height: 20.0,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(AppLocalizations.of(context)!.usageViewUsageErrorInfo,
+                  style: textTheme.headline2),
             ),
-            const CircularProgressIndicator(),
           ],
-        ),
-      ).withBackgroundColor(Colors.white),
+        ).withBackgroundColor(Colors.white),
+        loading: () => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(AppLocalizations.of(context)!.usageViewFetchingData),
+              const SizedBox(
+                height: 20.0,
+              ),
+              const CircularProgressIndicator(),
+            ],
+          ),
+        ).withBackgroundColor(Colors.white),
+      ),
     );
   }
 }

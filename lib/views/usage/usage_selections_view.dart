@@ -10,10 +10,20 @@ import 'package:oulun_energia_mobile/views/utils/content.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageSelectionsView extends StatelessWidget {
-  static const String routePath = '/usage';
-  static const String routeName = 'usage_selections_view';
+  static const String routePath = 'usage';
+  static const String routeName = 'usage';
 
   const UsageSelectionsView({Key? key}) : super(key: key);
+
+  static Map<String, dynamic> getSettings() {
+    return {
+      'title': '',
+      'secondaryAppBar': false,
+      'secondaryAppBarStyle': true,
+      'initialExpanded': true,
+      'hideAppBar': false,
+    };
+  }
 
   void onChangePage(BuildContext context, String routeName) =>
       Navigator.of(context).pushNamed(routeName);
@@ -27,14 +37,14 @@ class UsageSelectionsView extends StatelessWidget {
 
     List<SelectionButton> selections = [
       SelectionButton(
-        onChangePage: () => context.go(UsageInfoView.routePath),
+        onChangePage: () => context.goNamed(UsageInfoView.routeName),
         text: locals.usageViewUsageInfo,
         widget: SvgPicture.asset('assets/icons/monitoring.svg',
             width: Sizes.selectionButtonIconSize,
             height: Sizes.selectionButtonIconSize),
       ),
       SelectionButton(
-        onChangePage: () => context.go(UsageSettingsView.routePath),
+        onChangePage: () => context.goNamed(UsageSettingsView.routeName),
         text: locals.usageViewSettings,
         widget: const Icon(
           Icons.settings_outlined,

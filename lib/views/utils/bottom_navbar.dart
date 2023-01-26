@@ -1,36 +1,41 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
-import 'package:oulun_energia_mobile/views/interruptions/interruptions_selections_view.dart';
-import 'package:oulun_energia_mobile/views/main/home_view.dart';
-import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
-import 'package:oulun_energia_mobile/views/theme/sizes.dart';
-import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
-import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:oulun_energia_mobile/views/utils/config.dart';
 
-class BottomNavbar extends StatefulWidget {
-  const BottomNavbar(
-      {Key? key, required this.initialExpanded, required this.currentIndex})
+class BottomNavbar extends ConsumerStatefulWidget {
+  const BottomNavbar({Key? key, required this.initialExpanded})
       : super(key: key);
 
   final bool initialExpanded;
-  final int currentIndex;
 
   @override
-  State<BottomNavbar> createState() => _BottomNavbarState();
+  ConsumerState<BottomNavbar> createState() => _BottomNavbarState();
 }
 
-class _BottomNavbarState extends State<BottomNavbar> {
+class _BottomNavbarState extends ConsumerState<BottomNavbar> {
   late ExpandableController bottomNavigationBarController =
       ExpandableController(initialExpanded: widget.initialExpanded);
+
+  List<BottomNavigationBarItem> get _items =>
+      Config.getUserNavBarItems(context, ref, _currentIndex);
+  List<String> get _locationNames => Config.getUserNavBarRoutes(context, ref);
+
+  int get _currentIndex =>
+      _locationToIndex(_locationNames, GoRouter.of(context).location);
+
+  int _locationToIndex(List<String> routes, String location) {
+    var locations = location.split('/');
+    var idx = locations.length > 2 ? 2 : 1;
+    final index =
+        routes.indexWhere((route) => locations[idx].startsWith(route));
+    return index < 0 ? 0 : index;
+  }
 
   @override
   Widget build(BuildContext context) {
     bottomNavigationBarController.expanded = widget.initialExpanded;
-    var locals = AppLocalizations.of(context)!;
 
     return ExpandableNotifier(
       child: Expandable(
@@ -38,63 +43,11 @@ class _BottomNavbarState extends State<BottomNavbar> {
         expanded: BottomNavigationBar(
           elevation: 0.0,
           type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/home.svg',
-                width: Sizes.mainViewIconSize,
-                height: Sizes.mainViewIconSize,
-                color: widget.currentIndex == 0
-                    ? defaultTheme.bottomNavigationBarTheme.selectedItemColor
-                    : defaultTheme.bottomNavigationBarTheme.unselectedItemColor,
-              ).toBottomBarIcon(selected: widget.currentIndex == 0),
-              label: locals.usageViewHome,
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/monitoring.svg',
-                width: Sizes.mainViewIconSize,
-                height: Sizes.mainViewIconSize,
-                color: widget.currentIndex == 1
-                    ? defaultTheme.bottomNavigationBarTheme.selectedItemColor
-                    : defaultTheme.bottomNavigationBarTheme.unselectedItemColor,
-              ).toBottomBarIcon(selected: widget.currentIndex == 1),
-              label: locals.usageViewMyUsage,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(
-                Icons.fmd_bad_outlined,
-                size: Sizes.mainViewIconSize,
-              ).toBottomBarIcon(selected: widget.currentIndex == 2),
-              label: locals.usageViewInterruptions,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(
-                Icons.support_agent_outlined,
-                size: Sizes.mainViewIconSize,
-              ).toBottomBarIcon(selected: widget.currentIndex == 3),
-              label: locals.usageViewContact,
-            ),
-          ],
-          currentIndex: widget.currentIndex,
+          items: _items,
+          currentIndex: _currentIndex,
           onTap: (int index) {
-            switch (index) {
-              case 0:
-                context.go(HomeView.routePath);
-                break;
-              case 1:
-                context.go(UsageSelectionsView.routePath);
-                break;
-              case 2:
-                context.go(InterruptionsSelectionsView.routePath);
-                break;
-              case 3:
-                context.go(ContactUsView.routePath);
-                break;
-              default:
-                context.go(HomeView.routePath);
-                break;
-            }
+            var location = _locationNames[index];
+            context.goNamed(location);
           },
         ),
         collapsed: const SizedBox.shrink(),

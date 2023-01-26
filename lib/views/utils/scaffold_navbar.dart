@@ -18,12 +18,11 @@ class ScaffoldNavbar extends ConsumerWidget {
   const ScaffoldNavbar(
       {Key? key,
       this.title,
-      this.backRoutePath,
       required this.initialExpanded,
       required this.secondaryAppBar,
+      this.hasScrollBody,
       this.hideAppBar = false,
       this.secondaryAppBarStyle,
-      required this.bottomBarIndex,
       required this.child})
       : super(key: key);
 
@@ -31,10 +30,9 @@ class ScaffoldNavbar extends ConsumerWidget {
   final bool initialExpanded;
   final bool secondaryAppBar;
   final bool? secondaryAppBarStyle;
+  final bool? hasScrollBody;
   final bool hideAppBar;
-  final String? backRoutePath;
   final String? title;
-  final int bottomBarIndex;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,8 +72,11 @@ class ScaffoldNavbar extends ConsumerWidget {
                         child: PopupMenuButton(
                           itemBuilder: (context) {
                             return [
-                              _createMenuItem(locals.popupMenuItemUserInfo,
-                                  () => context.go(UserDetailsView.routePath),
+                              _createMenuItem(
+                                  locals.popupMenuItemUserInfo,
+                                  () => context.goNamed(
+                                      UserDetailsView.routeName,
+                                      extra: GoRouter.of(context).location),
                                   icon: Icons.face_outlined,
                                   enabled: userAuth.loggedIn()),
                               if (userAuth.loggedIn())
@@ -84,8 +85,10 @@ class ScaffoldNavbar extends ConsumerWidget {
                                   loginNotifier.logout();
                                 }, icon: Icons.logout),
                               if (!userAuth.loggedIn())
-                                _createMenuItem(locals.popupMenuItemLogin,
-                                    () => context.goNamed(LoginView.routeName),
+                                _createMenuItem(
+                                    locals.popupMenuItemLogin,
+                                    () => context.goNamed(LoginView.routeName,
+                                        extra: GoRouter.of(context).location),
                                     icon: Icons.login)
                             ];
                           },
@@ -121,8 +124,13 @@ class ScaffoldNavbar extends ConsumerWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
+                                    String? backRoutePath =
+                                        GoRouterState.of(context).extra
+                                            as String?;
                                     if (backRoutePath != null) {
-                                      context.go(backRoutePath!);
+                                      context.go(backRoutePath);
+                                    } else if (context.canPop()) {
+                                      context.pop();
                                     }
                                   },
                                   child: const Icon(Icons.arrow_back),
@@ -142,11 +150,13 @@ class ScaffoldNavbar extends ConsumerWidget {
                     )
                   : null,
             ),
-          SliverFillRemaining(child: child),
+          SliverFillRemaining(
+            hasScrollBody: hasScrollBody == null ? true : false,
+            child: child,
+          ),
         ],
       ).withBackground(),
-      bottomNavigationBar: BottomNavbar(
-          initialExpanded: initialExpanded, currentIndex: bottomBarIndex),
+      bottomNavigationBar: BottomNavbar(initialExpanded: initialExpanded),
     );
   }
 
