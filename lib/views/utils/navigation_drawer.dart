@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/flavors.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/providers/settings_provider.dart';
+import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/fishway/fish_way.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_fault_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_map_view.dart';
@@ -182,6 +183,11 @@ class NavigationDrawer extends ConsumerWidget {
                 locals.homeViewContact,
                 style: theme.textTheme.bodyText2
                     ?.copyWith(fontWeight: FontWeight.w600),
+              ).toClickable(
+                onTap: () {
+                  Scaffold.of(context).closeDrawer();
+                  context.goNamed(ContactUsView.routeName);
+                },
               ),
               const Divider(),
               Text(
