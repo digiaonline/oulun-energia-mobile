@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:oulun_energia_mobile/views/base/base_fullscreen_widget.dart';
-import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,7 +25,7 @@ class ServiceTermsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return BaseFullScreenWidget(LoginView.routePath,
+    return BaseFullScreenWidget(
         appBarTitle: "Käyttöehdot",
         title: "Sovelluksen käyttöehdot",
         description:
