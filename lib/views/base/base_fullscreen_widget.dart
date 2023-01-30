@@ -3,16 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
+import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class BaseFullScreenWidget extends ConsumerWidget {
   final String? appBarTitle;
   final String? title;
   final String? additionalTitle;
   final String? description;
-  final String prevRoutePath;
   final Widget? child;
 
-  const BaseFullScreenWidget(this.prevRoutePath,
+  const BaseFullScreenWidget(
       {this.appBarTitle,
       this.title,
       this.additionalTitle,
@@ -36,7 +36,10 @@ class BaseFullScreenWidget extends ConsumerWidget {
         iconTheme: appBarIconThemeSecondary,
         leading: InkWell(
           onTap: () {
-            if (context.canPop()) {
+            String? backRouteName = GoRouterState.of(context).extra as String?;
+            if (backRouteName != null) {
+              context.go(backRouteName);
+            } else if (context.canPop()) {
               context.pop();
             }
           },
@@ -69,6 +72,6 @@ class BaseFullScreenWidget extends ConsumerWidget {
           ),
         ),
       ),
-    );
+    ).withWillPopScope(context);
   }
 }
