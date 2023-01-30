@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oulun_energia_mobile/views/base/base_fullscreen_widget.dart';
+import 'package:oulun_energia_mobile/views/utils/content.dart';
 import 'package:video_player/video_player.dart';
 
 class FishWay extends ConsumerStatefulWidget {
@@ -46,29 +46,26 @@ class FishWayState extends ConsumerState {
     var locals = AppLocalizations.of(context)!;
     var textTheme = Theme.of(context).textTheme;
 
-    return BaseFullScreenWidget(
-      hideAppBar: true,
-      header: Image.asset("assets/images/fishway_header.png"),
+    return Content(
+      image: Image.asset("assets/images/fishway_header.png"),
       title: locals.fishWayViewTitle,
-      description: locals.fishWayViewDescription,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 200,
-            child: FutureBuilder(
-              builder: (context, snapshot) =>
-                  snapshot.connectionState == ConnectionState.done
-                      ? _buildVideoView()
-                      : const Center(child: CircularProgressIndicator()),
-              future: _initVideoControllers(),
-            ),
+      text: locals.fishWayViewDescription,
+      children: [
+        SizedBox(
+          height: 200,
+          child: FutureBuilder(
+            builder: (context, snapshot) =>
+                snapshot.connectionState == ConnectionState.done
+                    ? _buildVideoView()
+                    : const Center(child: CircularProgressIndicator()),
+            future: _initVideoControllers(),
           ),
-          Text(
-            locals.fishWayViewCamDescription,
-            style: textTheme.bodyText2,
-          )
-        ],
-      ),
+        ),
+        Text(
+          locals.fishWayViewCamDescription,
+          style: textTheme.bodyText2,
+        )
+      ],
     );
   }
 
