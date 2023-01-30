@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
+import 'package:oulun_energia_mobile/views/newsletter/newsletter_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/user/user_details.dart';
@@ -23,10 +24,12 @@ class ScaffoldNavbar extends ConsumerWidget {
       this.hasScrollBody,
       this.hideAppBar = false,
       this.secondaryAppBarStyle,
+      this.bottomSheet,
       required this.child})
       : super(key: key);
 
   final Widget child;
+  final Widget? bottomSheet;
   final bool initialExpanded;
   final bool secondaryAppBar;
   final bool? secondaryAppBarStyle;
@@ -41,6 +44,7 @@ class ScaffoldNavbar extends ConsumerWidget {
     var theme = Theme.of(context);
     var locals = AppLocalizations.of(context)!;
     return Scaffold(
+      bottomSheet: bottomSheet,
       drawerEnableOpenDragGesture: false,
       drawer: const Drawer(
         child: NavigationDrawer(),
