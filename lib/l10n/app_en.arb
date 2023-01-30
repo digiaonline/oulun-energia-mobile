@@ -77,6 +77,7 @@
       }
     }
   },
+  "homeViewOrderNewsletter": "Subscribe to the newsletter",
   "loginViewLogin": "Kirjaudu palveluun",
   "loginViewUsername": "Username",
   "loginViewPassword": "Password",
@@ -109,5 +110,14 @@
   "loginViewRememberSignIn": "Remember me",
   "popupMenuItemUserInfo": "Own info",
   "popupMenuItemLogout": "Logout",
-  "popupMenuItemLogin": "Login"
+  "popupMenuItemLogin": "Login",
+  "newsletterViewTitle": "Subscribe to our newsletter!",
+  "newsletterViewText": "Subscribe to our electronic newsletter and stay up-to-date on Oulu Energia's news! You will receive information about new products, services and news directly to your email.",
+  "newsletterViewDistrictHeatingNews": "Heating services and current news",
+  "newsletterViewElectricityNews": "Electricity network services and current news",
+  "newsletterViewRecyclingNews": "Recycling economy (newsletter of our subsidiary Suklo Oy)",
+  "newsletterViewAcceptTermsPrefix": "I agree to the processing of my personal data in accordance with Oulu Energia's ",
+  "newsletterViewAcceptTerms": "privacy statement.",
+  "newsletterViewAcceptTermsPostfix": "",
+  "newsletterViewCancellation": "If you want to cancel your consent to email newsletters, you can do so from the cancellation link at the end of the newsletter."
 }
