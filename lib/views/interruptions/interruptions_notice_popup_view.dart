@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/core/domain/interruption_notice.dart';
 import 'package:oulun_energia_mobile/providers/interruptions_provider.dart';
 import 'package:oulun_energia_mobile/views/base/base_fullscreen_widget.dart';
-import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
 
 class InterruptionNoticePopupView extends ConsumerWidget {
   static const String routePath = 'notice/:index';
@@ -25,12 +24,12 @@ class InterruptionNoticePopupView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<InterruptionNotice> notices = ref.read(interruptionsProvider).value!;
-    int index = int.parse(GoRouterState.of(context).params['index']!);
+    int index = int.parse(GoRouterState.of(context).params['index'] ?? '0');
 
     InterruptionNotice notice = notices[index];
 
     var locals = AppLocalizations.of(context)!;
-    return BaseFullScreenWidget(InterruptionsNoticesView.routePath,
+    return BaseFullScreenWidget(
         appBarTitle: locals.interruptionsViewNotice,
         title: notice.date,
         additionalTitle: notice.title,

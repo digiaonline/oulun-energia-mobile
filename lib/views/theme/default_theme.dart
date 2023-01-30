@@ -66,6 +66,10 @@ ThemeData defaultTheme = ThemeData(
       unselectedIconTheme:
           bottomNavigationIconTheme.copyWith(color: iconColorBlue),
     ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      elevation: 0.0,
+      backgroundColor: iconColorBlueLight,
+    ),
     fontFamily: 'Eina',
     useMaterial3: true,
     buttonTheme: ButtonThemeData(
@@ -115,7 +119,7 @@ ThemeData defaultTheme = ThemeData(
           vertical: VisualDensity.minimumDensity),
       checkColor: MaterialStateProperty.resolveWith<Color>(
         (states) {
-          return Colors.white;
+          return Colors.black;
         },
       ),
       fillColor: MaterialStateProperty.resolveWith<Color>(
@@ -127,7 +131,7 @@ ThemeData defaultTheme = ThemeData(
         borderRadius: BorderRadius.circular(2.0),
       ),
       side: MaterialStateBorderSide.resolveWith(
-        (states) => const BorderSide(width: 1.0, color: Colors.white),
+        (states) => const BorderSide(width: 1.5, color: borderColor),
       ),
     ),
     dividerColor: const Color(0xFF949494),

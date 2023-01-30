@@ -7,9 +7,9 @@
   "firstName": "Etunimi",
   "lastName": "Sukunimi",
   "phoneNumber": "Puhelinnumero",
-  "phoneNumberError": "Puhelinnumeron muoto on väärä",
-  "email": "Sähköposti",
-  "emailError": "Sähköpostin muoto on väärä",
+  "phoneNumberError": "Puhelinnumeron muoto on virheellinen",
+  "email": "Sähköpostiosoite",
+  "emailError": "Sähköpostiosoitteen muoto on virheellinen",
   "yes": "Kyllä",
   "no": "Ei",
   "title": "Aihe",
@@ -77,6 +77,7 @@
       }
     }
   },
+  "homeViewOrderNewsletter": "Tilaa uutiskirje",
   "loginViewLogin": "Kirjaudu palveluun",
   "loginViewUsername": "Käyttäjätunnus",
   "loginViewPassword": "Salasana",
@@ -109,5 +110,14 @@
   "loginViewRememberSignIn": "Muista minut",
   "popupMenuItemUserInfo": "Omat tiedot",
   "popupMenuItemLogout": "Kirjaudu ulos",
-  "popupMenuItemLogin": "Kirjaudu sisään"
+  "popupMenuItemLogin": "Kirjaudu sisään",
+  "newsletterViewTitle": "Tilaa uutiskirjeemme!",
+  "newsletterViewText": "Tilaa sähköinen uutiskirjeemme ja pysyt ajan tasalla Oulun Energian kuulumisista! Saat tiedon uusista tuotteista, palveluista ja uutisista suoraan sähköpostiisi.",
+  "newsletterViewDistrictHeatingNews": "Lämpöpalvelut ja ajankohtaiset uutiset",
+  "newsletterViewElectricityNews": "Sähköverkkopalvelut ja ajankohtaiset uutiset",
+  "newsletterViewRecyclingNews": "Kiertotalous (tytäryhtiömme Syklo Oy:n uutiskirje)",
+  "newsletterViewAcceptTermsPrefix": "Hyväksyn henkilötietojeni käsittelyn Oulun Energian ",
+  "newsletterViewAcceptTerms": "tietosuojaselosteen",
+  "newsletterViewAcceptTermsPostfix": " mukaisesti.",
+  "newsletterViewCancellation": "Jos haluat peruuttaa suostumuksesi sähköpostiuutiskirjeisiin, voit tehdä sen uutiskirjeen lopusta löytyvästä peruutuslinkistä."
 }

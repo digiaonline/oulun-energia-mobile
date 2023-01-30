@@ -15,6 +15,7 @@ import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/login/privacy_view.dart';
 import 'package:oulun_energia_mobile/views/login/register_view.dart';
 import 'package:oulun_energia_mobile/views/main/home_view.dart';
+import 'package:oulun_energia_mobile/views/newsletter/newsletter_view.dart';
 import 'package:oulun_energia_mobile/views/splash_screen.dart';
 import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
@@ -30,9 +31,6 @@ import 'package:oulun_energia_mobile/views/webview/OEWebView.dart';
     Used Riverpod official example Riverpod + Go Router
     https://github.com/lucavenir/go_router_riverpod/blob/master/complete_example/lib/router/router_notifier.dart
  */
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> interruptionKey = GlobalKey<NavigatorState>();
 
 class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     implements Listenable {
@@ -108,6 +106,12 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   return const HomeView();
                 },
                 routes: [
+                  GoRoute(
+                      path: NewsletterView.routePath,
+                      name: NewsletterView.routeName,
+                      builder: (BuildContext context, GoRouterState state) {
+                        return const NewsletterView();
+                      }),
                   GoRoute(
                       path: UserDetailsView.routePath,
                       name: UserDetailsView.routeName,
@@ -241,6 +245,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   secondaryAppBarStyle: config['secondaryAppBarStyle'],
                   initialExpanded: config['initialExpanded'],
                   hasScrollBody: config['hasScrollBody'],
+                  bottomSheet: config['bottomSheet'],
                   child: child);
             }),
       ];

@@ -18,7 +18,6 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100.0,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
             foregroundColor: disabled

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 
 const double disabledOpacity = 0.6;
@@ -24,6 +25,18 @@ extension WidgetExt on Widget {
   Widget withBackgroundColor(Color color) {
     return Container(color: color, child: this);
   }
+
+  Widget withWillPopScope(BuildContext context) => WillPopScope(
+        onWillPop: () async {
+          String? backRoutePath = GoRouterState.of(context).extra as String?;
+          if (backRoutePath != null) {
+            context.go(backRoutePath);
+            return false;
+          }
+          return true;
+        },
+        child: this,
+      );
 
   Widget toButton({bool? secondary, bool? enabled}) {
     var container = Container(
