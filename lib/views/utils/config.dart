@@ -14,6 +14,7 @@ import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/login/privacy_view.dart';
 import 'package:oulun_energia_mobile/views/login/register_view.dart';
 import 'package:oulun_energia_mobile/views/main/home_view.dart';
+import 'package:oulun_energia_mobile/views/newsletter/newsletter_view.dart';
 import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
@@ -127,7 +128,8 @@ class Config {
       RegisterView.routeName: RegisterView.getSettings(context),
       ContactUsView.routeName: ContactUsView.getSettings(),
       ServiceTermsView.routeName: ServiceTermsView.getSettings(),
-      UserDetailsView.routeName: UserDetailsView.getSettings(context)
+      UserDetailsView.routeName: UserDetailsView.getSettings(context),
+      NewsletterView.routeName: NewsletterView.getSettings()
     };
 
     return settings;
