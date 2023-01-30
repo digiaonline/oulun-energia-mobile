@@ -54,33 +54,35 @@ class BaseFullScreenWidget extends ConsumerWidget {
             )
           : null,
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(
-              Sizes.itemDefaultSpacing,
-              Sizes.itemDefaultSpacing / 2,
-              Sizes.itemDefaultSpacing,
-              Sizes.itemDefaultSpacing),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (header != null) header!,
-              if (title != null)
-                const SizedBox(height: Sizes.itemDefaultSpacing),
-              if (title != null) Text(title!, style: textTheme.headline1),
-              if (additionalTitle != null)
-                const SizedBox(height: Sizes.itemDefaultSpacing),
-              if (additionalTitle != null)
-                Text(additionalTitle!, style: textTheme.headline3),
-              if (description != null)
-                const SizedBox(height: Sizes.itemDefaultSpacing),
-              if (description != null)
-                Text(description!, style: textTheme.bodyText1),
-              if (child != null)
-                const SizedBox(height: Sizes.itemDefaultSpacing),
-              if (child != null) child!,
-            ],
+        child: Column(children: [
+          if (header != null) header!,
+          Container(
+            padding: const EdgeInsets.fromLTRB(
+                Sizes.itemDefaultSpacing,
+                Sizes.itemDefaultSpacing / 2,
+                Sizes.itemDefaultSpacing,
+                Sizes.itemDefaultSpacing),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (title != null)
+                  const SizedBox(height: Sizes.itemDefaultSpacing),
+                if (title != null) Text(title!, style: textTheme.headline1),
+                if (additionalTitle != null)
+                  const SizedBox(height: Sizes.itemDefaultSpacing),
+                if (additionalTitle != null)
+                  Text(additionalTitle!, style: textTheme.headline3),
+                if (description != null)
+                  const SizedBox(height: Sizes.itemDefaultSpacing),
+                if (description != null)
+                  Text(description!, style: textTheme.bodyText1),
+                if (child != null)
+                  const SizedBox(height: Sizes.itemDefaultSpacing),
+                if (child != null) child!,
+              ],
+            ),
           ),
-        ),
+        ]),
       ),
     ).withWillPopScope(context);
   }
