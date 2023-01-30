@@ -7,6 +7,7 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
+import 'package:oulun_energia_mobile/views/newsletter/newsletter_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
@@ -20,8 +21,28 @@ class HomeView extends ConsumerWidget {
       'title': '',
       'secondaryAppBar': false,
       'initialExpanded': false,
+      'bottomSheet': newsletterButton(context),
       'hideAppBar': false,
     };
+  }
+
+  static Widget newsletterButton(BuildContext context) {
+    // TODO check if user has signed up for a newsletter
+    // TODO hide if user has signed up for a newsletter?
+    return ListTile(
+      onTap: () {
+        context.goNamed(NewsletterView.routeName);
+      },
+      minVerticalPadding: 0.0,
+      textColor: Colors.white,
+      tileColor: Colors.transparent,
+      title: Text(AppLocalizations.of(context)!.homeViewOrderNewsletter,
+          style: textTheme.bodyText1),
+      leading: Icon(Icons.mail_outline,
+          size: Sizes.navigationDrawerIconSize, color: appBarIconTheme.color),
+      trailing: Icon(Icons.arrow_forward_ios,
+          size: Sizes.navigationDrawerIconSize, color: appBarIconTheme.color),
+    );
   }
 
   const HomeView({super.key});
