@@ -32,9 +32,6 @@ import 'package:oulun_energia_mobile/views/webview/OEWebView.dart';
     https://github.com/lucavenir/go_router_riverpod/blob/master/complete_example/lib/router/router_notifier.dart
  */
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> interruptionKey = GlobalKey<NavigatorState>();
-
 class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     implements Listenable {
   VoidCallback? routerListener;
@@ -61,7 +58,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     if (state.location == '/splash') {
       if (!userAuthState.loading &&
           userAuthState.loggedInStatus != LoggedInStatus.loggedIn) {
-        return HomeView.routePath;
+        return FirstTimeView.routePath;
       } else if (userAuthState.loggedInStatus == LoggedInStatus.loggedIn) {
         return HomeView.routePath;
       }
@@ -101,7 +98,6 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
               return const FirstTimeView();
             }),
         ShellRoute(
-            navigatorKey: navigatorKey,
             routes: <RouteBase>[
               GoRoute(
                 name: HomeView.routeName,
