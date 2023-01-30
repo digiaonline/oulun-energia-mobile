@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
+import 'package:oulun_energia_mobile/views/fishway/fish_way.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_fault_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_map_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notice_popup_view.dart';
@@ -18,11 +20,11 @@ import 'package:oulun_energia_mobile/views/newsletter/newsletter_view.dart';
 import 'package:oulun_energia_mobile/views/terms/service_terms.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/user/user_details.dart';
+
 import 'widget_ext.dart';
 
 class Config {
@@ -128,6 +130,7 @@ class Config {
       RegisterView.routeName: RegisterView.getSettings(context),
       ContactUsView.routeName: ContactUsView.getSettings(),
       ServiceTermsView.routeName: ServiceTermsView.getSettings(),
+      FishWay.routeName: FishWay.getSettings(),
       UserDetailsView.routeName: UserDetailsView.getSettings(context),
       NewsletterView.routeName: NewsletterView.getSettings()
     };
