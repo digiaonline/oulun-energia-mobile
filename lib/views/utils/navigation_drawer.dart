@@ -125,7 +125,7 @@ class NavigationDrawer extends ConsumerWidget {
                   color: theme.textTheme.bodyText2?.color,
                 ),
                 title: Text(
-                  "KeskeytyskarttaL",
+                  locals.interruptionsViewMap,
                   style: theme.textTheme.bodyText2
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
@@ -143,7 +143,7 @@ class NavigationDrawer extends ConsumerWidget {
                   color: theme.textTheme.bodyText2?.color,
                 ),
                 title: Text(
-                  "KeskeytystiedotteetL",
+                  locals.interruptionsViewNotices,
                   style: theme.textTheme.bodyText2
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
@@ -161,7 +161,7 @@ class NavigationDrawer extends ConsumerWidget {
                   color: theme.textTheme.bodyText2?.color,
                 ),
                 title: Text(
-                  "Ilmoita viastaL",
+                  locals.interruptionsViewFault,
                   style: theme.textTheme.bodyText2
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
