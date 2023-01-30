@@ -8,6 +8,7 @@ import 'package:oulun_energia_mobile/views/utils/content.dart';
 import 'package:oulun_energia_mobile/views/utils/input_box.dart';
 import 'package:oulun_energia_mobile/views/utils/radio_selector.dart';
 import 'package:oulun_energia_mobile/views/utils/submit_button.dart';
+import 'package:oulun_energia_mobile/views/utils/validators.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -51,11 +52,6 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
     'email': false
   };
 
-  var emailRegExp = RegExp(
-      r'(?:[a-z0-9!#$%&\x27*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\x27*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])');
-
-  var phoneRegExp = RegExp(r'^\+358\d+$');
-
   final _expandableController = ExpandableController(initialExpanded: true);
 
   void validate(String key, String value) {
@@ -67,10 +63,10 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
         hasError = value.isEmpty;
         break;
       case 'phoneNumber':
-        hasError = value.isEmpty == false && !phoneRegExp.hasMatch(value);
+        hasError = Validators.validatePhoneNumber(value);
         break;
       case 'email':
-        hasError = value.isEmpty == false && !emailRegExp.hasMatch(value);
+        hasError = Validators.validateEmail(value);
         break;
       default:
         hasError = false;
