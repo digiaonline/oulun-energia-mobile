@@ -24,8 +24,7 @@ class Content extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           if (image != null) image!,
-          // TODO Show the image here if assigned
-          //  Container is a placeholder for the image for now
+          // TODO Show the image here if assigned, Container is a placeholder for the image for now
           if (image is SizedBox)
             Container(
               color: Colors.grey,
@@ -33,8 +32,8 @@ class Content extends StatelessWidget {
               height: 235.0,
             ),
           Padding(
-              padding: const EdgeInsets.fromLTRB(
-                  Sizes.itemDefaultSpacing, 0.0, Sizes.itemDefaultSpacing, 0.0),
+              padding: const EdgeInsets.symmetric(
+                  vertical: Sizes.itemDefaultSpacing),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
