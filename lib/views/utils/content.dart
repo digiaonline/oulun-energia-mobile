@@ -26,7 +26,7 @@ class Content extends StatelessWidget {
             if (image != null) image!,
             // TODO Show the image here if assigned
             //  Container is a placeholder for the image for now
-            if (image != null)
+            if (image is SizedBox)
               Container(
                 color: Colors.grey,
                 width: double.infinity,
