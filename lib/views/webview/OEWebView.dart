@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class OEWebView extends StatelessWidget {
@@ -22,11 +23,22 @@ class OEWebView extends StatelessWidget {
       Factory(() => EagerGestureRecognizer())
     };
 
-    return Scaffold(
-      body: WebViewWidget(
-        controller: controller,
-        gestureRecognizers: gestureRecognizers,
+    return WillPopScope(
+      child: Scaffold(
+        body: WebViewWidget(
+          controller: controller,
+          gestureRecognizers: gestureRecognizers,
+        ),
       ),
+      onWillPop: () async {
+        String? backRoutePath = GoRouterState.of(context).extra as String?;
+        if (backRoutePath != null) {
+          context.pop();
+          context.go(backRoutePath);
+          return false;
+        }
+        return true;
+      },
     );
   }
 }

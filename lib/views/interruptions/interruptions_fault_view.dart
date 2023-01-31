@@ -277,6 +277,6 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
             ],
           ),
           const SizedBox(height: Sizes.inputMargin)
-        ]).withBackgroundColor(Colors.white);
+        ]).withBackgroundColor(Colors.white).withWillPopScope(context);
   }
 }

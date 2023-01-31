@@ -99,7 +99,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                     ),
                   ],
                 ),
-              ).withBackgroundColor(Colors.white);
+              );
             },
             error: ((error, stackTrace) => Center(
                     child: Column(
@@ -108,7 +108,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                     Text(AppLocalizations.of(context)!
                         .interruptionsViewNoticesFetchError),
                   ],
-                )).withBackgroundColor(Colors.white)),
+                ))),
             loading: () => Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -121,6 +121,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                     const CircularProgressIndicator(),
                   ],
                 )))
-        .withBackgroundColor(Colors.white);
+        .withBackgroundColor(Colors.white)
+        .withWillPopScope(context);
   }
 }
