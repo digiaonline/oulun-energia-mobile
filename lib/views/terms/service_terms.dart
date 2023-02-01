@@ -59,21 +59,26 @@ class ServiceTermsView extends StatelessWidget {
                             "Puhelin, vaihde:"),
                     WidgetSpan(
                       alignment: PlaceholderAlignment.middle,
-                      child: Text("08 5584 3300",
-                              style: theme.textTheme.bodyLarge?.copyWith(
-                                  decoration: TextDecoration.underline,
-                                  color: iconColorBlueLight))
-                          .toClickable(
-                              onTap: () =>
-                                  launchUrl(Uri.parse("tel:08 5584 3300"))),
+                      child: Text(
+                        "08 5584 3300",
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: iconColorBlueLight,
+                          color: iconColorBlueLight,
+                        ),
+                      ).toClickable(
+                          onTap: () =>
+                              launchUrl(Uri.parse("tel:08 5584 3300"))),
                     ),
                     WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           "info@oulunenergia.fi",
                           style: theme.textTheme.bodyLarge?.copyWith(
-                              decoration: TextDecoration.underline,
-                              color: iconColorBlueLight),
+                            decoration: TextDecoration.underline,
+                            decorationColor: iconColorBlueLight,
+                            color: iconColorBlueLight,
+                          ),
                         ).toClickable(onTap: () {
                           launchUrl(Uri.parse("mailto:info@oulunenergia.fi"));
                         })),

@@ -145,6 +145,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                           color: Colors.white,
                           height: 1.48,
                           decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
                         ),
                       ),
                     )
@@ -172,6 +173,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                           color: Colors.white,
                           height: 1.48,
                           decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
                         ),
                       ),
                     )

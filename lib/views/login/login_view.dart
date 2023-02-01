@@ -130,9 +130,10 @@ class LoginView extends ConsumerWidget {
                                       text: locals.loginViewTermsLink,
                                       style: defaultTheme.textTheme.bodyMedium
                                           ?.copyWith(
-                                              color: Colors.white,
-                                              decoration:
-                                                  TextDecoration.underline),
+                                        color: Colors.white,
+                                        decorationColor: Colors.white,
+                                        decoration: TextDecoration.underline,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -140,10 +141,12 @@ class LoginView extends ConsumerWidget {
                                   onTap: () => _openTermsLink(context)),
                               Text(
                                 locals.loginViewPrivacyStatementLink,
-                                style: defaultTheme.textTheme.bodyMedium
-                                    ?.copyWith(
-                                        color: Colors.white,
-                                        decoration: TextDecoration.underline),
+                                style:
+                                    defaultTheme.textTheme.bodyMedium?.copyWith(
+                                  color: Colors.white,
+                                  decorationColor: Colors.white,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ).toClickable(
                                   onTap: () => _openPrivacyStatement(context)),
                             ],
@@ -175,6 +178,7 @@ class LoginView extends ConsumerWidget {
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: Colors.white,
+                            decorationColor: Colors.white,
                             decoration: TextDecoration.underline,
                           ),
                         ).toClickable(
@@ -191,10 +195,12 @@ class LoginView extends ConsumerWidget {
                             children: [
                               TextSpan(
                                 text: locals.loginViewRegisterLink,
-                                style: defaultTheme.textTheme.bodyMedium
-                                    ?.copyWith(
-                                        color: Colors.white,
-                                        decoration: TextDecoration.underline),
+                                style:
+                                    defaultTheme.textTheme.bodyMedium?.copyWith(
+                                  color: Colors.white,
+                                  decorationColor: Colors.white,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ],
                           ),
