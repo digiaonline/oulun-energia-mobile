@@ -33,7 +33,7 @@ class Content extends StatelessWidget {
             ),
           Padding(
               padding: const EdgeInsets.symmetric(
-                  vertical: Sizes.itemDefaultSpacing),
+                  horizontal: Sizes.itemDefaultSpacing),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
