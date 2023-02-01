@@ -55,10 +55,9 @@ class UsageSelectionsView extends StatelessWidget {
     ];
 
     return Content(
-            image: Image.asset("assets/images/my_usage_header.webp"),
-            title: locals.usageViewMyConsumption,
-            text: bodyText,
-            children: selections)
-        .withBackgroundColor(Colors.white);
+        image: Image.asset("assets/images/my_usage_header.webp"),
+        title: locals.usageViewMyConsumption,
+        text: bodyText,
+        children: selections);
   }
 }
