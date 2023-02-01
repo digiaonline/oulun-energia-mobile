@@ -32,8 +32,6 @@ class FishWayState extends ConsumerState {
   late VideoPlayerController _videoController;
   late ChewieController _chewieController;
 
-  late Future<void> _videoFuture;
-
   @override
   void initState() {
     super.initState();
