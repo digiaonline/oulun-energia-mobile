@@ -59,7 +59,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
                       child: Text(
                         "Ohita",
                         style:
-                            textTheme.bodyText2?.copyWith(color: Colors.white),
+                            textTheme.bodyMedium?.copyWith(color: Colors.white),
                       ),
                     ),
                   ),
@@ -126,7 +126,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             Text(
               "$title\n\n",
               maxLines: 2,
-              style: textTheme.headline1?.copyWith(color: Colors.white),
+              style: textTheme.displayLarge?.copyWith(color: Colors.white),
             ),
             const SizedBox(
               height: Sizes.marginViewBorderSize,
@@ -134,7 +134,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             Text(
               "$description\n\n\n",
               maxLines: 4,
-              style: textTheme.bodyText1?.copyWith(color: Colors.white),
+              style: textTheme.bodyLarge?.copyWith(color: Colors.white),
             ),
             const SizedBox(
               height: Sizes.marginViewBorderSize,
@@ -159,7 +159,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             onPressed: () => context.goNamed(HomeView.routeName),
             child: Text(
               "Jatka ilman kirjautumista",
-              style: defaultTheme.textTheme.bodyText1
+              style: defaultTheme.textTheme.bodyLarge
                   ?.copyWith(color: buttonPrimaryBackground),
             ),
           ).toButton(secondary: true),
@@ -174,7 +174,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
               ),
               child: Text(
                 "Kirjaudu",
-                style: defaultTheme.textTheme.bodyText1
+                style: defaultTheme.textTheme.bodyLarge
                     ?.copyWith(color: Colors.white),
               ),
             ),
@@ -186,7 +186,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             "Kirjautumalla palveluun pääset seuraamaan energiankulutustasi ",
             textAlign: TextAlign.center,
             style:
-                defaultTheme.textTheme.bodyText1?.copyWith(color: Colors.white),
+                defaultTheme.textTheme.bodyLarge?.copyWith(color: Colors.white),
           ),
         ],
       );

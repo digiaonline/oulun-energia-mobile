@@ -40,7 +40,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                       height: 20.0,
                     ),
                     Text(locals.interruptionsViewNoticesTitle,
-                        style: textTheme.headline1),
+                        style: textTheme.displayLarge),
                     const SizedBox(
                       height: 16.0,
                     ),
@@ -81,7 +81,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                               ),
                             ),
                             subtitle: Text(data[index].title,
-                                style: textTheme.bodyText2
+                                style: textTheme.bodyMedium
                                     ?.copyWith(color: Colors.black)),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,

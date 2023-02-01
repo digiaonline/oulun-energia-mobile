@@ -5,13 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
-import 'package:oulun_energia_mobile/views/newsletter/newsletter_view.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/user/user_details.dart';
 import 'package:oulun_energia_mobile/views/utils/appbar.dart';
 import 'package:oulun_energia_mobile/views/utils/bottom_navbar.dart';
-import 'package:oulun_energia_mobile/views/utils/navigation_drawer.dart';
+import 'package:oulun_energia_mobile/views/utils/home_navigation_drawer.dart';
 import 'package:oulun_energia_mobile/views/utils/snackbar.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
@@ -47,7 +46,7 @@ class ScaffoldNavbar extends ConsumerWidget {
       bottomSheet: bottomSheet,
       drawerEnableOpenDragGesture: false,
       drawer: const Drawer(
-        child: NavigationDrawer(),
+        child: HomeNavigationDrawer(),
       ),
       body: CustomScrollView(
         slivers: [
@@ -144,7 +143,7 @@ class ScaffoldNavbar extends ConsumerWidget {
                                 ),
                                 Text(
                                   title ?? '',
-                                  style: textTheme.headline2
+                                  style: textTheme.displayMedium
                                       ?.copyWith(color: Colors.black),
                                 ),
                               ]),

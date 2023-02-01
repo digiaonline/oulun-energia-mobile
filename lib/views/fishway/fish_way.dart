@@ -1,5 +1,4 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,7 +60,7 @@ class FishWayState extends ConsumerState {
         ),
         Text(
           locals.fishWayViewCamDescription,
-          style: textTheme.bodyText2,
+          style: textTheme.bodyMedium,
         )
       ],
     );

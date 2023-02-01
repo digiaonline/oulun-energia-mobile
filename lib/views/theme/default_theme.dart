@@ -17,17 +17,17 @@ TextStyle popupMenuStyle = const TextStyle(
     color: popupMenuItemColor);
 
 TextTheme textTheme = const TextTheme(
-  bodyText2: TextStyle(
+  bodyMedium: TextStyle(
       fontSize: 14.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  bodyText1: TextStyle(
+  bodyLarge: TextStyle(
       fontSize: 16.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  headline1: TextStyle(
+  displayLarge: TextStyle(
       fontSize: 32.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  headline2: TextStyle(
+  displayMedium: TextStyle(
       fontSize: 22.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  headline3: TextStyle(
+  displaySmall: TextStyle(
       fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
-  headline4: TextStyle(
+  headlineMedium: TextStyle(
       fontSize: 28.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
 );
 
@@ -38,12 +38,12 @@ IconThemeData appBarIconThemeSecondary =
 
 ThemeData defaultTheme = ThemeData(
     appBarTheme: AppBarTheme(
-        toolbarTextStyle: textTheme.headline2,
-        titleTextStyle: textTheme.headline2,
+        toolbarTextStyle: textTheme.displayMedium,
+        titleTextStyle: textTheme.displayMedium,
         iconTheme: appBarIconTheme,
         shape: const Border.fromBorderSide(BorderSide(
             width: 1.0,
-            strokeAlign: StrokeAlign.outside,
+            strokeAlign: BorderSide.strokeAlignOutside,
             color: tabBorderColor)),
         toolbarHeight: 60,
         elevation: 1,
@@ -69,6 +69,9 @@ ThemeData defaultTheme = ThemeData(
     bottomSheetTheme: const BottomSheetThemeData(
       elevation: 0.0,
       backgroundColor: iconColorBlueLight,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
     ),
     fontFamily: 'Eina',
     useMaterial3: true,
@@ -89,12 +92,12 @@ ThemeData defaultTheme = ThemeData(
           vertical: VisualDensity.minimumDensity),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      labelStyle: textTheme.headline2?.copyWith(color: Colors.red),
+      labelStyle: textTheme.displayMedium?.copyWith(color: Colors.red),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.white,
       filled: true,
       floatingLabelAlignment: FloatingLabelAlignment.start,
-      hintStyle: textTheme.bodyText1?.copyWith(color: hintTextColor),
+      hintStyle: textTheme.bodyLarge?.copyWith(color: hintTextColor),
       focusedErrorBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.zero,
         borderSide: BorderSide(color: Colors.red, width: 1),
@@ -137,7 +140,7 @@ ThemeData defaultTheme = ThemeData(
     dividerColor: const Color(0xFF949494),
     listTileTheme: const ListTileThemeData(horizontalTitleGap: 0),
     popupMenuTheme: PopupMenuThemeData(
-        textStyle: textTheme.bodyText1?.copyWith(color: popupMenuItemColor),
+        textStyle: textTheme.bodyLarge?.copyWith(color: popupMenuItemColor),
         elevation: 1,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)))));

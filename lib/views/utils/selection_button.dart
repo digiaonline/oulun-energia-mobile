@@ -29,7 +29,7 @@ class SelectionButton extends StatelessWidget {
           color: Colors.black,
           size: 19.0,
         ),
-        title: Text(text, style: textTheme.bodyText2),
+        title: Text(text, style: textTheme.bodyMedium),
       ),
     );
   }

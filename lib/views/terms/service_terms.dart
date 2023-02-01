@@ -35,7 +35,7 @@ class ServiceTermsView extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             "Lisätietoja käyttöehdoista",
-            style: theme.textTheme.headline4?.copyWith(
+            style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w400, color: containerTitleColor),
           ),
           const SizedBox(
@@ -49,8 +49,8 @@ class ServiceTermsView extends StatelessWidget {
               children: [
                 Text(
                   "Oulun Energia",
-                  style:
-                      theme.textTheme.headline3?.copyWith(color: Colors.black),
+                  style: theme.textTheme.displaySmall
+                      ?.copyWith(color: Colors.black),
                 ),
                 Text.rich(
                   TextSpan(children: [
@@ -60,7 +60,7 @@ class ServiceTermsView extends StatelessWidget {
                     WidgetSpan(
                       alignment: PlaceholderAlignment.middle,
                       child: Text("08 5584 3300",
-                              style: theme.textTheme.bodyText1?.copyWith(
+                              style: theme.textTheme.bodyLarge?.copyWith(
                                   decoration: TextDecoration.underline,
                                   color: iconColorBlueLight))
                           .toClickable(
@@ -71,7 +71,7 @@ class ServiceTermsView extends StatelessWidget {
                         alignment: PlaceholderAlignment.middle,
                         child: Text(
                           "info@oulunenergia.fi",
-                          style: theme.textTheme.bodyText1?.copyWith(
+                          style: theme.textTheme.bodyLarge?.copyWith(
                               decoration: TextDecoration.underline,
                               color: iconColorBlueLight),
                         ).toClickable(onTap: () {
@@ -79,7 +79,7 @@ class ServiceTermsView extends StatelessWidget {
                         })),
                     TextSpan(
                         text: "\ny-tunnus: 0989376-5",
-                        style: theme.textTheme.bodyText1),
+                        style: theme.textTheme.bodyLarge),
                   ]),
                 ),
               ],

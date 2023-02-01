@@ -38,7 +38,7 @@ class SubmitButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: textTheme.headline3,
+          style: textTheme.displaySmall,
         ),
       ),
     );

@@ -85,7 +85,7 @@ class _NewsletterViewState extends State<NewsletterView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(locals.homeViewOrderNewsletter, style: textTheme.headline3),
+            Text(locals.homeViewOrderNewsletter, style: textTheme.displaySmall),
             const SizedBox(height: 6.0),
             Column(
               children: [
@@ -94,7 +94,7 @@ class _NewsletterViewState extends State<NewsletterView> {
                   onChanged: (value) => onChange('districtHeatingNews', value),
                   child: Text(
                     locals.newsletterViewDistrictHeatingNews,
-                    style: textTheme.bodyText1,
+                    style: textTheme.bodyLarge,
                   ),
                 ),
                 CheckboxRow(
@@ -102,7 +102,7 @@ class _NewsletterViewState extends State<NewsletterView> {
                   onChanged: (value) => onChange('electricityNews', value),
                   child: Text(
                     locals.newsletterViewElectricityNews,
-                    style: textTheme.bodyText1,
+                    style: textTheme.bodyLarge,
                   ),
                 ),
                 CheckboxRow(
@@ -110,7 +110,7 @@ class _NewsletterViewState extends State<NewsletterView> {
                   onChanged: (value) => onChange('recycleNews', value),
                   child: Text(
                     locals.newsletterViewRecyclingNews,
-                    style: textTheme.bodyText1,
+                    style: textTheme.bodyLarge,
                   ),
                 ),
                 CheckboxRow(
@@ -121,7 +121,7 @@ class _NewsletterViewState extends State<NewsletterView> {
                       children: [
                         TextSpan(
                           text: locals.newsletterViewAcceptTermsPrefix,
-                          style: textTheme.bodyText1,
+                          style: textTheme.bodyLarge,
                         ),
                         TextSpan(
                           text: locals.newsletterViewAcceptTerms,
@@ -129,13 +129,13 @@ class _NewsletterViewState extends State<NewsletterView> {
                             ..onTap = () => context.goNamed(
                                 ServiceTermsView.routeName,
                                 extra: GoRouter.of(context).location),
-                          style: textTheme.bodyText1?.copyWith(
+                          style: textTheme.bodyLarge?.copyWith(
                             decoration: TextDecoration.underline,
                           ),
                         ),
                         TextSpan(
                           text: locals.newsletterViewAcceptTermsPostfix,
-                          style: textTheme.bodyText1,
+                          style: textTheme.bodyLarge,
                         ),
                       ],
                     ),

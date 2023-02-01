@@ -70,7 +70,7 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
           value: type,
           child: Text(
             text,
-            style: textTheme.bodyText1,
+            style: textTheme.bodyLarge,
           ));
     }).toList();
   }
@@ -81,7 +81,7 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
           value: type,
           child: Text(
             '${type.street}, ${type.postPlace} ${type.postCode}',
-            style: textTheme.bodyText1,
+            style: textTheme.bodyLarge,
           ));
     }).toList();
   }
@@ -115,7 +115,7 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
             width: double.infinity,
             child: Text(
               locals.usageViewUsagePlace,
-              style: textTheme.headline1,
+              style: textTheme.displayLarge,
               textAlign: TextAlign.left,
             ),
           ),
@@ -137,7 +137,7 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
             width: double.infinity,
             child: Text(
               locals.usageViewUsageChartInfo,
-              style: textTheme.headline1,
+              style: textTheme.displayLarge,
               textAlign: TextAlign.left,
             ),
           ),
@@ -193,10 +193,10 @@ class InfoTile extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        title: Text(title, style: textTheme.bodyText1),
+        title: Text(title, style: textTheme.bodyLarge),
         subtitle: FittedBox(
           child: Text(subtitle,
-              style: textTheme.bodyText2?.copyWith(color: Colors.black)),
+              style: textTheme.bodyMedium?.copyWith(color: Colors.black)),
         ),
         trailing: trailing,
       ),

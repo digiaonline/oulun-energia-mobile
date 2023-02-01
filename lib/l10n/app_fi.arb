@@ -65,7 +65,7 @@
       }
     }
   },
-  "homeViewMessageSumUp": "{count, plural, =other{'Lukkosymbolilla merkityt osiot näet kirjautumalla palveluun'} =0{Ei tiedotteita} =1{Yksi uusi viesti} many{{count} Viestiä}}",
+  "homeViewMessageSumUp": "{count, plural, =0{Ei tiedotteita} =1{Yksi uusi viesti} many{{count} Viestiä} other{Lukkosymbolilla merkityt osiot näet kirjautumalla palveluun}}",
   "@homeViewMessageSumUp": {
     "description": "Message count number in home page",
     "placeholders": {

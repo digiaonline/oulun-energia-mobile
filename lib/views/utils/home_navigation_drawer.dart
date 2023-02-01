@@ -17,8 +17,8 @@ import 'package:oulun_energia_mobile/views/usage/usage_info_view.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_settings_view.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
-class NavigationDrawer extends ConsumerWidget {
-  const NavigationDrawer({super.key});
+class HomeNavigationDrawer extends ConsumerWidget {
+  const HomeNavigationDrawer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +36,7 @@ class NavigationDrawer extends ConsumerWidget {
             children: [
               Text(
                 F.title,
-                style: theme.textTheme.headline2,
+                style: theme.textTheme.displayMedium,
               ),
               const SizedBox(
                 height: Sizes.marginViewBorderSize,
@@ -44,7 +44,7 @@ class NavigationDrawer extends ConsumerWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text(
                   locals.usageViewMyUsage,
-                  style: theme.textTheme.bodyText1
+                  style: theme.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w700),
                 ).toDisabledOpacity(disabled: !userAuth.loggedIn()),
                 if (!userAuth.loggedIn())
@@ -53,11 +53,11 @@ class NavigationDrawer extends ConsumerWidget {
                       Icon(
                         Icons.lock_outline,
                         size: Sizes.navigationDrawerIconSize,
-                        color: theme.textTheme.bodyText2?.color,
+                        color: theme.textTheme.bodyMedium?.color,
                       ),
                       Text(
                         locals.navigationDrawerLogin,
-                        style: theme.textTheme.bodyText2
+                        style: theme.textTheme.bodyMedium
                             ?.copyWith(fontWeight: FontWeight.w600),
                       )
                     ],
@@ -72,11 +72,11 @@ class NavigationDrawer extends ConsumerWidget {
                   "assets/icons/monitoring.svg",
                   height: Sizes.navigationDrawerIconSize,
                   width: Sizes.navigationDrawerIconSize,
-                  color: theme.textTheme.bodyText2?.color,
+                  color: theme.textTheme.bodyMedium?.color,
                 ),
                 title: Text(
                   locals.usageViewUsage,
-                  style: theme.textTheme.bodyText2
+                  style: theme.textTheme.bodyMedium
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 onTap: userAuth.loggedIn()
@@ -90,7 +90,7 @@ class NavigationDrawer extends ConsumerWidget {
               ListTile(
                 leading: Icon(
                   Icons.settings_outlined,
-                  color: theme.textTheme.bodyText2?.color,
+                  color: theme.textTheme.bodyMedium?.color,
                   size: Sizes.navigationDrawerIconSize,
                 ),
                 onTap: userAuth.loggedIn()
@@ -102,14 +102,14 @@ class NavigationDrawer extends ConsumerWidget {
                     : null,
                 title: Text(
                   locals.usageViewSettings,
-                  style: theme.textTheme.bodyText2
+                  style: theme.textTheme.bodyMedium
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ).toDisabledOpacity(disabled: !userAuth.loggedIn()),
               const Divider(),
               Text(
                 locals.usageViewInterruptions,
-                style: theme.textTheme.bodyText1
+                style: theme.textTheme.bodyLarge
                     ?.copyWith(fontWeight: FontWeight.w700),
               ),
               ListTile(
@@ -123,11 +123,11 @@ class NavigationDrawer extends ConsumerWidget {
                   "assets/icons/monitoring.svg",
                   height: Sizes.navigationDrawerIconSize,
                   width: Sizes.navigationDrawerIconSize,
-                  color: theme.textTheme.bodyText2?.color,
+                  color: theme.textTheme.bodyMedium?.color,
                 ),
                 title: Text(
                   locals.interruptionsViewMap,
-                  style: theme.textTheme.bodyText2
+                  style: theme.textTheme.bodyMedium
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
@@ -141,11 +141,11 @@ class NavigationDrawer extends ConsumerWidget {
                   "assets/icons/news.svg",
                   height: Sizes.navigationDrawerIconSize,
                   width: Sizes.navigationDrawerIconSize,
-                  color: theme.textTheme.bodyText2?.color,
+                  color: theme.textTheme.bodyMedium?.color,
                 ),
                 title: Text(
                   locals.interruptionsViewNotices,
-                  style: theme.textTheme.bodyText2
+                  style: theme.textTheme.bodyMedium
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
@@ -159,18 +159,18 @@ class NavigationDrawer extends ConsumerWidget {
                   "assets/icons/calendar.svg",
                   height: Sizes.navigationDrawerIconSize,
                   width: Sizes.navigationDrawerIconSize,
-                  color: theme.textTheme.bodyText2?.color,
+                  color: theme.textTheme.bodyMedium?.color,
                 ),
                 title: Text(
                   locals.interruptionsViewFault,
-                  style: theme.textTheme.bodyText2
+                  style: theme.textTheme.bodyMedium
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
               const Divider(),
               Text(
                 locals.homeViewFishHunt,
-                style: theme.textTheme.bodyText2
+                style: theme.textTheme.bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600),
               ).toClickable(
                 onTap: () {
@@ -181,7 +181,7 @@ class NavigationDrawer extends ConsumerWidget {
               const Divider(),
               Text(
                 locals.homeViewContact,
-                style: theme.textTheme.bodyText2
+                style: theme.textTheme.bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600),
               ).toClickable(
                 onTap: () {
@@ -192,7 +192,7 @@ class NavigationDrawer extends ConsumerWidget {
               const Divider(),
               Text(
                 locals.homeViewHelp,
-                style: theme.textTheme.bodyText2
+                style: theme.textTheme.bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600),
               ),
               const Divider(),
@@ -203,7 +203,7 @@ class NavigationDrawer extends ConsumerWidget {
                         (e) => [
                           Text(
                             e.languageCode.toUpperCase(),
-                            style: theme.textTheme.bodyText2?.copyWith(
+                            style: theme.textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: currentLocale == e ? Colors.blue : null),
                           ).toClickable(

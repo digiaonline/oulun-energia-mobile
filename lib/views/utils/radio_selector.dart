@@ -22,7 +22,7 @@ class RadioSelector extends StatelessWidget {
       children: [
         Text(
           title,
-          style: textTheme.bodyText2,
+          style: textTheme.bodyMedium,
         ),
         const SizedBox(height: 6.0),
         ...selections.entries
@@ -41,7 +41,7 @@ class RadioSelector extends StatelessWidget {
                       ),
                       Text(
                         entry.value,
-                        style: textTheme.headline3,
+                        style: textTheme.displaySmall,
                       ),
                     ],
                   ),

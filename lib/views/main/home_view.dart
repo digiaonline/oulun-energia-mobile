@@ -37,12 +37,20 @@ class HomeView extends ConsumerWidget {
       minVerticalPadding: 0.0,
       textColor: Colors.white,
       tileColor: Colors.transparent,
-      title: Text(AppLocalizations.of(context)!.homeViewOrderNewsletter,
-          style: textTheme.bodyText1),
-      leading: Icon(Icons.mail_outline,
-          size: Sizes.navigationDrawerIconSize, color: appBarIconTheme.color),
-      trailing: Icon(Icons.arrow_forward_ios,
-          size: Sizes.navigationDrawerIconSize, color: appBarIconTheme.color),
+      title: Text(
+        AppLocalizations.of(context)!.homeViewOrderNewsletter,
+        style: textTheme.bodyLarge,
+      ),
+      leading: Icon(
+        Icons.mail_outline,
+        size: Sizes.navigationDrawerIconSize,
+        color: appBarIconTheme.color,
+      ),
+      trailing: Icon(
+        Icons.arrow_forward_ios,
+        size: Sizes.navigationDrawerIconSize,
+        color: appBarIconTheme.color,
+      ),
     );
   }
 
@@ -64,7 +72,7 @@ class HomeView extends ConsumerWidget {
                 ? locals.homeViewWelcomeUser(
                     loginStatus.userAuth?.customerInfo.firstName ?? "")
                 : locals.homeViewWelcome,
-            style: textTheme.headline2?.copyWith(color: Colors.white),
+            style: textTheme.displayMedium?.copyWith(color: Colors.white),
           ),
           Container(
             margin: Sizes.marginViewBorder * 2,
@@ -80,7 +88,7 @@ class HomeView extends ConsumerWidget {
                     locals.homeViewMessageSumUp(isLoggedIn ? 0 : -1),
                     // todo get message count
                     textAlign: TextAlign.center,
-                    style: textTheme.bodyText2?.copyWith(color: Colors.white),
+                    style: textTheme.bodyMedium?.copyWith(color: Colors.white),
                   ),
                 ),
               ],
@@ -178,7 +186,7 @@ Widget buildHomeViewButton(String title, String iconAsset,
             Text(
               title,
               textAlign: TextAlign.center,
-              style: textTheme.bodyText2?.copyWith(
+              style: textTheme.bodyMedium?.copyWith(
                   color: Colors.white,
                   fontSize: fontSize,
                   fontWeight: FontWeight.w400),

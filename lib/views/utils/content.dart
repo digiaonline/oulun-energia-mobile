@@ -42,13 +42,14 @@ class Content extends StatelessWidget {
                     fit: BoxFit.fitWidth,
                     child: Text(
                       title,
-                      style: textTheme.headline1?.copyWith(color: Colors.black),
+                      style:
+                          textTheme.displayLarge?.copyWith(color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: Sizes.itemDefaultSpacing),
                   Text(
                     text,
-                    style: defaultTheme.textTheme.bodyText2,
+                    style: defaultTheme.textTheme.bodyMedium,
                   ),
                   const SizedBox(height: Sizes.itemDefaultSpacing),
                   SizedBox(
@@ -61,7 +62,7 @@ class Content extends StatelessWidget {
                 ],
               ))
         ],
-      ).withBackgroundColor(Colors.white),
-    );
+      ),
+    ).withBackgroundColor(Colors.white);
   }
 }
