@@ -54,7 +54,7 @@ ThemeData defaultTheme = ThemeData(
         systemOverlayStyle:
             const SystemUiOverlayStyle(statusBarColor: iconColorBlue)),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      elevation: 0.0,
+      elevation: 0.1,
       unselectedLabelStyle: textTheme.labelMedium,
       selectedLabelStyle: textTheme.labelMedium,
       selectedItemColor: iconColorBlue,
