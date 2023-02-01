@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class OEWebView extends StatelessWidget {
   final WebViewController controller =
@@ -28,7 +29,7 @@ class OEWebView extends StatelessWidget {
         body: WebViewWidget(
           controller: controller,
           gestureRecognizers: gestureRecognizers,
-        ),
+        ).withBackgroundColor(Colors.white),
       ),
       onWillPop: () async {
         String? backRoutePath = GoRouterState.of(context).extra as String?;
