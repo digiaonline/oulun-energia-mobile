@@ -55,7 +55,7 @@ class UsageSelectionsView extends StatelessWidget {
     ];
 
     return Content(
-            image: const SizedBox.shrink(),
+            image: Image.asset("assets/images/my_usage_header.webp"),
             title: locals.usageViewMyConsumption,
             text: bodyText,
             children: selections)

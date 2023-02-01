@@ -66,7 +66,7 @@ class InterruptionsSelectionsView extends StatelessWidget {
     ];
 
     return Content(
-            image: const SizedBox.shrink(),
+            image: Image.asset("assets/images/interruptions_header.webp"),
             title: locals.interruptionsViewTitle,
             text: locals.interruptionsViewText,
             children: selections)
