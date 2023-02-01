@@ -78,6 +78,8 @@ class FishWayState extends ConsumerState {
   }
 
   _initVideoControllers() async {
+    await _videoController.initialize();
+
     _chewieController = ChewieController(
       videoPlayerController: _videoController,
       autoInitialize: true,
