@@ -58,19 +58,19 @@ class UserDetailsView extends ConsumerWidget {
                 children: [
                   Text(
                     "${customer.firstName} ${customer.lastName}",
-                    style: theme.textTheme.headline2,
+                    style: theme.textTheme.displayMedium,
                   ),
                   Column(
                     children: customer.customerCodes
                         .map((e) => Text(
                               e,
-                              style: theme.textTheme.bodyText1,
+                              style: theme.textTheme.bodyLarge,
                             ))
                         .toList(),
                   ),
                   Text(
                     "Asiakasnumero",
-                    style: theme.textTheme.bodyText2,
+                    style: theme.textTheme.bodyMedium,
                   )
                 ],
               ),

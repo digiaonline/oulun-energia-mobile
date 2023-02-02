@@ -24,7 +24,7 @@ class Dropdown extends StatelessWidget {
           width: double.infinity,
           child: Text(
             title,
-            style: textTheme.headline3,
+            style: textTheme.displaySmall,
             textAlign: TextAlign.left,
           ),
         ),
@@ -38,7 +38,7 @@ class Dropdown extends StatelessWidget {
                     borderSide: BorderSide(color: borderColor, width: 1)),
                 enabled: true,
                 contentPadding: const EdgeInsets.only(top: 0.0),
-                labelStyle: textTheme.bodyText2,
+                labelStyle: textTheme.bodyMedium,
               ),
               icon: const Icon(Icons.expand_more, color: iconColorBlack),
               items: items,

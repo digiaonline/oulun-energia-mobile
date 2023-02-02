@@ -40,7 +40,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                       height: 20.0,
                     ),
                     Text(locals.interruptionsViewNoticesTitle,
-                        style: textTheme.headline1),
+                        style: textTheme.displayLarge),
                     const SizedBox(
                       height: 16.0,
                     ),
@@ -81,7 +81,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                               ),
                             ),
                             subtitle: Text(data[index].title,
-                                style: textTheme.bodyText2
+                                style: textTheme.bodyMedium
                                     ?.copyWith(color: Colors.black)),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +99,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                     ),
                   ],
                 ),
-              ).withBackgroundColor(Colors.white);
+              );
             },
             error: ((error, stackTrace) => Center(
                     child: Column(
@@ -108,7 +108,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                     Text(AppLocalizations.of(context)!
                         .interruptionsViewNoticesFetchError),
                   ],
-                )).withBackgroundColor(Colors.white)),
+                ))),
             loading: () => Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -121,6 +121,7 @@ class InterruptionsNoticesView extends ConsumerWidget {
                     const CircularProgressIndicator(),
                   ],
                 )))
-        .withBackgroundColor(Colors.white);
+        .withBackgroundColor(Colors.white)
+        .withWillPopScope(context);
   }
 }

@@ -7,7 +7,6 @@ import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_v
 import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/utils/content.dart';
 import 'package:oulun_energia_mobile/views/utils/selection_button.dart';
-import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InterruptionsSelectionsView extends StatelessWidget {
@@ -66,10 +65,9 @@ class InterruptionsSelectionsView extends StatelessWidget {
     ];
 
     return Content(
-            image: const SizedBox.shrink(),
-            title: locals.interruptionsViewTitle,
-            text: locals.interruptionsViewText,
-            children: selections)
-        .withBackgroundColor(Colors.white);
+        image: Image.asset("assets/images/interruptions_header.webp"),
+        title: locals.interruptionsViewTitle,
+        text: locals.interruptionsViewText,
+        children: selections);
   }
 }

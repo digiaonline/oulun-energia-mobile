@@ -37,7 +37,7 @@ class InputBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text(title, style: textStyle ?? textTheme.headline3),
+      Text(title, style: textStyle ?? textTheme.displaySmall),
       const SizedBox(height: 6.0),
       SizedBox(
         height: multiline

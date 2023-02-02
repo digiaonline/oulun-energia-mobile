@@ -133,7 +133,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(locals.interruptionsViewFaultElectric,
-                        style: textTheme.bodyText1?.copyWith(
+                        style: textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         )),
@@ -141,10 +141,11 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                       onTap: () async => launchUrl(Uri.parse('tel:0855843222')),
                       child: Text(
                         '08 5584 3222',
-                        style: textTheme.bodyText2?.copyWith(
+                        style: textTheme.bodyMedium?.copyWith(
                           color: Colors.white,
                           height: 1.48,
                           decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
                         ),
                       ),
                     )
@@ -160,7 +161,7 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(locals.interruptionsViewFaultHeat,
-                        style: textTheme.bodyText1?.copyWith(
+                        style: textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         )),
@@ -168,10 +169,11 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
                       onTap: () async => launchUrl(Uri.parse('tel:0855843425')),
                       child: Text(
                         '08 5584 3425',
-                        style: textTheme.bodyText2?.copyWith(
+                        style: textTheme.bodyMedium?.copyWith(
                           color: Colors.white,
                           height: 1.48,
                           decoration: TextDecoration.underline,
+                          decorationColor: Colors.white,
                         ),
                       ),
                     )
@@ -183,7 +185,8 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
           const SizedBox(height: 32.0),
           Text(
             locals.sendMessage,
-            style: textTheme.headline4?.copyWith(fontWeight: FontWeight.w400),
+            style:
+                textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w400),
           ),
           const SizedBox(height: Sizes.inputMargin),
           InputBox(
@@ -277,6 +280,6 @@ class _InterruptionsFaultViewState extends State<InterruptionsFaultView> {
             ],
           ),
           const SizedBox(height: Sizes.inputMargin)
-        ]).withBackgroundColor(Colors.white);
+        ]).withBackgroundColor(Colors.white).withWillPopScope(context);
   }
 }

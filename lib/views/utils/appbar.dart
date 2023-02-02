@@ -25,7 +25,7 @@ SliverAppBar buildMainAppBar(
     shape: (backgroundColor == null)
         ? const Border.fromBorderSide(BorderSide(
             width: 0.0,
-            strokeAlign: StrokeAlign.outside,
+            strokeAlign: BorderSide.strokeAlignOutside,
             color: Colors.transparent))
         : defaultTheme.appBarTheme.shape,
     foregroundColor: foregroundColor,

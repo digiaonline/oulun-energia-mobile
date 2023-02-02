@@ -7,7 +7,6 @@ import 'package:oulun_energia_mobile/providers/usage_info_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
-import 'package:go_router/go_router.dart';
 
 class UsageInfoView extends ConsumerStatefulWidget {
   static const String routePath = 'info';
@@ -71,7 +70,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
                 const SizedBox(height: 20.0),
                 Center(
                   child: Text(ref.watch(usageInfoProvider).getTotalUsage(),
-                      style: textTheme.bodyText1),
+                      style: textTheme.bodyLarge),
                 ),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -89,7 +88,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
                       fit: BoxFit.fitWidth,
                       child: Text(
                         ref.watch(usageInfoProvider).getDateString(context),
-                        style: textTheme.headline1,
+                        style: textTheme.displayLarge,
                       ),
                     ),
                   ),
@@ -107,7 +106,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
                       : Center(
                           child: Text(
                             AppLocalizations.of(context)!.usageViewUsageNoInfo,
-                            style: textTheme.headline2,
+                            style: textTheme.displayMedium,
                           ),
                         ),
                 ),
@@ -176,7 +175,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
                     AppLocalizations.of(context)!.usageViewUsageErrorInfo,
-                    style: textTheme.headline2),
+                    style: textTheme.displayMedium),
               ),
             ],
           ).withBackgroundColor(Colors.white),

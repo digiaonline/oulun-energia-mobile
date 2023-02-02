@@ -55,7 +55,7 @@ class LoginView extends ConsumerWidget {
                   children: [
                     Text(
                       locals.loginViewLogin,
-                      style: theme.textTheme.headline2?.copyWith(
+                      style: theme.textTheme.displayMedium?.copyWith(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.bold),
@@ -70,7 +70,7 @@ class LoginView extends ConsumerWidget {
                             multiline: false,
                             controller: usernameController,
                             textStyle:
-                                defaultTheme.textTheme.bodyText2?.copyWith(
+                                defaultTheme.textTheme.bodyMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                             ),
@@ -88,7 +88,8 @@ class LoginView extends ConsumerWidget {
                           multiline: false,
                           obscureText: true,
                           controller: passwordController,
-                          textStyle: defaultTheme.textTheme.bodyText2?.copyWith(
+                          textStyle:
+                              defaultTheme.textTheme.bodyMedium?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
@@ -107,7 +108,7 @@ class LoginView extends ConsumerWidget {
                               loginNotifier.rememberSignIn(value ?? false),
                           child: Text(
                             locals.loginViewRememberSignIn,
-                            style: defaultTheme.textTheme.bodyText2
+                            style: defaultTheme.textTheme.bodyMedium
                                 ?.copyWith(color: Colors.white),
                           ),
                         ),
@@ -122,16 +123,17 @@ class LoginView extends ConsumerWidget {
                               Text.rich(
                                 TextSpan(
                                   text: locals.loginViewTermsLinkPrefix,
-                                  style: defaultTheme.textTheme.bodyText2
+                                  style: defaultTheme.textTheme.bodyMedium
                                       ?.copyWith(color: Colors.white),
                                   children: [
                                     TextSpan(
                                       text: locals.loginViewTermsLink,
-                                      style: defaultTheme.textTheme.bodyText2
+                                      style: defaultTheme.textTheme.bodyMedium
                                           ?.copyWith(
-                                              color: Colors.white,
-                                              decoration:
-                                                  TextDecoration.underline),
+                                        color: Colors.white,
+                                        decorationColor: Colors.white,
+                                        decoration: TextDecoration.underline,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -139,10 +141,12 @@ class LoginView extends ConsumerWidget {
                                   onTap: () => _openTermsLink(context)),
                               Text(
                                 locals.loginViewPrivacyStatementLink,
-                                style: defaultTheme.textTheme.bodyText2
-                                    ?.copyWith(
-                                        color: Colors.white,
-                                        decoration: TextDecoration.underline),
+                                style:
+                                    defaultTheme.textTheme.bodyMedium?.copyWith(
+                                  color: Colors.white,
+                                  decorationColor: Colors.white,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ).toClickable(
                                   onTap: () => _openPrivacyStatement(context)),
                             ],
@@ -160,7 +164,7 @@ class LoginView extends ConsumerWidget {
                                     : null,
                                 child: Text(
                                   locals.loginViewLoginButton,
-                                  style: defaultTheme.textTheme.bodyText1
+                                  style: defaultTheme.textTheme.bodyLarge
                                       ?.copyWith(color: Colors.white),
                                 ),
                               ).toButton(enabled: userAuth.termsAccepted)
@@ -172,8 +176,9 @@ class LoginView extends ConsumerWidget {
                         Text(
                           locals.loginViewForgotPasswordLink,
                           textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyText2?.copyWith(
+                          style: theme.textTheme.bodyMedium?.copyWith(
                             color: Colors.white,
+                            decorationColor: Colors.white,
                             decoration: TextDecoration.underline,
                           ),
                         ).toClickable(
@@ -185,15 +190,17 @@ class LoginView extends ConsumerWidget {
                           textAlign: TextAlign.center,
                           TextSpan(
                             text: locals.loginViewRegisterLinkPrefix,
-                            style: defaultTheme.textTheme.bodyText2
+                            style: defaultTheme.textTheme.bodyMedium
                                 ?.copyWith(color: Colors.white),
                             children: [
                               TextSpan(
                                 text: locals.loginViewRegisterLink,
-                                style: defaultTheme.textTheme.bodyText2
-                                    ?.copyWith(
-                                        color: Colors.white,
-                                        decoration: TextDecoration.underline),
+                                style:
+                                    defaultTheme.textTheme.bodyMedium?.copyWith(
+                                  color: Colors.white,
+                                  decorationColor: Colors.white,
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ],
                           ),

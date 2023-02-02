@@ -1,5 +1,4 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,8 +31,6 @@ class FishWayState extends ConsumerState {
   late VideoPlayerController _videoController;
   late ChewieController _chewieController;
 
-  late Future<void> _videoFuture;
-
   @override
   void initState() {
     super.initState();
@@ -47,7 +44,7 @@ class FishWayState extends ConsumerState {
     var textTheme = Theme.of(context).textTheme;
 
     return Content(
-      image: Image.asset("assets/images/fishway_header.png"),
+      image: Image.asset("assets/images/fishway_header.webp"),
       title: locals.fishWayViewTitle,
       text: locals.fishWayViewDescription,
       children: [
@@ -63,7 +60,7 @@ class FishWayState extends ConsumerState {
         ),
         Text(
           locals.fishWayViewCamDescription,
-          style: textTheme.bodyText2,
+          style: textTheme.bodyMedium,
         )
       ],
     );
@@ -81,9 +78,10 @@ class FishWayState extends ConsumerState {
   }
 
   _initVideoControllers() async {
+    await _videoController.initialize();
+
     _chewieController = ChewieController(
       videoPlayerController: _videoController,
-      autoInitialize: true,
       showOptions: false,
     );
   }
