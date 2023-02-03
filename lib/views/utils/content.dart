@@ -8,14 +8,22 @@ class Content extends StatelessWidget {
     Key? key,
     required this.title,
     required this.text,
-    this.image,
+    this.assetName,
     required this.children,
   }) : super(key: key);
 
   final List<Widget> children;
   final String title;
   final String text;
-  final Widget? image;
+  final String? assetName;
+
+  getImageAsset(String? assetName) {
+    if (assetName == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Image.asset(assetName, width: double.infinity, fit: BoxFit.fitWidth);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +31,7 @@ class Content extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (image != null) image!,
-          // TODO Show the image here if assigned, Container is a placeholder for the image for now
-          if (image is SizedBox)
-            Container(
-              color: Colors.grey,
-              width: double.infinity,
-              height: 235.0,
-            ),
+          getImageAsset(assetName),
           Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Sizes.itemDefaultSpacing),
