@@ -8,10 +8,13 @@ class InterruptionsMapView {
       'https://keskeytyskartta.oulunenergia.fi/OutageMap/';
 
   static Map<String, dynamic> getSettings(BuildContext context) {
+    var isLandscapeMode =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     return {
       'title': AppLocalizations.of(context)!.interruptionsViewMap,
-      'secondaryAppBar': true,
-      'initialExpanded': true,
+      'secondaryAppBar': !isLandscapeMode,
+      'secondaryAppBarStyle': true,
+      'initialExpanded': !isLandscapeMode,
       'hideAppBar': false,
     };
   }
