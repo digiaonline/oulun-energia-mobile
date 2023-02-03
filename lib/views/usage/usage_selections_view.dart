@@ -54,7 +54,7 @@ class UsageSelectionsView extends StatelessWidget {
     ];
 
     return Content(
-        image: Image.asset("assets/images/my_usage_header.webp"),
+        assetName: "assets/images/my_usage_header.webp",
         title: locals.usageViewMyConsumption,
         text: bodyText,
         children: selections);
