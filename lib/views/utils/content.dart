@@ -17,21 +17,15 @@ class Content extends StatelessWidget {
   final String text;
   final String? assetName;
 
-  getImageAsset(String? assetName) {
-    if (assetName == null) {
-      return const SizedBox.shrink();
-    }
-
-    return Image.asset(assetName, width: double.infinity, fit: BoxFit.fitWidth);
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          getImageAsset(assetName),
+          if (assetName != null)
+            Image.asset(assetName!,
+                width: double.infinity, fit: BoxFit.fitWidth),
           Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: Sizes.itemDefaultSpacing),
