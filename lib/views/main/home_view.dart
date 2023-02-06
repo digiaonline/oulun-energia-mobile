@@ -7,6 +7,7 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/fishway/fish_way.dart';
+import 'package:oulun_energia_mobile/views/help/help_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_fault_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notices_view.dart';
 import 'package:oulun_energia_mobile/views/newsletter/newsletter_view.dart';
@@ -145,7 +146,11 @@ List<Widget> _buildControls(
               InterruptionsFaultView.routeName,
               extra: GoRouter.of(context).location,
             )),
-    buildHomeViewButton(locals.homeViewHelp, 'assets/icons/menu_book.svg'),
+    buildHomeViewButton(
+      locals.homeViewHelp,
+      'assets/icons/menu_book.svg',
+      onTap: () => context.goNamed(HelpView.routeName),
+    ),
   ];
 }
 
