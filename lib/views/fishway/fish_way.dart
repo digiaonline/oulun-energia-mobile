@@ -44,7 +44,7 @@ class FishWayState extends ConsumerState {
     var textTheme = Theme.of(context).textTheme;
 
     return Content(
-      image: Image.asset("assets/images/fishway_header.webp"),
+      assetName: "assets/images/fishway_header.webp",
       title: locals.fishWayViewTitle,
       text: locals.fishWayViewDescription,
       children: [
