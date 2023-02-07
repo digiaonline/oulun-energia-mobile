@@ -28,72 +28,73 @@ class FtuState extends ConsumerState<FirstTimeView> {
     var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                Container(
-                    margin: const EdgeInsets.only(
-                        top: Sizes.marginViewBorderSizeLarge * 2,
-                        left: Sizes.marginViewBorderSize,
-                        right: Sizes.marginViewBorderSize),
-                    child: PageView(
-                      onPageChanged: (value) => setState(() {
-                        _stepIndex = value;
-                      }),
-                      children: [
-                        _getViewContent(ref, 0),
-                        _getViewContent(ref, 1),
-                        _getViewContent(ref, 2),
-                      ],
-                    )),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: InkWell(
-                    onTap: () => context.go(HomeView.routePath),
-                    child: Container(
-                      margin: Sizes.marginViewBorder
-                          .copyWith(top: Sizes.marginViewBorderSizeLarge),
-                      child: Text(
-                        "Ohita",
-                        style:
-                            textTheme.bodyMedium?.copyWith(color: Colors.white),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                      margin: const EdgeInsets.only(
+                          top: Sizes.marginViewBorderSizeLarge * 2,
+                          left: Sizes.marginViewBorderSize,
+                          right: Sizes.marginViewBorderSize),
+                      child: PageView(
+                        onPageChanged: (value) => setState(() {
+                          _stepIndex = value;
+                        }),
+                        children: [
+                          _getViewContent(ref, 0),
+                          _getViewContent(ref, 1),
+                          _getViewContent(ref, 2),
+                        ],
+                      )),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                      onTap: () => context.go(HomeView.routePath),
+                      child: Container(
+                        margin: Sizes.marginViewBorder,
+                        child: Text(
+                          "Ohita",
+                          style: textTheme.bodyMedium
+                              ?.copyWith(color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            height: 80,
-            padding: Sizes.marginViewBorder,
-            child: Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                width: 100,
-                height: 100,
-                child: StepProgressIndicator(
-                  totalSteps: 3,
-                  currentStep: _stepIndex,
-                  size: Sizes.mainViewIconSize,
-                  selectedSize: Sizes.mainViewIconSize,
-                  roundedEdges:
-                      const Radius.circular(Sizes.mainViewIconSize / 2),
-                  customStep: (index, color, __) => Icon(
-                    Icons.circle,
+            Container(
+              height: 80,
+              padding: Sizes.marginViewBorder,
+              child: Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: StepProgressIndicator(
+                    totalSteps: 3,
+                    currentStep: _stepIndex,
                     size: Sizes.mainViewIconSize,
-                    color: _stepIndex == index
-                        ? ftuNavigationSelected
-                        : ftuNavigationUnSelected,
+                    selectedSize: Sizes.mainViewIconSize,
+                    roundedEdges:
+                        const Radius.circular(Sizes.mainViewIconSize / 2),
+                    customStep: (index, color, __) => Icon(
+                      Icons.circle,
+                      size: Sizes.mainViewIconSize,
+                      color: _stepIndex == index
+                          ? ftuNavigationSelected
+                          : ftuNavigationUnSelected,
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     ).withBackground();
   }
