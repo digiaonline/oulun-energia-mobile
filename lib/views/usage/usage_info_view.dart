@@ -22,7 +22,12 @@ class UsageInfoView extends ConsumerStatefulWidget {
       'secondaryAppBar': !isLandscapeMode,
       'initialExpanded': !isLandscapeMode,
       'hideAppBar': isLandscapeMode,
+      'onTapHelp': () => onTapHelp(context)
     };
+  }
+
+  static void onTapHelp(BuildContext context) {
+    // TODO Show help view
   }
 
   @override

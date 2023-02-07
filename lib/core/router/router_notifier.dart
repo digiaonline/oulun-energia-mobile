@@ -254,6 +254,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                   initialExpanded: config['initialExpanded'],
                   hasScrollBody: config['hasScrollBody'],
                   bottomSheet: config['bottomSheet'],
+                  onTapHelp: config['onTapHelp'],
                   child: child);
             }),
       ];
