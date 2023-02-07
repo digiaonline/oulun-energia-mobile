@@ -6,6 +6,7 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/fishway/fish_way.dart';
+import 'package:oulun_energia_mobile/views/help/help_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_fault_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_map_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notice_popup_view.dart';
@@ -131,6 +132,7 @@ class Config {
       ContactUsView.routeName: ContactUsView.getSettings(),
       ServiceTermsView.routeName: ServiceTermsView.getSettings(),
       FishWay.routeName: FishWay.getSettings(),
+      HelpView.routeName: HelpView.getSettings(),
       UserDetailsView.routeName: UserDetailsView.getSettings(context),
       NewsletterView.routeName: NewsletterView.getSettings()
     };

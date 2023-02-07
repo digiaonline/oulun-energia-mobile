@@ -122,5 +122,12 @@
   "newsletterViewCancellation": "Jos haluat peruuttaa suostumuksesi sähköpostiuutiskirjeisiin, voit tehdä sen uutiskirjeen lopusta löytyvästä peruutuslinkistä.",
   "fishWayViewTitle": "Kalatie",
   "fishWayViewDescription": "Tunnetuksi ja suosituksi maamerkiksi muodostunut Merikosken kalatie mahdollistaa kalojen nousun merestä voimalaitoksen ohi Oulujoen yläjuoksulle. Lohi ja muut vaelluskalat pääsevät etenemään jokisuulta 40 kilometrin matkan Montan voimalaitokselle saakka sekä Oulujoen sivuhaaroihin, Muhos- ja Saninjokeen.\n\nMerikosken kalatie on avoinna toukokuun alusta lokakuun loppupuolelle, jolloin myös nettikamera on toiminnassa ja voit seurata vedenalaista liikennettä sen välityksellä.",
-  "fishWayViewCamDescription": "Nettikamera on toiminnassa toukokuun alusta lokakuun loppupuolelle."
+  "fishWayViewCamDescription": "Nettikamera on toiminnassa toukokuun alusta lokakuun loppupuolelle.",
+  "helpDescription": "Oulun Energian mobiilisovelluksen avulla seuraat helposti energiankulutustasi, saat nopeasti yhteyden asiakaspalveluun.",
+  "helpSignInTitle": "Kirjautuminen",
+  "helpSignInDescription": "Sovellukseen kirjaudutaan lorem ipsum dolor sit amet.",
+  "helpEnergyConsumptionDescription": "Voit tarkastella sähkön tai kaukolämmön kulutustietojasi kolmella eri tarkkuudella. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi cursus at velit nec sagittis. Donec libero tellus, volutpat sed nisi eget, posuere gravida purus. Nam eu mi eget odio fermentum hendrerit.",
+  "helpEnergyConsumptionUsagePlaceTitle": "Käyttöpaikan valinta",
+  "helpEnergyConsumptionUsagePlaceDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi cursus at velit nec sagittis. Donec libero tellus, volutpat sed nisi eget, posuere gravida purus. Nam eu mi eget odio fermentum hendrerit.",
+  "helpInterruptionsDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi cursus at velit nec sagittis. Donec libero tellus, volutpat sed nisi eget, posuere gravida purus. Nam eu mi eget odio fermentum hendrerit."
 }

@@ -122,5 +122,12 @@
   "newsletterViewCancellation": "If you want to cancel your consent to email newsletters, you can do so from the cancellation link at the end of the newsletter.",
   "fishWayViewTitle": "Kalatie",
   "fishWayViewDescription": "Tunnetuksi ja suosituksi maamerkiksi muodostunut Merikosken kalatie mahdollistaa kalojen nousun merestä voimalaitoksen ohi Oulujoen yläjuoksulle. Lohi ja muut vaelluskalat pääsevät etenemään jokisuulta 40 kilometrin matkan Montan voimalaitokselle saakka sekä Oulujoen sivuhaaroihin, Muhos- ja Saninjokeen.\n\nMerikosken kalatie on avoinna toukokuun alusta lokakuun loppupuolelle, jolloin myös nettikamera on toiminnassa ja voit seurata vedenalaista liikennettä sen välityksellä.",
-  "fishWayViewCamDescription": "Nettikamera on toiminnassa toukokuun alusta lokakuun loppupuolelle."
+  "fishWayViewCamDescription": "Nettikamera on toiminnassa toukokuun alusta lokakuun loppupuolelle.",
+  "helpDescription": null,
+  "helpSignInTitle": null,
+  "helpSignInDescription": null,
+  "helpEnergyConsumptionDescription": null,
+  "helpEnergyConsumptionUsagePlaceTitle": null,
+  "helpEnergyConsumptionUsagePlaceDescription": null,
+  "helpInterruptionsDescription": null
 }
