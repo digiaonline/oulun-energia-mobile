@@ -86,7 +86,7 @@ class ScaffoldNavbar extends ConsumerWidget {
                                   enabled: userAuth.loggedIn()),
                               if (userAuth.loggedIn())
                                 _createMenuItem(locals.popupMenuItemLogout, () {
-                                  showSnackbar("TODO but still logged out");
+                                  showSnackbar("Kirjauduit ulos!");
                                   loginNotifier.logout();
                                 }, icon: Icons.logout),
                               if (!userAuth.loggedIn())

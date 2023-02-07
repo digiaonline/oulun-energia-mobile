@@ -37,6 +37,12 @@ IconThemeData appBarIconThemeSecondary =
     const IconThemeData(size: 20, color: iconColorBlue);
 
 ThemeData defaultTheme = ThemeData(
+    snackBarTheme: SnackBarThemeData(
+        elevation: 1.0,
+        showCloseIcon: false,
+        backgroundColor: iconColorBlueLight,
+        contentTextStyle: textTheme.bodyMedium,
+        actionTextColor: Colors.white),
     appBarTheme: AppBarTheme(
         toolbarTextStyle: textTheme.displayMedium,
         titleTextStyle: textTheme.displayMedium,

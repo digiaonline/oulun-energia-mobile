@@ -6,6 +6,7 @@ import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/first_time/first_time_view.dart';
 import 'package:oulun_energia_mobile/views/fishway/fish_way.dart';
+import 'package:oulun_energia_mobile/views/help/help_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_fault_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_map_view.dart';
 import 'package:oulun_energia_mobile/views/interruptions/interruptions_notice_popup_view.dart';
@@ -67,7 +68,7 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
 
     if (state.location == '/home/login') {
       if (!userAuthState.loading && loggedInStatus == LoggedInStatus.loggedIn) {
-        showSnackbar('Jee! Kirjauduit sisään!');
+        showSnackbar('Kirjautuminen onnistui!');
         return HomeView.routePath;
       }
 
@@ -124,6 +125,13 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                     name: FishWay.routeName,
                     builder: (BuildContext context, GoRouterState state) {
                       return const FishWay();
+                    },
+                  ),
+                  GoRoute(
+                    path: HelpView.routePath,
+                    name: HelpView.routeName,
+                    builder: (BuildContext context, GoRouterState state) {
+                      return const HelpView();
                     },
                   ),
                   GoRoute(

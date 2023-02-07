@@ -18,6 +18,7 @@ class FishWay extends ConsumerStatefulWidget {
       'secondaryAppBarStyle': true,
       'initialExpanded': true,
       'hideAppBar': false,
+      'hasScrollBody': true,
     };
   }
 
