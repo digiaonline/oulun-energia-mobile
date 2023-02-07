@@ -71,6 +71,7 @@ class HelpView extends StatelessWidget {
       'secondaryAppBarStyle': true,
       'initialExpanded': true,
       'hideAppBar': false,
+      'hasScrollBody': true,
     };
   }
 }
