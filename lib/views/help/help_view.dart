@@ -13,55 +13,53 @@ class HelpView extends StatelessWidget {
   Widget build(BuildContext context) {
     var locals = AppLocalizations.of(context)!;
     var textTheme = Theme.of(context).textTheme;
-    return IntrinsicHeight(
-      child: Content(
-          title: locals.homeViewHelp,
-          text: locals.helpDescription,
-          children: [
-            Text(
-              locals.helpSignInTitle,
-              style: textTheme.headlineMedium
-                  ?.copyWith(fontWeight: FontWeight.w400),
-            ),
-            const SizedBox(
-              height: Sizes.itemDefaultSpacing,
-            ),
-            Text(
-              locals.helpSignInDescription,
-              style: textTheme.bodyLarge,
-            ),
-            const SizedBox(
-              height: Sizes.itemDefaultSpacing,
-            ),
-            Text(
-              locals.usageViewMyUsage,
-              style: textTheme.headlineMedium
-                  ?.copyWith(fontWeight: FontWeight.w400),
-            ),
-            const SizedBox(
-              height: Sizes.itemDefaultSpacing,
-            ),
-            Text(
-              locals.helpEnergyConsumptionDescription,
-              style: textTheme.bodyLarge,
-            ),
-            const SizedBox(
-              height: Sizes.itemDefaultSpacing,
-            ),
-            Text(
-              locals.helpEnergyConsumptionUsagePlaceTitle,
-              style: textTheme.headlineMedium
-                  ?.copyWith(fontWeight: FontWeight.w400),
-            ),
-            const SizedBox(
-              height: Sizes.itemDefaultSpacing,
-            ),
-            Text(
-              locals.helpEnergyConsumptionUsagePlaceDescription,
-              style: textTheme.bodyLarge,
-            ),
-          ]),
-    );
+    return Content(
+        title: locals.homeViewHelp,
+        text: locals.helpDescription,
+        children: [
+          Text(
+            locals.helpSignInTitle,
+            style:
+                textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(
+            height: Sizes.itemDefaultSpacing,
+          ),
+          Text(
+            locals.helpSignInDescription,
+            style: textTheme.bodyLarge,
+          ),
+          const SizedBox(
+            height: Sizes.itemDefaultSpacing,
+          ),
+          Text(
+            locals.usageViewMyUsage,
+            style:
+                textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(
+            height: Sizes.itemDefaultSpacing,
+          ),
+          Text(
+            locals.helpEnergyConsumptionDescription,
+            style: textTheme.bodyLarge,
+          ),
+          const SizedBox(
+            height: Sizes.itemDefaultSpacing,
+          ),
+          Text(
+            locals.helpEnergyConsumptionUsagePlaceTitle,
+            style:
+                textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w400),
+          ),
+          const SizedBox(
+            height: Sizes.itemDefaultSpacing,
+          ),
+          Text(
+            locals.helpEnergyConsumptionUsagePlaceDescription,
+            style: textTheme.bodyLarge,
+          ),
+        ]);
   }
 
   static Map<String, dynamic> getSettings() {
