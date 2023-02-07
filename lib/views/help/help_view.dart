@@ -13,7 +13,7 @@ class HelpView extends StatelessWidget {
   Widget build(BuildContext context) {
     var locals = AppLocalizations.of(context)!;
     var textTheme = Theme.of(context).textTheme;
-    return SingleChildScrollView(
+    return IntrinsicHeight(
       child: Content(
           title: locals.homeViewHelp,
           text: locals.helpDescription,
