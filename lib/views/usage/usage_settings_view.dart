@@ -7,10 +7,11 @@ import 'package:oulun_energia_mobile/core/domain/usage_place.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
+import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
+import 'package:oulun_energia_mobile/views/utils/content.dart';
 import 'package:oulun_energia_mobile/views/utils/submit_button.dart';
 import 'package:oulun_energia_mobile/views/utils/dropdown.dart';
-import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageSettingsView extends ConsumerStatefulWidget {
   static const String routePath = 'settings';
@@ -106,72 +107,62 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
   Widget build(BuildContext context) {
     AppLocalizations locals = AppLocalizations.of(context)!;
 
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              locals.usageViewUsagePlace,
-              style: textTheme.displayLarge,
-              textAlign: TextAlign.left,
-            ),
+    return Content(
+      title: locals.usageViewUsagePlace,
+      text: '',
+      children: [
+        Dropdown(
+          selectedValue: _selectedUsageType,
+          onChanged: _onSetSelectedUsageType,
+          items: _getUsageTypeItems(locals),
+          title: locals.usageViewUsageType,
+        ),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
+        Dropdown(
+          selectedValue: _selectedUsagePlace,
+          onChanged: _onSetSelectedUsagePlace,
+          items: _getUsagePlaceItems(),
+          title: locals.usageViewUsagePlace,
+        ),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
+        SizedBox(
+          width: double.infinity,
+          child: Text(
+            locals.usageViewUsageChartInfo,
+            style: textTheme.displayLarge,
+            textAlign: TextAlign.left,
           ),
-          Dropdown(
-            selectedValue: _selectedUsageType,
-            onChanged: _onSetSelectedUsageType,
-            items: _getUsageTypeItems(locals),
-            title: locals.usageViewUsageType,
+        ),
+        InfoTile(
+          title: locals.usageViewUsageInfo,
+          subtitle: locals.usageViewUsageInfoSubText,
+        ),
+        InfoTile(
+          title: locals.usageViewUsageTemperature,
+          subtitle: locals.usageViewUsageTemperatureSubText,
+          trailing: CupertinoSwitch(
+            value: _useCelsius,
+            onChanged: (useCelsius) => setState(() {
+              _useCelsius = useCelsius;
+            }),
+            activeColor: secondaryActiveButtonColor,
           ),
-          const SizedBox(height: 30.0),
-          Dropdown(
-            selectedValue: _selectedUsagePlace,
-            onChanged: _onSetSelectedUsagePlace,
-            items: _getUsagePlaceItems(),
-            title: locals.usageViewUsagePlace,
-          ),
-          const SizedBox(height: 30.0),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              locals.usageViewUsageChartInfo,
-              style: textTheme.displayLarge,
-              textAlign: TextAlign.left,
-            ),
-          ),
-          InfoTile(
-            title: locals.usageViewUsageInfo,
-            subtitle: locals.usageViewUsageInfoSubText,
-          ),
-          InfoTile(
-            title: locals.usageViewUsageTemperature,
-            subtitle: locals.usageViewUsageTemperatureSubText,
-            trailing: CupertinoSwitch(
-              value: _useCelsius,
-              onChanged: (useCelsius) => setState(() {
-                _useCelsius = useCelsius;
-              }),
-              activeColor: secondaryActiveButtonColor,
-            ),
-          ),
-          const SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SubmitButton(
-                  text: locals.cancel, onPressed: () => _onCancel(context)),
-              const SizedBox(width: 10.0),
-              SubmitButton(
-                  text: locals.save,
-                  onPressed: () => _onSave(context),
-                  invertColors: true),
-            ],
-          )
-        ],
-      ),
-    ).withBackgroundColor(Colors.white);
+        ),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SubmitButton(
+                text: locals.cancel, onPressed: () => _onCancel(context)),
+            const SizedBox(width: Sizes.itemDefaultSpacingTiny),
+            SubmitButton(
+                text: locals.save,
+                onPressed: () => _onSave(context),
+                invertColors: true),
+          ],
+        )
+      ],
+    );
   }
 }
 
