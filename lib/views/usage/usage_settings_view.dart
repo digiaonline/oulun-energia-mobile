@@ -117,14 +117,14 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
           items: _getUsageTypeItems(locals),
           title: locals.usageViewUsageType,
         ),
-        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
         Dropdown(
           selectedValue: _selectedUsagePlace,
           onChanged: _onSetSelectedUsagePlace,
           items: _getUsagePlaceItems(),
           title: locals.usageViewUsagePlace,
         ),
-        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
         SizedBox(
           width: double.infinity,
           child: Text(
@@ -148,13 +148,13 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
             activeColor: secondaryActiveButtonColor,
           ),
         ),
-        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SubmitButton(
                 text: locals.cancel, onPressed: () => _onCancel(context)),
-            const SizedBox(width: Sizes.itemDefaultSpacing / 2),
+            const SizedBox(width: Sizes.itemDefaultSpacingTiny),
             SubmitButton(
                 text: locals.save,
                 onPressed: () => _onSave(context),
