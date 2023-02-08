@@ -55,7 +55,7 @@ class BaseFullScreenWidget extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(
                 Sizes.itemDefaultSpacing,
-                Sizes.itemDefaultSpacing / 2,
+                Sizes.itemDefaultSpacingTiny,
                 Sizes.itemDefaultSpacing,
                 Sizes.itemDefaultSpacing),
             child: Column(
