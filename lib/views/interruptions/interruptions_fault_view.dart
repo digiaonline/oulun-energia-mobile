@@ -40,7 +40,7 @@ class InterruptionsFaultView extends StatelessWidget {
         text: locals.interruptionsViewFaultText,
         children: [
           const FaultServiceInfo(),
-          const SizedBox(height: 32.0),
+          const SizedBox(height: Sizes.itemDefaultSpacingLarge),
           SendMessageForm(
             onSubmit: onSubmit,
           ),
@@ -57,11 +57,11 @@ class FaultServiceInfo extends StatelessWidget {
     var locals = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(
-        top: 10.0,
+        top: Sizes.itemDefaultSpacing,
       ),
       width: double.infinity,
       height: 104,
-      color: const Color(0xFF1360A8),
+      color: iconColorBlueLight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
