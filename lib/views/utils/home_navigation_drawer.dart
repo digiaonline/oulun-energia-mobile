@@ -181,7 +181,7 @@ class HomeNavigationDrawer extends ConsumerWidget {
               ),
               const Divider(),
               Text(
-                locals.homeViewContact,
+                locals.contactUs,
                 style: theme.textTheme.bodyMedium
                     ?.copyWith(fontWeight: FontWeight.w600),
               ).toClickable(

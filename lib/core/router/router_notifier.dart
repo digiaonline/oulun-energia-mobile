@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
+import 'package:oulun_energia_mobile/views/contact/contact_us_send_message_view.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/first_time/first_time_view.dart';
 import 'package:oulun_energia_mobile/views/fishway/fish_way.dart';
@@ -184,7 +185,16 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
                       name: ContactUsView.routeName,
                       builder: (BuildContext context, GoRouterState state) {
                         return const ContactUsView();
-                      }),
+                      },
+                      routes: [
+                        GoRoute(
+                          path: ContactUsSendMessageView.routePath,
+                          name: ContactUsSendMessageView.routeName,
+                          builder: (BuildContext context, GoRouterState state) {
+                            return const ContactUsSendMessageView();
+                          },
+                        ),
+                      ]),
                   GoRoute(
                       path: UsageSelectionsView.routePath,
                       name: UsageSelectionsView.routeName,
