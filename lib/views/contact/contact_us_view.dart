@@ -57,14 +57,14 @@ class ContactUsView extends StatelessWidget {
           email: 'tekninenneuvonta@oulunenergia.fi',
           phonenumber: '040 712 8606',
         ),
-        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
         Text(
           locals.interruptionsViewFaultTitle,
           style:
               textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w400),
         ),
         const FaultServiceInfo(),
-        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
+        const SizedBox(height: Sizes.itemDefaultSpacingLarge),
         Text(
           locals.contactUsPaymentAdvice,
           style:
@@ -111,7 +111,7 @@ class ContactUsView extends StatelessWidget {
           margin: const EdgeInsets.only(top: Sizes.itemDefaultSpacing),
           width: double.infinity,
           padding: const EdgeInsets.symmetric(
-              vertical: Sizes.itemDefaultSpacing * 3,
+              vertical: Sizes.singelineInputboxHeight,
               horizontal: Sizes.itemDefaultSpacing),
           decoration: const BoxDecoration(color: containerColor),
           child: Column(
@@ -198,7 +198,8 @@ class InfoBox extends StatelessWidget {
                   TextSpan(
                     recognizer: TapGestureRecognizer()
                       ..onTap = () async => await launchUrl(
-                            Uri.parse('https:$link'),
+                            Uri.parse('https://$link'),
+                            mode: LaunchMode.externalApplication,
                           ),
                     text: link,
                     style: textTheme.bodyMedium?.copyWith(
