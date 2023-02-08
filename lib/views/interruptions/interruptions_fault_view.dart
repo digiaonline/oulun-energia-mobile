@@ -65,55 +65,71 @@ class FaultServiceInfo extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(locals.interruptionsViewFaultElectric,
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  )),
-              GestureDetector(
-                onTap: () async => launchUrl(Uri.parse('tel:0855843222')),
-                child: Text(
-                  '08 5584 3222',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.white,
-                    height: 1.48,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.white,
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
+                    locals.interruptionsViewFaultElectric,
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              )
-            ],
-          ),
-          SvgPicture.asset(
-            'assets/icons/support_agent.svg',
-            width: Sizes.bannerIconSize,
-            height: Sizes.bannerIconSize,
-            color: appBarIconColor,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(locals.interruptionsViewFaultHeat,
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  )),
-              GestureDetector(
-                onTap: () async => launchUrl(Uri.parse('tel:0855843425')),
-                child: Text(
-                  '08 5584 3425',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.white,
-                    height: 1.48,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.white,
+                GestureDetector(
+                  onTap: () async => launchUrl(Uri.parse('tel:0855843222')),
+                  child: Text(
+                    '08 5584 3222',
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                      height: 1.48,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.white,
+                    ),
                   ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: SvgPicture.asset(
+              'assets/icons/support_agent.svg',
+              width: Sizes.bannerIconSize,
+              height: Sizes.bannerIconSize,
+              color: appBarIconColor,
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(locals.interruptionsViewFaultHeat,
+                      style: textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      )),
                 ),
-              )
-            ],
+                GestureDetector(
+                  onTap: () async => launchUrl(Uri.parse('tel:0855843425')),
+                  child: Text(
+                    '08 5584 3425',
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                      height: 1.48,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.white,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
