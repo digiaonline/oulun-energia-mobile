@@ -129,8 +129,7 @@ List<Widget> _buildControls(
               InterruptionsNoticesView.routeName,
               extra: GoRouter.of(context).location,
             )),
-    buildHomeViewButton(
-        locals.homeViewContact, 'assets/icons/support_agent.svg',
+    buildHomeViewButton(locals.contactUs, 'assets/icons/support_agent.svg',
         onTap: () => context.goNamed(
               ContactUsView.routeName,
               extra: GoRouter.of(context).location,
