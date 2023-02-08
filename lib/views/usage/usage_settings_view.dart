@@ -7,6 +7,7 @@ import 'package:oulun_energia_mobile/core/domain/usage_place.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
+import 'package:oulun_energia_mobile/views/theme/sizes.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_selections_view.dart';
 import 'package:oulun_energia_mobile/views/utils/content.dart';
 import 'package:oulun_energia_mobile/views/utils/submit_button.dart';
@@ -116,14 +117,14 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
           items: _getUsageTypeItems(locals),
           title: locals.usageViewUsageType,
         ),
-        const SizedBox(height: 30.0),
+        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
         Dropdown(
           selectedValue: _selectedUsagePlace,
           onChanged: _onSetSelectedUsagePlace,
           items: _getUsagePlaceItems(),
           title: locals.usageViewUsagePlace,
         ),
-        const SizedBox(height: 30.0),
+        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
         SizedBox(
           width: double.infinity,
           child: Text(
@@ -147,13 +148,13 @@ class _UsageSettingsViewState extends ConsumerState<UsageSettingsView> {
             activeColor: secondaryActiveButtonColor,
           ),
         ),
-        const SizedBox(height: 20.0),
+        const SizedBox(height: Sizes.itemDefaultSpacing * 2),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SubmitButton(
                 text: locals.cancel, onPressed: () => _onCancel(context)),
-            const SizedBox(width: 10.0),
+            const SizedBox(width: Sizes.itemDefaultSpacing / 2),
             SubmitButton(
                 text: locals.save,
                 onPressed: () => _onSave(context),
