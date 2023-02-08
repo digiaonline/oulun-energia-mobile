@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/login_provider.dart';
+import 'package:oulun_energia_mobile/views/contact/contact_us_send_message_view.dart';
 import 'package:oulun_energia_mobile/views/contact/contact_us_view.dart';
 import 'package:oulun_energia_mobile/views/fishway/fish_way.dart';
 import 'package:oulun_energia_mobile/views/help/help_view.dart';
@@ -71,7 +72,7 @@ class Config {
               Icons.support_agent_outlined,
               size: Sizes.mainViewIconSize,
             ).toBottomBarIcon(selected: currentIndex == index),
-            label: locals.usageViewContact,
+            label: locals.contactUs,
           );
 
   static List<BottomNavigationBarItem> getUserLoggedInItems(index, locals) => [
@@ -130,6 +131,8 @@ class Config {
       PrivacyView.routeName: PrivacyView.getSettings(context),
       RegisterView.routeName: RegisterView.getSettings(context),
       ContactUsView.routeName: ContactUsView.getSettings(),
+      ContactUsSendMessageView.routeName:
+          ContactUsSendMessageView.getSettings(context),
       ServiceTermsView.routeName: ServiceTermsView.getSettings(),
       FishWay.routeName: FishWay.getSettings(),
       HelpView.routeName: HelpView.getSettings(),
