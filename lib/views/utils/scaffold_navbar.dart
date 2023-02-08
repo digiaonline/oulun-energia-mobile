@@ -24,6 +24,7 @@ class ScaffoldNavbar extends ConsumerWidget {
       this.hideAppBar = false,
       this.secondaryAppBarStyle,
       this.bottomSheet,
+      this.onTapHelp,
       required this.child})
       : super(key: key);
 
@@ -33,6 +34,7 @@ class ScaffoldNavbar extends ConsumerWidget {
   final bool secondaryAppBar;
   final bool? secondaryAppBarStyle;
   final bool? hasScrollBody;
+  final void Function()? onTapHelp;
   final bool hideAppBar;
   final String? title;
 
@@ -147,7 +149,11 @@ class ScaffoldNavbar extends ConsumerWidget {
                                       ?.copyWith(color: Colors.black),
                                 ),
                               ]),
-                          const Icon(Icons.help),
+                          if (onTapHelp != null)
+                            InkWell(
+                              onTap: onTapHelp!,
+                              child: const Icon(Icons.help),
+                            ),
                         ],
                       ),
                     )

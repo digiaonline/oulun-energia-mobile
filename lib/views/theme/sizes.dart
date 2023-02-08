@@ -13,7 +13,9 @@ class Sizes {
   static const double multilineInputboxHeightError = 168;
   static const double singelineInputboxHeight = 48;
   static const double singelineInputboxHeightError = 72;
+  static const double itemDefaultSpacingTiny = 8.0;
   static const double itemDefaultSpacing = 16.0;
+  static const double itemDefaultSpacingLarge = 32.0;
   static const double appBarIconSize = 28.5;
 
   static EdgeInsets marginViewBorder =
