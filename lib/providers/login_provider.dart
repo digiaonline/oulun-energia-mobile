@@ -65,18 +65,28 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
         rememberSignIn: false);
   }
 
-  Future<void> _setSignInParams(UserAuth? userAuth, bool rememberSignIn) {
-    return rememberSignIn
-        ? auth.setUserAuth(jsonEncode(userAuth?.toJsonMap()))
-        : Future.value();
-  }
-
   void acceptTerms(bool accept) {
     state = state.copyWith(termsAccepted: accept);
   }
 
   void rememberSignIn(bool remember) {
     state = state.copyWith(rememberSignIn: remember);
+  }
+
+  Future<bool> tryReLogin() async {
+    var userString = await auth.getUserAuth();
+    if (userString == null || userString.isEmpty) {
+      logout(); // todo think if we need some UI change
+      return false;
+    }
+    var userAuth = UserAuth.fromJson(jsonDecode(userString));
+    if (userAuth.username == null || userAuth.password == null) {
+      logout(); // todo think if we need some UI change
+      return false;
+    }
+
+    login(userAuth.username!, userAuth.password!, true);
+    return true;
   }
 
   void _initialize() {
@@ -97,6 +107,12 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
                   ? LoggedInStatus.visitor
                   : LoggedInStatus.notInitialized);
     });
+  }
+
+  Future<void> _setSignInParams(UserAuth? userAuth, bool rememberSignIn) {
+    return rememberSignIn
+        ? auth.setUserAuth(jsonEncode(userAuth?.toJsonMap()))
+        : Future.value();
   }
 
   void _setLoggedOut() {

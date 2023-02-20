@@ -40,7 +40,7 @@ class AuthenticationApi extends RestApiBase {
     if (response.response?.statusCode == HttpStatus.ok) {
       var content = await response.bodyContent();
       var data = jsonDecode(content);
-      return UserAuth.fromJson(data);
+      return UserAuth.fromJson(data, username: username, password: password);
     }
 
     return null;

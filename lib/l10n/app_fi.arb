@@ -141,5 +141,7 @@
   "contactUsContactInformation": "Yhteystiedot",
   "contactUsCableAndHeatmaps": "Kaapeli- ja kaukolämpökartat",
   "contactUsNonUrgent": "Kiireettömät asiat",
-  "contactUsNonUrgentInfo": "Kiireettömissä asioissa voit lähettää viestin."
+  "contactUsNonUrgentInfo": "Kiireettömissä asioissa voit lähettää viestin.",
+  "errorLoginExpired": "Kirjautuminen vanhentunut!",
+  "errorLoginExpiredSnackReLogin": "Kirjaudu uudestaan"
 }

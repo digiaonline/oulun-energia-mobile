@@ -6,6 +6,7 @@ import 'package:oulun_energia_mobile/core/enums.dart';
 import 'package:oulun_energia_mobile/providers/usage_info_provider.dart';
 import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 import 'package:oulun_energia_mobile/views/usage/usage_bar_chart.dart';
+import 'package:oulun_energia_mobile/views/utils/errors.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
 class UsageInfoView extends ConsumerStatefulWidget {
@@ -172,18 +173,7 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
               ],
             ),
           ).withBackgroundColor(Colors.white),
-          error: (error, stack) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                    AppLocalizations.of(context)!.usageViewUsageErrorInfo,
-                    style: textTheme.displayMedium),
-              ),
-            ],
-          ).withBackgroundColor(Colors.white),
+          error: _onError,
           loading: () => Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -198,5 +188,20 @@ class UsageInfoViewState extends ConsumerState<UsageInfoView>
           ).withBackgroundColor(Colors.white),
         )
         .withWillPopScope(context);
+  }
+
+  Widget _onError(Object error, StackTrace stackTrace) {
+    handleAppErrors(context, ref, error);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(AppLocalizations.of(context)!.usageViewUsageErrorInfo,
+              style: textTheme.displayMedium),
+        ),
+      ],
+    ).withBackgroundColor(Colors.white);
   }
 }

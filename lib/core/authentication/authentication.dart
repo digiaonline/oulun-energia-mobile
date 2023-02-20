@@ -21,3 +21,5 @@ class Authentication {
     return await _storage.write(_userAuthStorageKey, auth ?? "");
   }
 }
+
+enum AuthenticationError { unauthorized }
