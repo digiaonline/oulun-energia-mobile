@@ -24,33 +24,31 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
     _initialize();
   }
 
-  void login(String user, String password, bool rememberSignIn) {
+  Future<void> login(String user, String password, bool rememberSignIn) async {
     state = state.copyWith(loading: true);
-    api.requestToken().then((token) {
-      if (token != null) {
-        auth
-            .setAuthenticationToken(token)
-            .then((value) => api.login(username: user, password: password))
-            .then((userAuth) => _setSignInParams(userAuth, rememberSignIn).then(
-                (value) => state = state.copyWith(
-                    loading: false,
-                    rememberSignIn: rememberSignIn,
-                    loggedIn: userAuth != null
-                        ? LoggedInStatus.loggedIn
-                        : LoggedInStatus.failed,
-                    userAuth: userAuth)))
-            .catchError((_) {
-          state =
-              state.copyWith(loading: false, loggedIn: LoggedInStatus.failed);
-          return Future.value(state);
-        });
-      } else {
-        state = state.copyWith(
-          loading: false,
-          loggedIn: LoggedInStatus.failed,
-        );
-      }
-    });
+    var token = await api.requestToken().catchError(_onTokenError);
+    if (token != null) {
+      auth
+          .setAuthenticationToken(token)
+          .then((value) => api.login(username: user, password: password))
+          .then(
+            (userAuth) => _setSignInParams(userAuth, rememberSignIn).then(
+              (value) => state = state.copyWith(
+                  loading: false,
+                  rememberSignIn: rememberSignIn,
+                  loggedIn: userAuth != null
+                      ? LoggedInStatus.loggedIn
+                      : LoggedInStatus.failed,
+                  userAuth: userAuth),
+            ),
+          )
+          .catchError(_onLoginError);
+    } else {
+      state = state.copyWith(
+        loading: false,
+        loggedIn: LoggedInStatus.failed,
+      );
+    }
   }
 
   void logout() async {
@@ -76,17 +74,18 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
   Future<bool> tryReLogin() async {
     var userString = await auth.getUserAuth();
     if (userString == null || userString.isEmpty) {
-      logout(); // todo think if we need some UI change
+      _onLoginError(AuthenticationError
+          .unauthorized); // todo think if we need some UI change
       return false;
     }
     var userAuth = UserAuth.fromJson(jsonDecode(userString));
     if (userAuth.username == null || userAuth.password == null) {
-      logout(); // todo think if we need some UI change
+      _onLoginError(AuthenticationError.unauthorized);
       return false;
     }
 
-    login(userAuth.username!, userAuth.password!, true);
-    return true;
+    await login(userAuth.username!, userAuth.password!, true);
+    return state.loggedInStatus == LoggedInStatus.loggedIn;
   }
 
   void _initialize() {
@@ -125,6 +124,16 @@ class UserAuthNotifier extends StateNotifier<UserAuthState> {
         loading: false,
         loggedIn: LoggedInStatus.loggedIn,
         termsAccepted: true);
+  }
+
+  _onLoginError(Object error) {
+    state = state.copyWith(loading: false, loggedIn: LoggedInStatus.failed);
+    return Future.value(state);
+  }
+
+  _onTokenError(Object error) {
+    state = state.copyWith(loading: false, loggedIn: LoggedInStatus.failed);
+    return Future.value(null);
   }
 }
 

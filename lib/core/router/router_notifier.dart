@@ -58,6 +58,11 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
     if (this.state.isLoading || this.state.hasError) return null;
 
     LoggedInStatus loggedInStatus = userAuthState.loggedInStatus;
+
+    if (!userAuthState.loading && loggedInStatus == LoggedInStatus.failed) {
+      showSnackbar('Kirjautuminen epäonnistui!');
+    }
+
     if (state.location == '/splash') {
       if (!userAuthState.loading &&
           userAuthState.loggedInStatus != LoggedInStatus.loggedIn) {
@@ -72,13 +77,9 @@ class RouterNotifier extends AutoDisposeAsyncNotifier<void>
         showSnackbar('Kirjautuminen onnistui!');
         return HomeView.routePath;
       }
-
-      if (!userAuthState.loading && loggedInStatus == LoggedInStatus.failed) {
-        showSnackbar('Kirjautuminen epäonnistui!');
-      }
     }
 
-    if (state.location == '/home/usage') {
+    if (state.location.startsWith('/home/usage')) {
       if (loggedInStatus == LoggedInStatus.loggedOut) {
         return HomeView.routePath;
       }
