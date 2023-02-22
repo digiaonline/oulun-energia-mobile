@@ -8,7 +8,7 @@ class Sizes {
   static const double inputMargin = 24;
   static const double navigationDrawerIconSize = 20;
   static const double marginViewBorderSize = 20;
-  static const double marginViewBorderSizeLarge = 40;
+  static const double marginViewBorderSizeLarge = 36;
   static const double multilineInputboxHeight = 144;
   static const double multilineInputboxHeightError = 168;
   static const double singelineInputboxHeight = 48;

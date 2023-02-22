@@ -43,8 +43,8 @@ class FtuState extends ConsumerState<FirstTimeView> {
                   Container(
                       margin: const EdgeInsets.only(
                           top: Sizes.marginViewBorderSizeLarge * 2,
-                          left: Sizes.marginViewBorderSize,
-                          right: Sizes.marginViewBorderSize),
+                          left: Sizes.marginViewBorderSizeLarge,
+                          right: Sizes.marginViewBorderSizeLarge),
                       child: PageView(
                         controller: _pageController,
                         onPageChanged: (value) => setState(() {
