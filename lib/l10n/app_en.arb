@@ -141,5 +141,7 @@
   "contactUsContactInformation": "Contact information",
   "contactUsCableAndHeatmaps": "Cable and remote heat maps",
   "contactUsNonUrgent": "Non-urgent matters",
-  "contactUsNonUrgentInfo": "For non-urgent matters, you can send a message."
+  "contactUsNonUrgentInfo": "For non-urgent matters, you can send a message.",
+  "errorLoginExpired": "Login expired!",
+  "errorLoginExpiredSnackReLogin": "Re-Login"
 }
