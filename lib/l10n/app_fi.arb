@@ -143,5 +143,17 @@
   "contactUsNonUrgent": "Kiireettömät asiat",
   "contactUsNonUrgentInfo": "Kiireettömissä asioissa voit lähettää viestin.",
   "errorLoginExpired": "Kirjautuminen vanhentunut!",
-  "errorLoginExpiredSnackReLogin": "Kirjaudu uudestaan"
+  "errorLoginExpiredSnackReLogin": "Kirjaudu uudestaan",
+  "firstTimeViewBypass": "Ohita",
+  "firstTimeViewNext": "Seuraava",
+  "firstTimeViewEnergyTitlePartOne": "Oman",
+  "firstTimeViewEnergyTitlePartTwo": "energian kulutustiedot",
+  "firstTimeViewEnergyDescription": "Kun tunnistaudut Oulun Energian mobiilisovelluksen käyttäjäksi, pääset seuraamaan helposti energiankulutustasi",
+  "firstTimeViewInterruptionsTitlePartOne": "Keykeytykset",
+  "firstTimeViewInterruptionTitlePartTwo": "kartalla ja tiedotteina",
+  "firstTimeViewInterruptionsDescription": "Löydät nopeasti tiedon mahdollisista sähkön- ja lämmönjakelun keskeytyksistä",
+  "firstTimeViewContactsTitlePartOne": "Kaikki",
+  "firstTimeViewContactsTitlePartTwo": "yhteystiedot sovelluksessa",
+  "firstTimeViewContinueWOLogin": "Jatka ilman tunnistautumista",
+  "firstTimeViewLogin": "Kirjaudu"
 }

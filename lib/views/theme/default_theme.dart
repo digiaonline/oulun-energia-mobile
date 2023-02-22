@@ -17,18 +17,59 @@ TextStyle popupMenuStyle = const TextStyle(
     color: popupMenuItemColor);
 
 TextTheme textTheme = const TextTheme(
-  bodyMedium: TextStyle(
-      fontSize: 14.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  bodyLarge: TextStyle(
-      fontSize: 16.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  displayLarge: TextStyle(
-      fontSize: 32.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  displayMedium: TextStyle(
-      fontSize: 22.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
-  displaySmall: TextStyle(
-      fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
-  headlineMedium: TextStyle(
-      fontSize: 28.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+    bodySmall: TextStyle(
+        fontSize: 12.0, fontWeight: FontWeight.w700, fontFamily: "Eina"),
+    bodyMedium: TextStyle(
+        fontSize: 14.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
+    bodyLarge: TextStyle(
+        fontSize: 16.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
+    displayLarge: TextStyle(
+        fontSize: 32.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
+    displayMedium: TextStyle(
+        fontSize: 22.0, fontWeight: FontWeight.w400, fontFamily: "Eina"),
+    displaySmall: TextStyle(
+        fontSize: 14.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+    headlineMedium: TextStyle(
+        fontSize: 28.0, fontWeight: FontWeight.w600, fontFamily: "Eina"),
+    headlineLarge: TextStyle(
+        fontSize: 42.0, fontWeight: FontWeight.w600, fontFamily: "Eina"));
+
+TextButtonThemeData textButtonTheme = TextButtonThemeData(
+  style: ButtonStyle(
+    textStyle: MaterialStatePropertyAll(textTheme.bodySmall),
+    backgroundColor: const MaterialStatePropertyAll(buttonNavigation),
+  ),
+);
+
+ButtonThemeData buttonPrimaryTheme = ButtonThemeData(
+    textTheme: ButtonTextTheme.primary,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: BorderSide.none,
+    ),
+    colorScheme: ColorScheme.fromSwatch(backgroundColor: buttonNavigation));
+
+ButtonStyle secondaryButtonStyle = ButtonStyle(
+  textStyle: MaterialStatePropertyAll(
+      textTheme.bodyMedium?.copyWith(color: buttonNavigation)),
+  backgroundColor: const MaterialStatePropertyAll(buttonSecondary),
+  shape: MaterialStatePropertyAll(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+      side: const BorderSide(color: buttonNavigation, width: 1),
+    ),
+  ),
+);
+
+ButtonStyle primaryButtonStyle = secondaryButtonStyle.copyWith(
+  textStyle: MaterialStatePropertyAll(
+      textTheme.bodyMedium?.copyWith(color: buttonSecondary)),
+  backgroundColor: const MaterialStatePropertyAll(buttonPrimary),
+  shape: MaterialStatePropertyAll(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+  ),
 );
 
 IconThemeData appBarIconTheme =
@@ -81,16 +122,14 @@ ThemeData defaultTheme = ThemeData(
     ),
     fontFamily: 'Eina',
     useMaterial3: true,
-    buttonTheme: ButtonThemeData(
-      textTheme: ButtonTextTheme.primary,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: BorderSide.none,
-      ),
-    ),
+    buttonTheme: buttonPrimaryTheme,
+    textButtonTheme: textButtonTheme,
     textTheme: textTheme,
     iconTheme: const IconThemeData(color: Colors.white, size: 40),
-    colorScheme: ColorScheme.fromSwatch().copyWith(primary: iconColorBlue),
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+        primary: buttonSecondary,
+        secondary: buttonNavigation,
+        background: buttonSecondary),
     radioTheme: const RadioThemeData(
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity(
@@ -126,16 +165,8 @@ ThemeData defaultTheme = ThemeData(
       visualDensity: const VisualDensity(
           horizontal: VisualDensity.minimumDensity,
           vertical: VisualDensity.minimumDensity),
-      checkColor: MaterialStateProperty.resolveWith<Color>(
-        (states) {
-          return Colors.black;
-        },
-      ),
-      fillColor: MaterialStateProperty.resolveWith<Color>(
-        (states) {
-          return Colors.transparent;
-        },
-      ),
+      checkColor: const MaterialStatePropertyAll(buttonNavigation),
+      fillColor: const MaterialStatePropertyAll(Colors.transparent),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(2.0),
       ),
@@ -163,7 +194,10 @@ const Color iconColorBlueLight = Color(0xFF0F5EA6);
 const Color appBarIconColor = Colors.white;
 const Color appBarBackgroundColor = Colors.transparent;
 const Color buttonPrimaryBackground = Color(0xFF009EB5);
-const Color ftuNavigationSelected = Color(0xFFFFFFFF);
-const Color ftuNavigationUnSelected = Color(0xFF1A4590);
+const Color ftuNavigationSelected = Colors.black;
+const Color ftuNavigationUnSelected = Color.fromRGBO(34, 34, 34, 0.2);
 const Color containerTitleColor = Colors.black;
 const Color popupMenuItemColor = Color(0xFF1C1B1F);
+const Color buttonPrimary = iconColorBlueLight;
+const Color buttonSecondary = Colors.white;
+const Color buttonNavigation = Colors.black;

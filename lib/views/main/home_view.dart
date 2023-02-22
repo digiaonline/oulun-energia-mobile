@@ -177,7 +177,6 @@ Widget buildHomeViewButton(String title, String iconAsset,
                     iconAsset,
                     width: iconSize,
                     height: iconSize,
-                    color: iconColorBlue,
                   ),
                 ),
                 marker != null

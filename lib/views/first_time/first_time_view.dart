@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oulun_energia_mobile/views/login/login_view.dart';
 import 'package:oulun_energia_mobile/views/main/home_view.dart';
@@ -21,10 +23,13 @@ class FirstTimeView extends ConsumerStatefulWidget {
 }
 
 class FtuState extends ConsumerState<FirstTimeView> {
+  final int _totalSteps = 3;
   var _stepIndex = 0;
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
+    var locals = AppLocalizations.of(context)!;
     var textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -41,13 +46,14 @@ class FtuState extends ConsumerState<FirstTimeView> {
                           left: Sizes.marginViewBorderSize,
                           right: Sizes.marginViewBorderSize),
                       child: PageView(
+                        controller: _pageController,
                         onPageChanged: (value) => setState(() {
                           _stepIndex = value;
                         }),
                         children: [
-                          _getViewContent(ref, 0),
-                          _getViewContent(ref, 1),
-                          _getViewContent(ref, 2),
+                          _getViewContent(locals, ref, 0),
+                          _getViewContent(locals, ref, 1),
+                          _getViewContent(locals, ref, 2),
                         ],
                       )),
                   Align(
@@ -57,9 +63,8 @@ class FtuState extends ConsumerState<FirstTimeView> {
                       child: Container(
                         margin: Sizes.marginViewBorder,
                         child: Text(
-                          "Ohita",
-                          style: textTheme.bodyMedium
-                              ?.copyWith(color: Colors.white),
+                          locals.firstTimeViewBypass,
+                          style: textTheme.bodyMedium,
                         ),
                       ),
                     ),
@@ -70,27 +75,37 @@ class FtuState extends ConsumerState<FirstTimeView> {
             Container(
               height: 80,
               padding: Sizes.marginViewBorder,
-              child: Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: StepProgressIndicator(
-                    totalSteps: 3,
-                    currentStep: _stepIndex,
-                    size: Sizes.mainViewIconSize,
-                    selectedSize: Sizes.mainViewIconSize,
-                    roundedEdges:
-                        const Radius.circular(Sizes.mainViewIconSize / 2),
-                    customStep: (index, color, __) => Icon(
-                      Icons.circle,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: StepProgressIndicator(
+                      totalSteps: _totalSteps,
+                      currentStep: _stepIndex,
                       size: Sizes.mainViewIconSize,
-                      color: _stepIndex == index
-                          ? ftuNavigationSelected
-                          : ftuNavigationUnSelected,
+                      selectedSize: Sizes.mainViewIconSize,
+                      roundedEdges:
+                          const Radius.circular(Sizes.mainViewIconSize / 2),
+                      customStep: (index, color, __) => Icon(
+                        Icons.circle,
+                        size: Sizes.mainViewIconSize,
+                        color: _stepIndex == index
+                            ? ftuNavigationSelected
+                            : ftuNavigationUnSelected,
+                      ),
                     ),
                   ),
-                ),
+                  if (_stepIndex != _totalSteps - 1)
+                    TextButton(
+                        onPressed: () {
+                          _pageController.animateToPage(_stepIndex + 1,
+                              curve: Curves.linear,
+                              duration: const Duration(milliseconds: 300));
+                        },
+                        child: Text(locals.firstTimeViewNext))
+                ],
               ),
             )
           ],
@@ -99,13 +114,15 @@ class FtuState extends ConsumerState<FirstTimeView> {
     ).withBackground();
   }
 
-  Widget _getViewContent(WidgetRef ref, int stepIndex) {
-    var stepItem = stepData[stepIndex];
+  Widget _getViewContent(
+      AppLocalizations locals, WidgetRef ref, int stepIndex) {
+    var stepItem = _getStepData(locals, stepIndex);
     return _buildStep(
       ref,
       context: context,
-      title: stepItem['title']!,
-      description: stepItem['description']!,
+      titlePartOne: stepItem['titlePartOne']!,
+      titlePartTwo: stepItem['titlePartTwo']!,
+      description: stepItem['description'],
       iconArea: stepItem['iconArea']!,
       step: stepIndex,
     );
@@ -113,81 +130,79 @@ class FtuState extends ConsumerState<FirstTimeView> {
 
   Widget _buildStep(WidgetRef ref,
       {required BuildContext context,
-      required String title,
-      required String description,
+      required String titlePartOne,
+      required String titlePartTwo,
+      required String? description,
       required Widget iconArea,
       required int step}) {
-    Widget? content = _getStepAdditionalContent(ref, step);
+    Widget? content =
+        _getStepAdditionalContent(AppLocalizations.of(context)!, ref, step);
     var textTheme = Theme.of(context).textTheme;
     return SingleChildScrollView(
       child: IntrinsicHeight(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Align(alignment: Alignment.center, child: iconArea).toExpanded(),
+            const SizedBox(
+              height: Sizes.marginViewBorderSize,
+            ),
             Text(
-              "$title\n\n",
+              titlePartOne,
+              maxLines: 1,
+              style: textTheme.displayLarge,
+            ),
+            Text(
+              titlePartTwo,
               maxLines: 2,
-              style: textTheme.displayLarge?.copyWith(color: Colors.white),
+              style: textTheme.headlineLarge,
             ),
-            const SizedBox(
-              height: Sizes.marginViewBorderSize,
-            ),
-            Text(
-              "$description\n\n\n",
-              maxLines: 4,
-              style: textTheme.bodyLarge?.copyWith(color: Colors.white),
-            ),
-            const SizedBox(
-              height: Sizes.marginViewBorderSize,
-            ),
-            iconArea.toExpanded(),
-            content ?? const SizedBox.shrink(),
+            if (description != null)
+              const SizedBox(
+                height: Sizes.marginViewBorderSize,
+              ),
+            if (description != null)
+              Text(
+                "$description\n\n\n",
+                maxLines: 4,
+                style: textTheme.bodyLarge,
+              ),
+            if (content != null) content,
           ],
         ),
       ),
     );
   }
 
-  _getStepAdditionalContent(WidgetRef ref, int step) {
+  _getStepAdditionalContent(AppLocalizations locals, WidgetRef ref, int step) {
     if (step == 2) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(
-            height: Sizes.marginViewBorderSizeLarge,
+            height: Sizes.marginViewBorderSize,
           ),
           TextButton(
+            style: secondaryButtonStyle,
             onPressed: () => context.goNamed(HomeView.routeName),
             child: Text(
-              "Jatka ilman kirjautumista",
-              style: defaultTheme.textTheme.bodyLarge
-                  ?.copyWith(color: buttonPrimaryBackground),
+              locals.firstTimeViewContinueWOLogin,
+              style: secondaryButtonStyle.textStyle?.resolve({}),
             ),
-          ).toButton(secondary: true),
+          ),
           const SizedBox(
             height: Sizes.marginViewBorderSize,
           ),
           TextButton(
+            style: primaryButtonStyle,
             onPressed: () => context.goNamed(LoginView.routeName),
             child: Container(
               decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,
               ),
-              child: Text(
-                "Kirjaudu",
-                style: defaultTheme.textTheme.bodyLarge
-                    ?.copyWith(color: Colors.white),
-              ),
+              child: Text(locals.firstTimeViewLogin,
+                  style: primaryButtonStyle.textStyle?.resolve({})),
             ),
-          ).toButton(),
-          const SizedBox(
-            height: Sizes.marginViewBorderSize,
-          ),
-          Text(
-            "Kirjautumalla palveluun pääset seuraamaan energiankulutustasi ",
-            textAlign: TextAlign.center,
-            style:
-                defaultTheme.textTheme.bodyLarge?.copyWith(color: Colors.white),
           ),
         ],
       );
@@ -195,49 +210,39 @@ class FtuState extends ConsumerState<FirstTimeView> {
     return null;
   }
 
-  List<Map<String, dynamic>> stepData = [
-    {
-      "title": "Keskeytykset kartalla ja tiedotteina",
-      "description":
-          "Löydät nopeasti tiedon mahdollisista sähkön- ja lämmönjakelun keskeytyksistä",
-      "iconArea": buildHomeViewButton(
-        avatarSize: Sizes.mainViewIconAvatarSize * 2,
-        fontSize: 20,
-        iconSize: 56,
-        "Keskeytys-kartta",
-        'assets/icons/fmd_bad.svg',
-        onTap: () => {},
-      ),
-    },
-    {
-      "title": "Kaikki yhteystiedot sovelluksessa",
-      "description":
-          "Oulun Energian asiakaspalvelu auttaa sinua kaikissa sähköä ja lämpöä sekä niiden laskutusta koskevissa kysymyksissä",
-      "iconArea": buildHomeViewButton(
-        avatarSize: Sizes.mainViewIconAvatarSize * 2,
-        fontSize: 20,
-        iconSize: 56,
-        "Ota yhteyttä",
-        'assets/icons/support_agent.svg',
-        onTap: () => {},
-      ),
-    },
-    {
-      "title": "Omat energian kulutustiedot",
-      "description":
-          "Kun tunnistaudut Oulun Energian mobiilisovelluksen käyttäjäksi, pääset seuraamaan helposti energiankulutustasi",
-      "iconArea": buildHomeViewButton(
-        avatarSize: Sizes.mainViewIconAvatarSize * 2,
-        fontSize: 20,
-        iconSize: 56,
-        "Omat kulutustiedot",
-        'assets/icons/monitoring.svg',
-        onTap: () => {},
-        marker: const Icon(
-          Icons.lock_outline,
-          size: 28,
+  Map<String, dynamic> _getStepData(AppLocalizations locals, int stepIndex) {
+    List<Map<String, dynamic>> stepData = [
+      {
+        "titlePartOne": locals.firstTimeViewEnergyTitlePartOne,
+        "titlePartTwo": locals.firstTimeViewEnergyTitlePartTwo,
+        "description": locals.firstTimeViewEnergyDescription,
+        "iconArea": SvgPicture.asset(
+          'assets/images/ft_energy.svg',
+          width: 318,
+          height: 318,
         ),
-      ),
-    },
-  ];
+      },
+      {
+        "titlePartOne": locals.firstTimeViewInterruptionsTitlePartOne,
+        "titlePartTwo": locals.firstTimeViewInterruptionTitlePartTwo,
+        "description": locals.firstTimeViewInterruptionsDescription,
+        "iconArea": SvgPicture.asset(
+          'assets/images/ft_energy.svg',
+          width: 318,
+          height: 318,
+        ),
+      },
+      {
+        "titlePartOne": locals.firstTimeViewContactsTitlePartOne,
+        "titlePartTwo": locals.firstTimeViewContactsTitlePartTwo,
+        "iconArea": SvgPicture.asset(
+          'assets/images/ft_energy.svg',
+          width: 318,
+          height: 318,
+        ),
+      },
+    ];
+
+    return stepData[stepIndex];
+  }
 }

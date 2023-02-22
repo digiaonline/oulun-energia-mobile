@@ -103,17 +103,6 @@ class LoginView extends ConsumerWidget {
                         ),
                         CheckboxRow(
                           color: Colors.white,
-                          value: userAuth.rememberSignIn,
-                          onChanged: (value) =>
-                              loginNotifier.rememberSignIn(value ?? false),
-                          child: Text(
-                            locals.loginViewRememberSignIn,
-                            style: defaultTheme.textTheme.bodyMedium
-                                ?.copyWith(color: Colors.white),
-                          ),
-                        ),
-                        CheckboxRow(
-                          color: Colors.white,
                           value: userAuth.termsAccepted,
                           onChanged: (value) =>
                               loginNotifier.acceptTerms(value ?? false),
@@ -167,7 +156,18 @@ class LoginView extends ConsumerWidget {
                                   style: defaultTheme.textTheme.bodyLarge
                                       ?.copyWith(color: Colors.white),
                                 ),
-                              ).toButton(enabled: userAuth.termsAccepted)
+                              ).toButton(enabled: userAuth.termsAccepted),
+                        CheckboxRow(
+                          color: Colors.white,
+                          value: userAuth.rememberSignIn,
+                          onChanged: (value) =>
+                              loginNotifier.rememberSignIn(value ?? false),
+                          child: Text(
+                            locals.loginViewRememberSignIn,
+                            style: defaultTheme.textTheme.bodyMedium
+                                ?.copyWith(color: Colors.white),
+                          ),
+                        ),
                       ],
                     ),
                     Column(
@@ -211,7 +211,9 @@ class LoginView extends ConsumerWidget {
             ),
           ),
         ],
-      ).withBackground().withWillPopScope(context),
+      )
+          .withBackground(img: true, dimBackground: true)
+          .withWillPopScope(context),
     );
   }
 
