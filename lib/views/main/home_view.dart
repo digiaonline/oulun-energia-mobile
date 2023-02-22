@@ -163,8 +163,8 @@ Widget buildHomeViewButton(String title, String iconAsset,
     opacity: onTap == null ? 0.6 : 1.0,
     child: SizedBox(
       width: avatarSize,
-      child: TextButton(
-        onPressed: onTap,
+      child: InkWell(
+        onTap: onTap,
         child: Column(
           children: [
             Stack(

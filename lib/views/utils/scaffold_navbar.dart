@@ -164,7 +164,7 @@ class ScaffoldNavbar extends ConsumerWidget {
             child: child,
           ),
         ],
-      ).withBackground(),
+      ).withBackground(img: true),
       bottomNavigationBar: BottomNavbar(initialExpanded: initialExpanded),
     );
   }
