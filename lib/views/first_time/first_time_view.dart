@@ -87,7 +87,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
                       size: Sizes.mainViewIconSize,
                       selectedSize: Sizes.mainViewIconSize,
                       roundedEdges:
-                          const Radius.circular(Sizes.mainViewIconSize / 2),
+                          const Radius.circular(Sizes.stepIndicatorIconSize),
                       customStep: (index, color, __) => Icon(
                         Icons.circle,
                         size: Sizes.mainViewIconSize,
@@ -191,7 +191,7 @@ class FtuState extends ConsumerState<FirstTimeView> {
             ),
           ),
           const SizedBox(
-            height: Sizes.marginViewBorderSize,
+            height: Sizes.marginViewBorderSizeSmall,
           ),
           TextButton(
             style: primaryButtonStyle,

@@ -49,6 +49,21 @@ ButtonThemeData buttonPrimaryTheme = ButtonThemeData(
     ),
     colorScheme: ColorScheme.fromSwatch(backgroundColor: buttonNavigation));
 
+CheckboxThemeData checkBoxTheme = CheckboxThemeData(
+  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  visualDensity: const VisualDensity(
+      horizontal: VisualDensity.minimumDensity,
+      vertical: VisualDensity.minimumDensity),
+  checkColor: const MaterialStatePropertyAll(buttonNavigation),
+  fillColor: const MaterialStatePropertyAll(Colors.transparent),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(4.0),
+  ),
+  side: MaterialStateBorderSide.resolveWith(
+    (states) => const BorderSide(width: 1, color: borderColor),
+  ),
+);
+
 ButtonStyle secondaryButtonStyle = ButtonStyle(
   textStyle: MaterialStatePropertyAll(
       textTheme.bodyMedium?.copyWith(color: buttonNavigation)),
@@ -136,44 +151,34 @@ ThemeData defaultTheme = ThemeData(
           horizontal: VisualDensity.minimumDensity,
           vertical: VisualDensity.minimumDensity),
     ),
+    textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: textTheme.displayMedium?.copyWith(color: Colors.red),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.white,
       filled: true,
+      focusColor: Colors.black,
+      hoverColor: Colors.black,
       floatingLabelAlignment: FloatingLabelAlignment.start,
       hintStyle: textTheme.bodyLarge?.copyWith(color: hintTextColor),
       focusedErrorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: BorderRadius.all(Radius.circular(4)),
         borderSide: BorderSide(color: Colors.red, width: 1),
       ),
       focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: BorderRadius.all(Radius.circular(4)),
         borderSide: BorderSide(
           color: borderColor,
           width: 1,
         ),
       ),
       border: const OutlineInputBorder(
-        borderRadius: BorderRadius.zero,
+        borderRadius: BorderRadius.all(Radius.circular(4)),
         borderSide: BorderSide(color: borderColor, width: 1),
       ),
       contentPadding: const EdgeInsets.only(left: 16.0, top: 16.0),
     ),
-    checkboxTheme: CheckboxThemeData(
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      visualDensity: const VisualDensity(
-          horizontal: VisualDensity.minimumDensity,
-          vertical: VisualDensity.minimumDensity),
-      checkColor: const MaterialStatePropertyAll(buttonNavigation),
-      fillColor: const MaterialStatePropertyAll(Colors.transparent),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(2.0),
-      ),
-      side: MaterialStateBorderSide.resolveWith(
-        (states) => const BorderSide(width: 1.5, color: borderColor),
-      ),
-    ),
+    checkboxTheme: checkBoxTheme,
     dividerColor: const Color(0xFF949494),
     listTileTheme: const ListTileThemeData(horizontalTitleGap: 0),
     popupMenuTheme: PopupMenuThemeData(

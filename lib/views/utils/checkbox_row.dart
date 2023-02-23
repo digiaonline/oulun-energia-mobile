@@ -20,6 +20,7 @@ class CheckboxRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: Sizes.inputMargin),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Checkbox(
               visualDensity: const VisualDensity(
