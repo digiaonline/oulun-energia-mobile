@@ -14,7 +14,7 @@ import 'package:oulun_energia_mobile/views/utils/checkbox_row.dart';
 import 'package:oulun_energia_mobile/views/utils/input_box.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
-class LoginView extends ConsumerWidget {
+class LoginView extends ConsumerStatefulWidget {
   static const String routePath = "login";
   static const String routeName = "login";
 
@@ -32,9 +32,17 @@ class LoginView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final usernameController = TextEditingController();
-    final passwordController = TextEditingController();
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return LoginState();
+  }
+}
+
+class LoginState extends ConsumerState<LoginView> {
+  var usernameController = TextEditingController();
+  var passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     var userAuth = ref.watch(loginProvider);
     var loginNotifier = ref.read(loginProvider.notifier);
     var theme = Theme.of(context);
