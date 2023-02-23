@@ -14,7 +14,7 @@ import 'package:oulun_energia_mobile/views/utils/checkbox_row.dart';
 import 'package:oulun_energia_mobile/views/utils/input_box.dart';
 import 'package:oulun_energia_mobile/views/utils/widget_ext.dart';
 
-class LoginView extends ConsumerWidget {
+class LoginView extends ConsumerStatefulWidget {
   static const String routePath = "login";
   static const String routeName = "login";
 
@@ -32,10 +32,17 @@ class LoginView extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final usernameController =
-        TextEditingController(text: "mira.juola@icloud.com");
-    final passwordController = TextEditingController(text: "Vaihda123456");
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    return LoginState();
+  }
+}
+
+class LoginState extends ConsumerState<LoginView> {
+  var usernameController = TextEditingController();
+  var passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     var userAuth = ref.watch(loginProvider);
     var loginNotifier = ref.read(loginProvider.notifier);
     var theme = Theme.of(context);
@@ -53,16 +60,20 @@ class LoginView extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      locals.loginViewLogin,
-                      style: theme.textTheme.displayMedium?.copyWith(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold),
-                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const SizedBox(
+                          height: Sizes.itemDefaultSpacingLarge,
+                        ),
+                        Text(
+                          locals.loginViewLogin,
+                          style: theme.textTheme.displayLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: Sizes.itemDefaultSpacingLarge,
+                        ),
                         InputBox(
                             hintText: locals.loginViewUsernameHint,
                             title: locals.loginViewUsername,
@@ -73,13 +84,6 @@ class LoginView extends ConsumerWidget {
                                 defaultTheme.textTheme.bodyMedium?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
-                            ),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.zero,
-                              borderSide: BorderSide(
-                                color: Colors.white,
-                                width: 1,
-                              ),
                             )),
                         InputBox(
                           hintText: locals.loginViewPasswordHint,
@@ -92,24 +96,6 @@ class LoginView extends ConsumerWidget {
                               defaultTheme.textTheme.bodyMedium?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                          ),
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.zero,
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        CheckboxRow(
-                          color: Colors.white,
-                          value: userAuth.rememberSignIn,
-                          onChanged: (value) =>
-                              loginNotifier.rememberSignIn(value ?? false),
-                          child: Text(
-                            locals.loginViewRememberSignIn,
-                            style: defaultTheme.textTheme.bodyMedium
-                                ?.copyWith(color: Colors.white),
                           ),
                         ),
                         CheckboxRow(
@@ -131,6 +117,7 @@ class LoginView extends ConsumerWidget {
                                       style: defaultTheme.textTheme.bodyMedium
                                           ?.copyWith(
                                         color: Colors.white,
+                                        fontWeight: FontWeight.w700,
                                         decorationColor: Colors.white,
                                         decoration: TextDecoration.underline,
                                       ),
@@ -139,11 +126,15 @@ class LoginView extends ConsumerWidget {
                                 ),
                               ).toClickable(
                                   onTap: () => _openTermsLink(context)),
+                              const SizedBox(
+                                height: Sizes.itemDefaultSpacingTiny,
+                              ),
                               Text(
                                 locals.loginViewPrivacyStatementLink,
                                 style:
                                     defaultTheme.textTheme.bodyMedium?.copyWith(
                                   color: Colors.white,
+                                  fontWeight: FontWeight.w700,
                                   decorationColor: Colors.white,
                                   decoration: TextDecoration.underline,
                                 ),
@@ -155,6 +146,7 @@ class LoginView extends ConsumerWidget {
                         userAuth.loading
                             ? const Center(child: CircularProgressIndicator())
                             : TextButton(
+                                style: primaryButtonStyle,
                                 onPressed: userAuth.termsAccepted
                                     ? () => _doLogin(
                                         ref,
@@ -164,20 +156,44 @@ class LoginView extends ConsumerWidget {
                                     : null,
                                 child: Text(
                                   locals.loginViewLoginButton,
-                                  style: defaultTheme.textTheme.bodyLarge
-                                      ?.copyWith(color: Colors.white),
+                                  style:
+                                      primaryButtonStyle.textStyle?.resolve({}),
                                 ),
-                              ).toButton(enabled: userAuth.termsAccepted)
+                              ).toOpacity(
+                                opacity: userAuth.termsAccepted
+                                    ? 1.0
+                                    : disabledOpacity),
+                        const SizedBox(
+                          height: Sizes.itemDefaultSpacingTiny,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: 200,
+                            child: CheckboxRow(
+                              color: Colors.white,
+                              value: userAuth.rememberSignIn,
+                              onChanged: (value) =>
+                                  loginNotifier.rememberSignIn(value ?? false),
+                              child: Text(
+                                locals.loginViewRememberSignIn,
+                                style: defaultTheme.textTheme.bodyMedium
+                                    ?.copyWith(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           locals.loginViewForgotPasswordLink,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: Colors.white,
+                            fontWeight: FontWeight.w700,
                             decorationColor: Colors.white,
                             decoration: TextDecoration.underline,
                           ),
@@ -190,14 +206,16 @@ class LoginView extends ConsumerWidget {
                           textAlign: TextAlign.center,
                           TextSpan(
                             text: locals.loginViewRegisterLinkPrefix,
-                            style: defaultTheme.textTheme.bodyMedium
-                                ?.copyWith(color: Colors.white),
+                            style: defaultTheme.textTheme.bodyMedium?.copyWith(
+                              color: Colors.white,
+                            ),
                             children: [
                               TextSpan(
                                 text: locals.loginViewRegisterLink,
                                 style:
                                     defaultTheme.textTheme.bodyMedium?.copyWith(
                                   color: Colors.white,
+                                  fontWeight: FontWeight.w700,
                                   decorationColor: Colors.white,
                                   decoration: TextDecoration.underline,
                                 ),
@@ -211,7 +229,9 @@ class LoginView extends ConsumerWidget {
             ),
           ),
         ],
-      ).withBackground().withWillPopScope(context),
+      )
+          .withBackground(img: true, dimBackground: true)
+          .withWillPopScope(context),
     );
   }
 

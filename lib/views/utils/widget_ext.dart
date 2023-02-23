@@ -5,21 +5,22 @@ import 'package:oulun_energia_mobile/views/theme/default_theme.dart';
 const double disabledOpacity = 0.6;
 
 extension WidgetExt on Widget {
-  Widget withBackground() {
-    return Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: <Color>[
-              Color(0xff3993D6),
-              Color(0xff030B5C),
-            ],
-            // Gradient from https://learnui.design/tools/gradient-generator.html
-            tileMode: TileMode.mirror,
+  Widget withBackground({bool img = false, bool dimBackground = false}) {
+    if (img) {
+      return Stack(
+        children: [
+          Image.asset(
+            "assets/images/background.jpg",
+            width: double.infinity,
+            fit: BoxFit.fitWidth,
           ),
-        ),
-        child: this);
+          !dimBackground
+              ? this
+              : withBackgroundColor(Colors.black54.withOpacity(0.8))
+        ],
+      );
+    }
+    return Container(color: Colors.white, child: this);
   }
 
   Widget withBackgroundColor(Color color) {
@@ -79,6 +80,13 @@ extension WidgetExt on Widget {
 
   InkWell toClickable({required Function()? onTap}) {
     return InkWell(onTap: onTap, child: this);
+  }
+
+  Widget toOpacity({required double opacity}) {
+    return Opacity(
+      opacity: opacity,
+      child: this,
+    );
   }
 
   Widget toDisabledOpacity({bool disabled = true}) {
